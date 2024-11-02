@@ -1,6 +1,12 @@
-import { cookies } from "next/headers";
+import "server-only";
+
 import { Client, Account, ID } from "node-appwrite";
 import { cookieName } from "@/lib/server/config/auth";
+import { getCookie } from "../utils/cookies";
+
+export function getUniqueID() {
+  return ID.unique();
+}
 
 export async function createSessionClient() {
   if (
@@ -10,17 +16,15 @@ export async function createSessionClient() {
     throw new Error("Appwrite endpoint or project not provided");
   }
 
-  const client = new Client()
-    .setEndpoint(process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT)
-    .setProject(process.env.NEXT_PUBLIC_APPWRITE_PROJECT);
-  const cookieStore = await cookies();
-  const sessionCookie = cookieStore.get(cookieName);
-
+  const sessionCookie = await getCookie(cookieName);
   if (!sessionCookie || !sessionCookie.value) {
     throw new Error("No session");
   }
 
-  client.setSession(sessionCookie.value);
+  const client = new Client()
+    .setEndpoint(process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT)
+    .setProject(process.env.NEXT_PUBLIC_APPWRITE_PROJECT)
+    .setSession(sessionCookie.value);
 
   return {
     get account() {
@@ -48,8 +52,4 @@ export async function createAdminClient() {
       return new Account(client);
     },
   };
-}
-
-export function getUniqueID() {
-  return ID.unique();
 }

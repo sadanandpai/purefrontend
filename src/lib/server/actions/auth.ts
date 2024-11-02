@@ -1,6 +1,5 @@
 "use server";
 
-import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { cookieName } from "@/lib/server/config/auth";
 import {
@@ -9,55 +8,89 @@ import {
   redirectToOAuth,
   destroySession,
   initiateSessionWithEmail,
-} from "@/lib/server/controller/auth";
-import { validateSignIn, validateSignUp } from "@/lib/server/utils/auth";
+  updateSessionPassword,
+} from "@/lib/server/controller/session";
+import {
+  validatePassword,
+  validateSignIn,
+  validateSignUp,
+} from "@/lib/server/utils/auth";
 import { routes } from "@/lib/common/routes";
-import { setSecureCookie } from "../utils/cookies";
-import { SignInSchemaErrors, SignUpSchemaErrors } from "../definitions/auth";
+import { createCookie, deleteCookie } from "../utils/cookies";
+import { ActionErrorType } from "@/lib/common/error";
+import { headers } from "next/headers";
+import {
+  ActionResponse,
+  respondWithError,
+  respondWithSuccess,
+} from "../handlers/action";
 
 export async function signInWithEmail(
-  _prev: {
-    errors: SignInSchemaErrors;
-  },
+  _prev: ActionResponse,
   formData: FormData
 ) {
-  const validatorResult = validateSignIn(formData);
-  if (!validatorResult.success) {
-    return { errors: validatorResult.error.flatten().fieldErrors };
+  try {
+    const { email, password } = validateSignIn(formData);
+    const secret = await createSessionWithEmail(email, password);
+    await createCookie(cookieName, secret);
+    redirect(routes.profile);
+  } catch (error) {
+    return respondWithError(error);
   }
-
-  const { email, password } = validatorResult.data;
-  const secret = await createSessionWithEmail(email, password);
-  await setSecureCookie(cookieName, secret);
-  redirect(routes.profile);
 }
 
 export async function signInWithGoogle() {
-  return await redirectToOAuth();
+  try {
+    const reqHeaders = await headers();
+    const origin = reqHeaders.get("origin");
+    const redirectUrl = await redirectToOAuth(origin);
+    redirect(redirectUrl);
+  } catch (error) {
+    return respondWithError(error);
+  }
 }
 
 export async function signUpWithEmail(
-  _prev: { errors: SignUpSchemaErrors },
+  _prev: ActionResponse,
   formData: FormData
 ) {
-  const validatorResult = validateSignUp(formData);
-  if (!validatorResult.success) {
-    return { errors: validatorResult.error.flatten().fieldErrors };
+  try {
+    const { name, email, password } = validateSignUp(formData);
+    const secret = await initiateSessionWithEmail(name, email, password);
+    await createCookie(cookieName, secret);
+    redirect(routes.profile);
+  } catch (error) {
+    return respondWithError(error);
   }
-
-  const { name, email, password } = validatorResult.data;
-  const secret = await initiateSessionWithEmail(name, email, password);
-  await setSecureCookie(cookieName, secret);
-  redirect(routes.profile);
 }
 
 export async function signOut() {
-  destroySession();
-  const cookieStore = await cookies();
-  cookieStore.delete(cookieName);
-  redirect(routes.signIn);
+  try {
+    destroySession();
+    deleteCookie(cookieName);
+    redirect(routes.signIn);
+  } catch (error) {
+    return respondWithError(error);
+  }
+}
+
+export async function updatePassword(
+  _prev: ActionResponse,
+  formData: FormData
+) {
+  try {
+    const { password, newPassword } = validatePassword(formData);
+    await updateSessionPassword(newPassword, password);
+    return respondWithSuccess("Password updated successfully");
+  } catch (error) {
+    return respondWithError(error);
+  }
 }
 
 export async function getLoggedInUser() {
-  return await getSession();
+  try {
+    return await getSession();
+  } catch (error) {
+    return null;
+  }
 }

@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
 import { routes } from "@/lib/common/routes";
 import { getLoggedInUser, signOut } from "@/lib/server/actions/auth";
+import PasswordUpdate from "@/components/auth/password-update";
 
 export const dynamic = "force-dynamic";
 
@@ -24,6 +25,8 @@ export default async function ProfilePage() {
           <strong>Email:</strong> {user.email}
         </li>
       </ul>
+
+      <PasswordUpdate />
 
       <form action={signOut}>
         <button type="submit" className="btn">
