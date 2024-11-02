@@ -13,12 +13,12 @@ export default function PasswordUpdate() {
     <form action={formAction}>
       <div className="form-field">
         <PasswordField />
-        <ErrorField error={state.errors?.password?.[0]} />
+        <ErrorField error={state.fieldErrors?.password?.[0]} />
       </div>
 
       <div className="form-field">
         <NewPasswordField />
-        <ErrorField error={state.errors?.newPassword?.[0]} />
+        <ErrorField error={state.fieldErrors?.newPassword?.[0]} />
       </div>
 
       <SubmitButton label="Update Password" pending={pending} />

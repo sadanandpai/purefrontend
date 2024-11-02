@@ -1,15 +1,9 @@
-import { ActionError } from "@/lib/common/error";
+import { GlobalError, GlobalResponse } from "@/lib/common/types/globals";
 
-export interface ActionResponse {
-  errors?: Record<string, string[] | undefined | null>;
-  error?: string;
-  message?: string;
-}
-
-export function respondWithError(error: unknown): ActionResponse {
-  if (error instanceof ActionError) {
+export function respondWithError(error: unknown): GlobalResponse {
+  if (error instanceof GlobalError) {
     return {
-      ...(error.fieldErrors && { errors: error.fieldErrors }),
+      ...(error.fieldErrors && { fieldErrors: error.fieldErrors }),
       ...(error.error && { error: error.error }),
     };
   }
@@ -17,7 +11,7 @@ export function respondWithError(error: unknown): ActionResponse {
   throw error;
 }
 
-export function respondWithSuccess(message: string): ActionResponse {
+export function respondWithSuccess(message: string): GlobalResponse {
   return {
     message,
   };

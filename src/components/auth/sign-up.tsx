@@ -22,17 +22,17 @@ export function SignUp() {
       <form action={formAction} className={classes.authForm}>
         <div className="form-field">
           <FullNameField />
-          <ErrorField error={state.errors?.name?.[0]} />
+          <ErrorField error={state.fieldErrors?.name?.[0]} />
         </div>
 
         <div className="form-field">
           <EmailField />
-          <ErrorField error={state.errors?.email?.[0]} />
+          <ErrorField error={state.fieldErrors?.email?.[0]} />
         </div>
 
         <div className="form-field">
           <PasswordField />
-          <ErrorField error={state.errors?.password?.[0]} />
+          <ErrorField error={state.fieldErrors?.password?.[0]} />
         </div>
 
         <SubmitButton label="Sign up" pending={pending} />

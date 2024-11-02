@@ -1,6 +1,6 @@
 import { cookieName } from "@/lib/server/config/auth";
 import { NextRequest, NextResponse } from "next/server";
-import { createSessionWithSecret } from "@/lib/server/controller/session";
+import { createSessionWithSecret } from "@/lib/server/data-layer/session";
 import { routes } from "@/lib/common/routes";
 import { createCookie } from "@/lib/server/utils/cookies";
 

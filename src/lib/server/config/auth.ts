@@ -1,1 +1,1 @@
-export const cookieName = "pureauth";
+export const cookieName = "auth-session";

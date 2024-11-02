@@ -9,7 +9,7 @@ import {
   destroySession,
   initiateSessionWithEmail,
   updateSessionPassword,
-} from "@/lib/server/controller/session";
+} from "@/lib/server/data-layer/session";
 import {
   validatePassword,
   validateSignIn,
@@ -17,16 +17,12 @@ import {
 } from "@/lib/server/utils/auth";
 import { routes } from "@/lib/common/routes";
 import { createCookie, deleteCookie } from "../utils/cookies";
-import { ActionErrorType } from "@/lib/common/error";
 import { headers } from "next/headers";
-import {
-  ActionResponse,
-  respondWithError,
-  respondWithSuccess,
-} from "../handlers/action";
+import { respondWithError, respondWithSuccess } from "../handlers/action";
+import { GlobalResponse } from "@/lib/common/types/globals";
 
 export async function signInWithEmail(
-  _prev: ActionResponse,
+  _prev: GlobalResponse,
   formData: FormData
 ) {
   try {
@@ -40,18 +36,14 @@ export async function signInWithEmail(
 }
 
 export async function signInWithGoogle() {
-  try {
-    const reqHeaders = await headers();
-    const origin = reqHeaders.get("origin");
-    const redirectUrl = await redirectToOAuth(origin);
-    redirect(redirectUrl);
-  } catch (error) {
-    return respondWithError(error);
-  }
+  const reqHeaders = await headers();
+  const origin = reqHeaders.get("origin");
+  const redirectUrl = await redirectToOAuth(origin);
+  redirect(redirectUrl);
 }
 
 export async function signUpWithEmail(
-  _prev: ActionResponse,
+  _prev: GlobalResponse,
   formData: FormData
 ) {
   try {
@@ -65,17 +57,13 @@ export async function signUpWithEmail(
 }
 
 export async function signOut() {
-  try {
-    destroySession();
-    deleteCookie(cookieName);
-    redirect(routes.signIn);
-  } catch (error) {
-    return respondWithError(error);
-  }
+  destroySession();
+  deleteCookie(cookieName);
+  redirect(routes.signIn);
 }
 
 export async function updatePassword(
-  _prev: ActionResponse,
+  _prev: GlobalResponse,
   formData: FormData
 ) {
   try {
@@ -90,7 +78,7 @@ export async function updatePassword(
 export async function getLoggedInUser() {
   try {
     return await getSession();
-  } catch (error) {
+  } catch {
     return null;
   }
 }

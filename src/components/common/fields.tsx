@@ -31,7 +31,7 @@ export function EmailField({ value = "" }: Props) {
       name="email"
       placeholder="Email"
       type="email"
-      // required
+      required
       value={email}
       onChange={(e) => setEmail(e.target.value)}
     />

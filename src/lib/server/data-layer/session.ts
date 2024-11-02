@@ -6,7 +6,7 @@ import {
   createSessionClient,
   getUniqueID,
 } from "@/lib/server/service";
-import { ActionError } from "@/lib/common/error";
+import { GlobalError } from "@/lib/common/types/globals";
 
 export async function getSession() {
   const { account } = await createSessionClient();
@@ -20,7 +20,7 @@ export async function createSessionWithEmail(email: string, password: string) {
     return session.secret;
   } catch (error) {
     if (error instanceof Error) {
-      throw new ActionError({
+      throw new GlobalError({
         error: error.message,
       });
     }
@@ -56,7 +56,7 @@ export async function initiateSessionWithEmail(
     return session.secret;
   } catch (error) {
     if (error instanceof Error) {
-      throw new ActionError({
+      throw new GlobalError({
         error: error.message,
       });
     }

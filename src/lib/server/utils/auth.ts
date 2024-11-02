@@ -3,7 +3,7 @@ import {
   signUpSchema,
   updatePasswordSchema,
 } from "@/lib/server/definitions/auth";
-import { handleValidationError } from "../handlers/validation";
+import { respondWithValidationError } from "../handlers/validation";
 
 export function validateSignIn(formData: FormData) {
   try {
@@ -12,7 +12,7 @@ export function validateSignIn(formData: FormData) {
       password: formData.get("password"),
     });
   } catch (error) {
-    handleValidationError(error);
+    respondWithValidationError(error);
   }
 }
 
@@ -24,7 +24,7 @@ export function validateSignUp(formData: FormData) {
       password: formData.get("password"),
     });
   } catch (error) {
-    handleValidationError(error);
+    respondWithValidationError(error);
   }
 }
 
@@ -35,6 +35,6 @@ export function validatePassword(formData: FormData) {
       newPassword: formData.get("newPassword"),
     });
   } catch (error) {
-    handleValidationError(error);
+    respondWithValidationError(error);
   }
 }

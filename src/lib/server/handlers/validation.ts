@@ -1,9 +1,9 @@
-import { ActionError } from "@/lib/common/error";
+import { GlobalError } from "@/lib/common/types/globals";
 import { ZodError } from "zod";
 
-export function handleValidationError(error: unknown): never {
+export function respondWithValidationError(error: unknown): never {
   if (error instanceof ZodError) {
-    throw new ActionError({
+    throw new GlobalError({
       fieldErrors: error.flatten().fieldErrors,
     });
   }
