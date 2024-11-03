@@ -38,16 +38,15 @@ export function ChallengeRightPanel() {
       files={files}
       template="test-ts"
       theme="auto"
+      style={{ height: "100%" }}
     >
-      <div style={{ height: "100vh" }}>
-        <Allotment vertical={true} defaultSizes={[800, 300]} minSize={300}>
-          <MonacoEditor />
-          <ChallengeControls
-            defaultInput={problem.sampleInput}
-            testCode={problem.testCode}
-          />
-        </Allotment>
-      </div>
+      <Allotment vertical={true} defaultSizes={[800, 300]} minSize={300}>
+        <MonacoEditor />
+        <ChallengeControls
+          defaultInput={problem.sampleInput}
+          testCode={problem.testCode}
+        />
+      </Allotment>
     </SandpackProvider>
   );
 }

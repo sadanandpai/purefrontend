@@ -7,6 +7,7 @@ import { TestInput } from "./test-input";
 import { TestCases } from "./test-cases";
 import { TestConsole } from "./test-console";
 import { TestOutput } from "./test-output";
+import classes from "./challenge-controls.module.scss";
 
 interface Props {
   defaultInput: string;
@@ -32,7 +33,7 @@ export function ChallengeControls({ defaultInput, testCode }: Props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  function run() {
+  function runUserTest() {
     setSelectedIndex(1);
     dispatch({
       type: "run-tests",
@@ -41,38 +42,38 @@ export function ChallengeControls({ defaultInput, testCode }: Props) {
   }
 
   return (
-    <>
-      <TabGroup selectedIndex={selectedIndex} onChange={setSelectedIndex}>
-        <TabList className="flex gap-4 justify-between">
-          <Tab className="tab">Input</Tab>
-          <Tab className="tab">Output</Tab>
-          <Tab className="tab">TestCases</Tab>
-          <Tab className="tab">Console</Tab>
+    <TabGroup
+      selectedIndex={selectedIndex}
+      onChange={setSelectedIndex}
+      className={classes.controlsWrapper}
+    >
+      <TabList className="tab-list">
+        <Tab className="tab">Input</Tab>
+        <Tab className="tab">Output</Tab>
+        <Tab className="tab">TestCases</Tab>
+        <Tab className="tab">Console</Tab>
 
-          <button className="ml-auto btn">^</button>
-        </TabList>
+        <button className="ml-auto btn">^</button>
+      </TabList>
 
-        <TabPanels className="mt-2">
-          <TabPanel className="rounded-xl bg-white/5 p-3" unmount={false}>
-            <TestInput defaultInput={defaultInput} testCode={testCode} />
-          </TabPanel>
-          <TabPanel className="rounded-xl bg-white/5 p-3" unmount={false}>
-            <TestOutput {...testResult} />
-          </TabPanel>
-          <TabPanel className="rounded-xl bg-white/5 p-3" unmount={false}>
-            <TestCases />
-          </TabPanel>
-          <TabPanel className="rounded-xl bg-white/5 p-3" unmount={false}>
-            <TestConsole />
-          </TabPanel>
-        </TabPanels>
-      </TabGroup>
-
-      <div>
-        <button className="btn" onClick={run}>
-          Run
-        </button>
-      </div>
-    </>
+      <TabPanels className="tab-panels overflow-auto">
+        <TabPanel className="tab-panel" unmount={false}>
+          <TestInput
+            defaultInput={defaultInput}
+            testCode={testCode}
+            runUserTest={runUserTest}
+          />
+        </TabPanel>
+        <TabPanel className="tab-panel" unmount={false}>
+          <TestOutput {...testResult} />
+        </TabPanel>
+        <TabPanel className="tab-panel" unmount={false}>
+          <TestCases />
+        </TabPanel>
+        <TabPanel className="tab-panel" unmount={false}>
+          <TestConsole />
+        </TabPanel>
+      </TabPanels>
+    </TabGroup>
   );
 }

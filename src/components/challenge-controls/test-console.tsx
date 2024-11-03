@@ -6,11 +6,7 @@ export function TestConsole() {
 
   return (
     <>
-      <SandpackConsole
-        style={{ height: "300px" }}
-        ref={consoleRef}
-        showSyntaxError={false}
-      />
+      <SandpackConsole ref={consoleRef} showSyntaxError={false} />
     </>
   );
 }
