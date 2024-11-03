@@ -1,3 +1,13 @@
+.bodyWrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100dvh;
+}
+
+.bodyContent {
+  flex-grow: 1;
+}
+
 .challengeWrapper {
   height: 100%;
   display: flex;

@@ -1,8 +1,8 @@
-import { Allotment } from "allotment";
 import { problem } from "@/data/1";
 import dynamic from "next/dynamic";
-import { ChallengeControls } from "../challenge-controls/challenge-controls";
+import { Allotment } from "allotment";
 import { SandpackProvider } from "@codesandbox/sandpack-react";
+import { ChallengeControls } from "@/components/challenge-controls/challenge-controls";
 
 // const SandpackEditor = dynamic(
 //   () =>

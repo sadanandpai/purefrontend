@@ -5,14 +5,14 @@ import Link from "next/link";
 import { OAuth } from "./oauth";
 import { routes } from "@/lib/common/routes";
 import { signUpWithEmail } from "@/lib/server/actions/auth";
-import { ErrorField } from "@/components/common/error-field";
+import { ErrorField } from "@/components/common/form/error-field";
 import {
   EmailField,
   FullNameField,
   PasswordField,
-} from "@/components/common/fields";
+} from "@/components/common/form/input-fields";
 import classes from "./auth-form.module.scss";
-import { SubmitButton } from "../common/submit-button";
+import { SubmitButton } from "@/components/common/form/submit-button";
 
 export function SignUp() {
   const [state, formAction, pending] = useActionState(signUpWithEmail, {});

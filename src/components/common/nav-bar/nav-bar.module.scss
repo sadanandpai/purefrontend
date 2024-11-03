@@ -1,0 +1,17 @@
+.navBar {
+  display: flex;
+  gap: 1rem;
+  background-color: #333;
+  color: white;
+  padding: 0.5rem 1rem;
+
+  h1 {
+    font-size: 2rem;
+    font-weight: 600;
+
+    a {
+      color: white;
+      text-decoration: none;
+    }
+  }
+}

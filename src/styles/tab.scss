@@ -1,0 +1,39 @@
+.tab {
+  border-radius: 9999px;
+  padding: 0.25rem 1rem;
+  font-weight: 600;
+
+  &:focus {
+    outline: 1px solid #fff;
+  }
+
+  &[data-selected] {
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+
+  &[data-hover] {
+    background-color: rgba(0, 0, 0, 0.05);
+  }
+
+  &[data-selected][data-hover] {
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+
+  &[data-focus] {
+    outline: 1px solid #fff;
+  }
+}
+
+.tab-list {
+  display: flex;
+  gap: 1rem;
+}
+
+.tab-panels {
+  height: calc(100% - 2.9rem);
+}
+
+.tab-panel {
+  height: 100%;
+  overflow-y: auto;
+}

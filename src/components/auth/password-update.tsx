@@ -2,9 +2,12 @@
 
 import { updatePassword } from "@/lib/server/actions/auth";
 import { useActionState } from "react";
-import { NewPasswordField, PasswordField } from "../common/fields";
-import { ErrorField } from "../common/error-field";
-import { SubmitButton } from "../common/submit-button";
+import {
+  NewPasswordField,
+  PasswordField,
+} from "@/components/common/form/input-fields";
+import { ErrorField } from "@/components/common/form/error-field";
+import { SubmitButton } from "@/components/common/form/submit-button";
 
 export default function PasswordUpdate() {
   const [state, formAction, pending] = useActionState(updatePassword, {});

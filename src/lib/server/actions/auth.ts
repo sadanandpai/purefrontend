@@ -16,9 +16,12 @@ import {
   validateSignUp,
 } from "@/lib/server/utils/auth";
 import { routes } from "@/lib/common/routes";
-import { createCookie, deleteCookie } from "../utils/cookies";
+import { createCookie, deleteCookie } from "@/lib/server/utils/cookies";
 import { headers } from "next/headers";
-import { respondWithError, respondWithSuccess } from "../handlers/action";
+import {
+  respondWithError,
+  respondWithSuccess,
+} from "@/lib/server/handlers/action";
 import { GlobalResponse } from "@/lib/common/types/globals";
 
 export async function signInWithEmail(

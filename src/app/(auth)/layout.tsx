@@ -1,4 +1,4 @@
-import { NavBar } from "@/components/common/nav-bar";
+import { NavBar } from "@/components/common/nav-bar/nav-bar";
 import classes from "./auth.module.scss";
 
 export default function RootLayout({

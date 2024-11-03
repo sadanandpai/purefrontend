@@ -1,13 +1,16 @@
 "use client";
 
 import { useActionState } from "react";
-import { signInWithEmail } from "@/lib/server/actions/auth";
-import { EmailField, PasswordField } from "../common/fields";
 import Link from "next/link";
 import { OAuth } from "./oauth";
 import { routes } from "@/lib/common/routes";
-import { SubmitButton } from "@/components/common/submit-button";
-import { ErrorField } from "@/components/common/error-field";
+import { signInWithEmail } from "@/lib/server/actions/auth";
+import {
+  EmailField,
+  PasswordField,
+} from "@/components/common/form/input-fields";
+import { SubmitButton } from "@/components/common/form/submit-button";
+import { ErrorField } from "@/components/common/form/error-field";
 import classes from "./auth-form.module.scss";
 
 export function SignIn() {

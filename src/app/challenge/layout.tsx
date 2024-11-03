@@ -1,4 +1,5 @@
-import { NavBar } from "@/components/common/nav-bar";
+import { NavBar } from "@/components/common/nav-bar/nav-bar";
+import classes from "./challenge.module.scss";
 
 export default function RootLayout({
   children,
@@ -6,9 +7,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div className="body-wrapper">
+    <div className={classes.bodyWrapper}>
       <NavBar />
-      <div className="body-content">{children}</div>
+      <div className={classes.bodyContent}>{children}</div>
     </div>
   );
 }

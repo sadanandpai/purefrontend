@@ -3,7 +3,7 @@ import {
   signUpSchema,
   updatePasswordSchema,
 } from "@/lib/server/definitions/auth";
-import { respondWithValidationError } from "../handlers/validation";
+import { respondWithValidationError } from "@/lib/server/handlers/validation";
 
 export function validateSignIn(formData: FormData) {
   try {

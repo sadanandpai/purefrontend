@@ -2,7 +2,7 @@ import "server-only";
 
 import { Client, Account, ID } from "node-appwrite";
 import { cookieName } from "@/lib/server/config/auth";
-import { getCookie } from "../utils/cookies";
+import { getCookie } from "@/lib/server/utils/cookies";
 
 export function getUniqueID() {
   return ID.unique();

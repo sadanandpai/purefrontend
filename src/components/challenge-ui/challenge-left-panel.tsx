@@ -1,7 +1,7 @@
 import { Tab, TabGroup, TabList, TabPanel, TabPanels } from "@headlessui/react";
-import { ProblemStatement } from "../challenge-details/problem-statement";
+import { ProblemStatement } from "@/components/challenge-details/problem-statement";
+import { Solution } from "@/components/challenge-details/solution";
 import { problem } from "@/data/1";
-import { Solution } from "../challenge-details/solution";
 
 export function ChallengeLeftPanel() {
   return (

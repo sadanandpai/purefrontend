@@ -1,12 +1,6 @@
-.body-wrapper {
-  display: flex;
-  flex-direction: column;
-  height: 100dvh;
-}
-
-.body-content {
-  flex-grow: 1;
-}
+@use "@/styles/form";
+@use "@/styles/button";
+@use "@/styles/tab";
 
 .logo {
   font-size: 3rem;
@@ -14,96 +8,6 @@
   margin-bottom: 3rem;
 }
 
-.btn {
-  background: #007bff;
-  color: white;
-  padding: 1rem 2rem;
-  border: none;
-  border-radius: 0.5rem;
-  cursor: pointer;
-
-  &:hover {
-    background: #0056b3;
-  }
-
-  &:focus {
-    outline: 1px solid #fff;
-  }
-
-  &:active {
-    background: #004286;
-  }
-
-  &:disabled {
-    background: #ccc;
-    cursor: not-allowed;
-  }
-}
-
-.tab {
-  border-radius: 9999px;
-  padding: 0.25rem 1rem;
-  font-weight: 600;
-
-  &:focus {
-    outline: 1px solid #fff;
-  }
-
-  &[data-selected] {
-    background-color: rgba(0, 0, 0, 0.1);
-  }
-
-  &[data-hover] {
-    background-color: rgba(0, 0, 0, 0.05);
-  }
-
-  &[data-selected][data-hover] {
-    background-color: rgba(0, 0, 0, 0.1);
-  }
-
-  &[data-focus] {
-    outline: 1px solid #fff;
-  }
-}
-
-.tab-list {
-  display: flex;
-  gap: 1rem;
-}
-
-.tab-panels {
-  height: calc(100% - 2.9rem);
-}
-
-.tab-panel {
-  height: 100%;
-  overflow-y: auto;
-}
-
-.navbar {
-  display: flex;
-  gap: 1rem;
-  background-color: #333;
-  color: white;
-  padding: 0.5rem 1rem;
-
-  h1 {
-    font-size: 2rem;
-    font-weight: 600;
-  }
-}
-
 .error {
   color: red;
-}
-
-.form-field {
-  display: flex;
-  flex-direction: column;
-
-  .error {
-    text-align: left;
-    padding: 0.25rem 1rem 0;
-    font-size: 1.2rem;
-  }
 }
