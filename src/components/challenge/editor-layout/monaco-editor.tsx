@@ -1,21 +1,19 @@
 import Editor from "@monaco-editor/react";
 import {
   useActiveCode,
-  SandpackStack,
   FileTabs,
   useSandpack,
 } from "@codesandbox/sandpack-react";
 
 export function MonacoEditor() {
-  const { code, updateCode } = useActiveCode();
   const { sandpack } = useSandpack();
+  const { code, updateCode } = useActiveCode();
 
   return (
-    <SandpackStack style={{ height: "100%" }}>
+    <>
       <FileTabs />
       <Editor
-        width="100%"
-        height="100%"
+        height="calc(100% - 7.2rem)"
         language="javascript"
         theme="vs-light"
         options={{
@@ -27,6 +25,6 @@ export function MonacoEditor() {
         defaultValue={code}
         onChange={(value) => updateCode(value || "")}
       />
-    </SandpackStack>
+    </>
   );
 }

@@ -1,11 +1,19 @@
 import classes from "./challenge-controls.module.scss";
 
 interface Props {
-  status: "fail" | "pass";
+  status?: "fail" | "pass";
   error: string;
 }
 
 export function TestOutput({ status, error }: Props) {
+  if (!status) {
+    return (
+      <div className={classes.noOutputWrapper}>
+        <p>Click on run button to see the output</p>
+      </div>
+    );
+  }
+
   return (
     <div className={classes.outputWrapper}>
       <h3 className={classes.title} data-status={status}>

@@ -7,10 +7,9 @@ import classes from "./challenge-controls.module.scss";
 interface Props {
   defaultInput: string;
   testCode: (...args: any) => string;
-  runUserTest: () => void;
 }
 
-export function TestInput({ defaultInput, testCode, runUserTest }: Props) {
+export function TestInput({ defaultInput, testCode }: Props) {
   const { sandpack } = useSandpack();
   const [userInput, setUserInput] = useState<string>(defaultInput);
 
@@ -32,10 +31,6 @@ export function TestInput({ defaultInput, testCode, runUserTest }: Props) {
         onChange={(e) => setUserInput(e.target.value)}
         tagName="div"
       />
-
-      <button className="btn" onClick={runUserTest}>
-        Run
-      </button>
     </div>
   );
 }

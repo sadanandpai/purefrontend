@@ -48,4 +48,24 @@ describe('inputTest', () => {
     expect(userSolution(${num1}, ${num2})).toEqual(systemSolution(${num1}, ${num2}));
   });
 });`,
+  testCases: `import userSolution from './code';
+import systemSolution from './solution';
+
+describe('inputTest', () => {
+  test('should check if sum of 2 positive numbers is correct', () => {
+    expect(userSolution(1, 2)).toEqual(systemSolution(1, 2));
+  });
+
+  test('should check if sum of 2 positive or negative numbers is correct', () => {
+    expect(userSolution(4, -7)).toEqual(systemSolution(4, -7));
+  });
+
+  test('should check if sum of 2 decimal numbers is correct', () => {
+    expect(userSolution(3.6, 4.3)).toEqual(systemSolution(3.6, 4.3));
+  });
+
+  test('should check if sum of 2 large numbers is correct', () => {
+    expect(userSolution(100, 200)).toEqual(systemSolution(100, 200));
+  });  
+});`,
 };
