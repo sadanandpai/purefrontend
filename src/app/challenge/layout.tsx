@@ -1,7 +1,7 @@
 import { NavBar } from "@/components/common/nav-bar/nav-bar";
 import classes from "./challenge.module.scss";
 
-export default function RootLayout({
+export default function Layout({
   children,
 }: Readonly<{
   children: React.ReactNode;

@@ -51,5 +51,8 @@ export async function createAdminClient() {
     get account() {
       return new Account(client);
     },
+    get client() {
+      return client;
+    },
   };
 }

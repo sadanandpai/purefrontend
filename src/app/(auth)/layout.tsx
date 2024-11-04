@@ -1,7 +1,7 @@
 import { NavBar } from "@/components/common/nav-bar/nav-bar";
 import classes from "./auth.module.scss";
 
-export default function RootLayout({
+export default function Layout({
   children,
 }: Readonly<{
   children: React.ReactNode;
