@@ -1,4 +1,4 @@
-import { NavBar } from "@/components/common/nav-bar/nav-bar";
+import { NavBar } from "@/ui/components/common/nav-bar/nav-bar";
 import classes from "./challenge.module.scss";
 
 export default function Layout({

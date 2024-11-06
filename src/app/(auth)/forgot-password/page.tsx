@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
-import { routes } from "@/lib/common/routes";
-import { getLoggedInUser } from "@/lib/server/actions/auth";
+import { routes } from "@/common/routes";
+import { getLoggedInUser } from "@/server/actions/auth";
 
 export const dynamic = "force-dynamic";
 

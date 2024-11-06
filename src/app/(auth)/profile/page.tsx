@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation";
-import { routes } from "@/lib/common/routes";
-import { getLoggedInUser, signOut } from "@/lib/server/actions/auth";
-import PasswordUpdate from "@/components/auth/password-update";
+import { routes } from "@/common/routes";
+import { getLoggedInUser, signOut } from "@/server/actions/auth";
+import PasswordUpdate from "@/ui/components/auth/password-update";
 
 export const dynamic = "force-dynamic";
 

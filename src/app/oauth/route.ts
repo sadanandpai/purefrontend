@@ -1,8 +1,8 @@
-import { cookieName } from "@/lib/server/config/auth";
+import { cookieName } from "@/server/config/auth";
 import { NextRequest, NextResponse } from "next/server";
-import { createSessionWithSecret } from "@/lib/server/data-layer/session";
-import { routes } from "@/lib/common/routes";
-import { createCookie } from "@/lib/server/utils/cookies";
+import { createSessionWithSecret } from "@/server/data-access/session";
+import { routes } from "@/common/routes";
+import { createCookie } from "@/server/utils/cookies";
 
 export async function GET(request: NextRequest) {
   const userId = request.nextUrl.searchParams.get("userId");

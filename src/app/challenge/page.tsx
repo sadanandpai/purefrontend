@@ -2,8 +2,8 @@
 
 import { problem } from "@/data/1";
 import { Panel, PanelGroup, PanelResizeHandle } from "react-resizable-panels";
-import { ChallengeLeftPanel } from "@/components/challenge/challenge-ui/challenge-left-panel";
-import { ChallengeRightPanel } from "@/components/challenge/challenge-ui/challenge-right-panel";
+import { ChallengeLeftPanel } from "@/ui/components/challenge/challenge-ui/challenge-left-panel";
+import { ChallengeRightPanel } from "@/ui/components/challenge/challenge-ui/challenge-right-panel";
 import classes from "./challenge.module.scss";
 import { SandpackProvider } from "@codesandbox/sandpack-react";
 
