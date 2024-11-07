@@ -44,7 +44,7 @@ export default function sum(num1, num2) {
 import systemSolution from './solution';
 
 describe('inputTest', () => {
-  test('should check if sum of 2 positive numbers is correct', () => {
+  test('should check if sum of 2 numbers is correct', () => {
     expect(userSolution(${num1}, ${num2})).toEqual(systemSolution(${num1}, ${num2}));
   });
 });`,

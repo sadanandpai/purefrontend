@@ -1,14 +1,14 @@
-import { TestResult } from "@/common/types/test";
+import { TestResultProps } from "@/common/types/test";
 import { create } from "zustand";
 
 interface ChallengeState {
-  result: TestResult | null;
-  results: TestResult[];
-  setResult: (result: TestResult) => void;
-  setResults: (results: TestResult[]) => void;
+  result: TestResultProps | null;
+  results: TestResultProps[];
+  setResult: (result: TestResultProps) => void;
+  setResults: (results: TestResultProps[]) => void;
 }
 
-export const usechallengeStore = create<ChallengeState>()((set) => ({
+export const useChallengeStore = create<ChallengeState>()((set) => ({
   result: null,
   results: [],
   setResult: (result) => set(() => ({ result })),

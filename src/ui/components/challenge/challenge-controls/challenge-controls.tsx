@@ -4,7 +4,7 @@ import { TestInput } from "./test-input";
 import { TestCases } from "./test-cases";
 import { TestConsole } from "./test-console";
 import { TestOutput } from "./test-output";
-import { usechallengeStore } from "@/ui/store/challenge.store";
+import { useChallengeStore } from "@/ui/store/challenge.store";
 import { Tab, TabGroup, TabList, TabPanel, TabPanels } from "@headlessui/react";
 import classes from "./challenge-controls.module.scss";
 
@@ -15,7 +15,7 @@ interface Props {
 
 export function ChallengeControls({ defaultInput, testCode }: Props) {
   const [selectedIndex, setSelectedIndex] = useState(0);
-  const testResult = usechallengeStore((state) => state.result);
+  const testResult = useChallengeStore((state) => state.result);
 
   useEffect(() => {
     if (testResult?.status) {
@@ -42,7 +42,7 @@ export function ChallengeControls({ defaultInput, testCode }: Props) {
             <TestInput defaultInput={defaultInput} testCode={testCode} />
           </TabPanel>
           <TabPanel className="tab-panel" unmount={false}>
-            <TestOutput status={testResult?.status} error={testResult?.error} />
+            <TestOutput {...testResult} />
           </TabPanel>
           <TabPanel className="tab-panel" unmount={false}>
             <TestCases />

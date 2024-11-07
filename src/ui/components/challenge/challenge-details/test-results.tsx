@@ -1,14 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect } from "react";
-import { TestOutput } from "@/ui/components/challenge/challenge-controls/test-output";
-import { usechallengeStore } from "@/ui/store/challenge.store";
+import { useChallengeStore } from "@/ui/store/challenge.store";
+import { TestResult } from "@/ui/components/challenge/challenge-controls/test-result";
 
 interface Props {
   setSelectedIndex: (index: number) => void;
 }
 
 export function TestResults({ setSelectedIndex }: Props) {
-  const testResults = usechallengeStore((state) => state.results);
+  const testResults = useChallengeStore((state) => state.results);
 
   useEffect(() => {
     if (testResults.length) {
@@ -20,7 +20,7 @@ export function TestResults({ setSelectedIndex }: Props) {
   return (
     <>
       {testResults.map((result: any, index: number) => (
-        <TestOutput key={index} {...result} />
+        <TestResult key={index} {...result} />
       ))}
     </>
   );

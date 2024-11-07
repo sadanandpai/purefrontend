@@ -1,7 +1,7 @@
 import dynamic from "next/dynamic";
 import { useSandpack } from "@codesandbox/sandpack-react";
 import { getTestResult, getTestResults } from "@/ui/utils/test-results";
-import { usechallengeStore } from "@/ui/store/challenge.store";
+import { useChallengeStore } from "@/ui/store/challenge.store";
 
 // const SandpackEditor = dynamic(
 //   () =>
@@ -21,8 +21,8 @@ const MonacoEditor = dynamic(
 
 export function EditorLayout() {
   const { dispatch, listen } = useSandpack();
-  const setResult = usechallengeStore((state) => state.setResult);
-  const setResults = usechallengeStore((state) => state.setResults);
+  const setResult = useChallengeStore((state) => state.setResult);
+  const setResults = useChallengeStore((state) => state.setResults);
 
   function runUserTest() {
     const unsubscribe = getTestResult(listen, (result) => {

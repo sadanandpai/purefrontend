@@ -1,11 +1,13 @@
 import classes from "./challenge-controls.module.scss";
+import { TestResult } from "./test-result";
 
 interface Props {
+  name?: string;
   status?: string;
   error?: string;
 }
 
-export function TestOutput({ status, error }: Props) {
+export function TestOutput({ name, status, error }: Props) {
   if (!status) {
     return (
       <div className={classes.noOutputWrapper}>
@@ -14,12 +16,5 @@ export function TestOutput({ status, error }: Props) {
     );
   }
 
-  return (
-    <div className={classes.outputWrapper}>
-      <h3 className={classes.title} data-status={status}>
-        {status}
-      </h3>
-      {error && <pre className={classes.details}>{error}</pre>}
-    </div>
-  );
+  return <TestResult name={name!} status={status} error={error!} />;
 }
