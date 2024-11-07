@@ -1,7 +1,7 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { useEffect } from "react";
 import { useChallengeStore } from "@/ui/store/challenge.store";
 import { TestResult } from "@/ui/components/challenge/challenge-controls/test-result";
+import { SaveSubmission } from "./save-submission";
+import { TestResultProps } from "@/common/types/test";
 import classes from "./challenge-details.module.scss";
 
 interface Props {
@@ -11,26 +11,22 @@ interface Props {
 export function TestResults({ setSelectedIndex }: Props) {
   const testResults = useChallengeStore((state) => state.results);
 
-  useEffect(() => {
-    if (testResults.length) {
-      setSelectedIndex(1);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [testResults]);
-
   if (!testResults.length) {
     return (
-      <div className={classes.noOutputWrapper}>
+      <div className={classes.verticalCenter}>
         <p>Click on submit button to see the output</p>
       </div>
     );
   }
 
   return (
-    <>
-      {testResults.map((result: any, index: number) => (
-        <TestResult key={index} {...result} />
-      ))}
-    </>
+    <div className={classes.testResultsWrapper}>
+      <div className={classes.testResults}>
+        {testResults.map((result: TestResultProps, index: number) => (
+          <TestResult key={index} {...result} />
+        ))}
+      </div>
+      <SaveSubmission setSelectedIndex={setSelectedIndex} />
+    </div>
   );
 }

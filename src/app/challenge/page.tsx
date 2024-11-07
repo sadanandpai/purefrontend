@@ -6,6 +6,10 @@ import { ChallengeLeftPanel } from "@/ui/components/challenge/challenge-ui/chall
 import { ChallengeRightPanel } from "@/ui/components/challenge/challenge-ui/challenge-right-panel";
 import classes from "./challenge.module.scss";
 import { SandpackProvider } from "@codesandbox/sandpack-react";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { AppContextProvider } from "@/ui/context/app.context";
+
+const queryClient = new QueryClient();
 
 const files = {
   "/code.ts": problem.code,
@@ -16,35 +20,39 @@ const files = {
 
 export default function Challenge() {
   return (
-    <SandpackProvider
-      options={{
-        activeFile: "/code.ts",
-        visibleFiles: ["/code.ts"],
-        initMode: "immediate",
-        autorun: true,
-      }}
-      files={files}
-      template="test-ts"
-      theme="auto"
-      style={{ height: "100%" }}
-    >
-      <div className={classes.challengeWrapper}>
-        <PanelGroup direction="horizontal">
-          <Panel
-            defaultSize={40}
-            minSize={25}
-            maxSize={75}
-            className="panel left"
-          >
-            <ChallengeLeftPanel />
-          </Panel>
-          <PanelResizeHandle className="resize-handle" />
-          <Panel minSize={30}>
-            <ChallengeRightPanel />
-          </Panel>
-          <PanelResizeHandle />
-        </PanelGroup>
-      </div>
-    </SandpackProvider>
+    <AppContextProvider>
+      <QueryClientProvider client={queryClient}>
+        <SandpackProvider
+          options={{
+            activeFile: "/code.ts",
+            visibleFiles: ["/code.ts"],
+            initMode: "immediate",
+            autorun: true,
+          }}
+          files={files}
+          template="test-ts"
+          theme="auto"
+          style={{ height: "100%" }}
+        >
+          <div className={classes.challengeWrapper}>
+            <PanelGroup direction="horizontal">
+              <Panel
+                defaultSize={40}
+                minSize={25}
+                maxSize={75}
+                className="panel left"
+              >
+                <ChallengeLeftPanel />
+              </Panel>
+              <PanelResizeHandle className="resize-handle" />
+              <Panel minSize={30}>
+                <ChallengeRightPanel />
+              </Panel>
+              <PanelResizeHandle />
+            </PanelGroup>
+          </div>
+        </SandpackProvider>
+      </QueryClientProvider>
+    </AppContextProvider>
   );
 }

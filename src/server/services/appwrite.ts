@@ -1,11 +1,15 @@
 import "server-only";
 
-import { Client, Account, ID } from "node-appwrite";
+import { Client, Account, ID, OAuthProvider } from "node-appwrite";
 import { cookieName } from "@/server/config/auth";
 import { getCookie } from "@/server/utils/cookies";
 
 export function getUniqueID() {
   return ID.unique();
+}
+
+export function getOAuthProvider() {
+  return OAuthProvider;
 }
 
 export async function createSessionClient() {
@@ -29,6 +33,9 @@ export async function createSessionClient() {
   return {
     get account() {
       return new Account(client);
+    },
+    get client() {
+      return client;
     },
   };
 }

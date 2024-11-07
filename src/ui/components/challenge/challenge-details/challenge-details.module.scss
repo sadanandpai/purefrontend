@@ -31,11 +31,22 @@
   }
 }
 
-.noOutputWrapper {
+.verticalCenter {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100%;
+}
+
+.testResultsWrapper {
+  margin: 1rem;
+
+  .testResults {
+    display: flex;
+    flex-direction: column;
+    gap: 2.4rem;
+    margin-bottom: 2.4rem;
+  }
 }
 
 .solution {
@@ -55,4 +66,8 @@
     flex-direction: column;
     gap: 0.5rem;
   }
+}
+
+.tableWrapper {
+  margin: 1rem;
 }

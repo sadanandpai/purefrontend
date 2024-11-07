@@ -1,12 +1,12 @@
 import "server-only";
 
-import { OAuthProvider } from "node-appwrite";
 import {
   createAdminClient,
   createSessionClient,
   getUniqueID,
 } from "@/server/services";
-import { GlobalError } from "@/common/types/globals";
+import { getOAuthProvider } from "../services/appwrite";
+import { respondWithDataAccessError } from "../handlers/data-access";
 
 export async function getSession() {
   const { account } = await createSessionClient();
@@ -19,26 +19,24 @@ export async function createSessionWithEmail(email: string, password: string) {
     const session = await account.createEmailPasswordSession(email, password);
     return session.secret;
   } catch (error) {
-    if (error instanceof Error) {
-      throw new GlobalError({
-        error: error.message,
-      });
-    }
-
-    throw error;
+    respondWithDataAccessError(error);
   }
 }
 
 export async function createSessionWithSecret(userId: string, secret: string) {
-  const { account } = await createAdminClient();
-  const session = await account.createSession(userId, secret);
-  return session.secret;
+  try {
+    const { account } = await createAdminClient();
+    const session = await account.createSession(userId, secret);
+    return session.secret;
+  } catch (error) {
+    respondWithDataAccessError(error);
+  }
 }
 
 export async function redirectToOAuth(origin: string | null) {
   const { account } = await createAdminClient();
   return await account.createOAuth2Token(
-    OAuthProvider.Google,
+    getOAuthProvider().Google,
     `${origin}/oauth`,
     `${origin}/signin`
   );
@@ -55,13 +53,7 @@ export async function initiateSessionWithEmail(
     const session = await account.createEmailPasswordSession(email, password);
     return session.secret;
   } catch (error) {
-    if (error instanceof Error) {
-      throw new GlobalError({
-        error: error.message,
-      });
-    }
-
-    throw error;
+    respondWithDataAccessError(error);
   }
 }
 
@@ -74,6 +66,10 @@ export async function updateSessionPassword(
   password: string,
   oldPassword: string
 ) {
-  const { account } = await createSessionClient();
-  await account.updatePassword(password.toString(), oldPassword.toString());
+  try {
+    const { account } = await createSessionClient();
+    await account.updatePassword(password.toString(), oldPassword.toString());
+  } catch (error) {
+    respondWithDataAccessError(error);
+  }
 }

@@ -16,5 +16,9 @@ export function TestOutput({ name, status, error }: Props) {
     );
   }
 
-  return <TestResult name={name!} status={status} error={error!} />;
+  return (
+    <div className={classes.testOutput}>
+      <TestResult name={name!} status={status} error={error!} />
+    </div>
+  );
 }
