@@ -2,6 +2,7 @@ import dynamic from "next/dynamic";
 import { useSandpack } from "@codesandbox/sandpack-react";
 import { getTestResult, getTestResults } from "@/ui/utils/test-results";
 import { useChallengeStore } from "@/ui/store/challenge.store";
+import classes from "./editor-layout.module.scss";
 
 // const SandpackEditor = dynamic(
 //   () =>
@@ -52,7 +53,7 @@ export function EditorLayout() {
     <div className="panel-layout">
       <MonacoEditor />
 
-      <div className="flex gap-4 justify-end">
+      <div className={classes.execution}>
         <button className="btn" onClick={runUserTest}>
           Run
         </button>

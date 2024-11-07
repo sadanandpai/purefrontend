@@ -1,0 +1,58 @@
+.statement {
+  margin: 1rem;
+
+  h2 {
+    font-size: 2rem;
+    font-weight: 600;
+  }
+
+  .info {
+    margin: 1rem 0;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+
+    .difficulty {
+      text-transform: capitalize;
+      border: 2px solid orangered;
+      padding: 0.4rem 1rem;
+      border-radius: 8px;
+    }
+  }
+
+  p {
+    margin: 2rem 0;
+  }
+
+  pre {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+}
+
+.noOutputWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.solution {
+  margin: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+
+  .lineNumber {
+    margin: 0 2rem 0 1rem;
+    user-select: none;
+    color: lightgray;
+  }
+
+  pre {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}

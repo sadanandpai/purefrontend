@@ -1,9 +1,10 @@
-import { Tab, TabGroup, TabList, TabPanel, TabPanels } from "@headlessui/react";
-import { ProblemStatement } from "@/ui/components/challenge/challenge-details/problem-statement";
-import { Solution } from "@/ui/components/challenge/challenge-details/solution";
-import { problem } from "@/data/1";
-import { TestResults } from "../challenge-details/test-results";
 import { useState } from "react";
+import { problem } from "@/data/1";
+import { Tab, TabGroup, TabList, TabPanel, TabPanels } from "@headlessui/react";
+import { Solution } from "@/ui/components/challenge/challenge-details/solution";
+import { TestResults } from "@/ui/components/challenge/challenge-details/test-results";
+import { ProblemStatement } from "@/ui/components/challenge/challenge-details/problem-statement";
+import { Submissions } from "@/ui/components/challenge/challenge-details/submissions";
 
 export function ChallengeLeftPanel() {
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -29,7 +30,9 @@ export function ChallengeLeftPanel() {
           <TabPanel className="tab-panel" unmount={false}>
             <TestResults setSelectedIndex={setSelectedIndex} />
           </TabPanel>
-          <TabPanel className="tab-panel">Successful submissions</TabPanel>
+          <TabPanel className="tab-panel">
+            <Submissions />
+          </TabPanel>
           <TabPanel className="tab-panel">
             <Solution code={problem.solution} />
           </TabPanel>

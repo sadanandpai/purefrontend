@@ -1,14 +1,15 @@
 .tab {
-  border-radius: 9999px;
-  padding: 0.25rem 1rem;
+  padding: 1rem;
   font-weight: 600;
+  user-select: none;
 
   &:focus {
     outline: 1px solid #fff;
   }
 
   &[data-selected] {
-    background-color: rgba(0, 0, 0, 0.1);
+    border-bottom: 2px solid #007bff;
+    color: #007bff;
   }
 
   &[data-hover] {
@@ -30,7 +31,7 @@
 }
 
 .tab-panels {
-  height: calc(100% - 2.9rem);
+  height: calc(100% - 4rem);
 }
 
 .tab-panel {

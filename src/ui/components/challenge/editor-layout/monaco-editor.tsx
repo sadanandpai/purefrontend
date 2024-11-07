@@ -13,7 +13,7 @@ export function MonacoEditor() {
     <>
       <FileTabs />
       <Editor
-        height="calc(100% - 7.2rem)"
+        height="calc(100% - 9.2rem)"
         language="javascript"
         theme="vs-light"
         options={{

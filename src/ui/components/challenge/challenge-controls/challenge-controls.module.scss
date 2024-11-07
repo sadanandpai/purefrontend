@@ -9,17 +9,16 @@
 
   .testInput {
     border-radius: 0.25rem;
-    padding: 0.5rem;
-    margin: 1rem 0;
+    padding: 1rem;
     overflow: auto;
     height: 100%;
-    border: 1px solid #ccc;
+    border: 1px solid gray;
     font-size: 1.6rem;
   }
 }
 
 .outputWrapper {
-  margin: 1rem;
+  margin: 2rem 1rem;
   border: 1px solid #ccc;
 
   .title {
@@ -28,13 +27,16 @@
     padding: 1rem;
     text-transform: capitalize;
     color: white;
+    border-bottom: 1px solid lightgray;
 
     &[data-status="pass"] {
-      background-color: green;
+      color: green;
+      font-weight: 600;
     }
 
     &[data-status="fail"] {
-      background-color: red;
+      color: red;
+      font-weight: 600;
     }
   }
 

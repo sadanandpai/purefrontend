@@ -1,4 +1,5 @@
 import Image from "next/image";
+import classes from "./challenge-details.module.scss";
 
 interface Props {
   name: string;
@@ -19,11 +20,11 @@ export function ProblemStatement({
   examples,
 }: Props) {
   return (
-    <>
+    <div className={classes.statement}>
       <h2>{name}</h2>
-      <div className="my-4">
-        <span>{difficulty}</span>
+      <div className={classes.info}>
         <Image src="/js.svg" height={24} width={24} alt="JavaScript" />
+        <span className={classes.difficulty}>{difficulty}</span>
       </div>
       <p dangerouslySetInnerHTML={{ __html: statement }}></p>
       <p dangerouslySetInnerHTML={{ __html: description }}></p>
@@ -36,12 +37,11 @@ export function ProblemStatement({
 
             <pre className="bg-gray-200 rounded-md p-4 mt-2 text-md">
               <span>Input: {example.input}</span>
-              <br />
               <span>Output: {example.output}</span>
             </pre>
           </div>
         ))}
       </div>
-    </>
+    </div>
   );
 }
