@@ -10,7 +10,7 @@ export default function Home() {
           Prepare for your next frontend coding interview
         </p>
 
-        <Link href="/challenge" className="btn">
+        <Link href="/challenge/1" className="btn">
           Get started
         </Link>
       </div>

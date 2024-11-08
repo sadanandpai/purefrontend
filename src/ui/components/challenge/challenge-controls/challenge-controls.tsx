@@ -10,10 +10,9 @@ import classes from "./challenge-controls.module.scss";
 
 interface Props {
   defaultInput: string;
-  testCode: (...args: any) => string;
 }
 
-export function ChallengeControls({ defaultInput, testCode }: Props) {
+export function ChallengeControls({ defaultInput }: Props) {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const testResult = useChallengeStore((state) => state.result);
 
@@ -39,7 +38,7 @@ export function ChallengeControls({ defaultInput, testCode }: Props) {
 
         <TabPanels className="tab-panels overflow-auto">
           <TabPanel className="tab-panel" unmount={false}>
-            <TestInput defaultInput={defaultInput} testCode={testCode} />
+            <TestInput defaultInput={defaultInput} />
           </TabPanel>
           <TabPanel className="tab-panel" unmount={false}>
             <TestOutput {...testResult} />

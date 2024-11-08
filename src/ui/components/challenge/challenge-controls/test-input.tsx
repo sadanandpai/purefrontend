@@ -1,25 +1,19 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from "react";
-import { useSandpack } from "@codesandbox/sandpack-react";
 import ContentEditable from "react-contenteditable";
+import { useSandpack } from "@codesandbox/sandpack-react";
+import { testCode } from "@/ui/utils/test-code";
 import classes from "./challenge-controls.module.scss";
 
 interface Props {
   defaultInput: string;
-  testCode: (...args: any) => string;
 }
 
-export function TestInput({ defaultInput, testCode }: Props) {
+export function TestInput({ defaultInput }: Props) {
   const { sandpack } = useSandpack();
   const [userInput, setUserInput] = useState<string>(defaultInput);
 
   useEffect(() => {
-    const [num1, num2] = userInput
-      .split(",")
-      .map((line) => line.trim())
-      .map(Number);
-
-    sandpack.updateFile("/add.test.ts", testCode(num1, num2));
+    sandpack.updateFile("/add.test.ts", testCode(userInput));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userInput]);
 

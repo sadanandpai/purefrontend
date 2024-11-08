@@ -3,6 +3,9 @@ import { useActiveCode } from "@codesandbox/sandpack-react";
 import { submitUserSubmission } from "@/server/actions/submissions";
 import { useMutation } from "@tanstack/react-query";
 import { appContext } from "@/ui/context/app.context";
+import { usePathname } from "next/navigation";
+import { routes } from "@/common/routes";
+import Link from "next/link";
 
 interface SubmissionMutationProps {
   challengeId: number;
@@ -16,13 +19,15 @@ interface Props {
 export function SaveSubmission({ setSelectedIndex }: Props) {
   const context = useContext(appContext);
   const { code } = useActiveCode();
+  const challengeId = Number(usePathname().split("/").at(-1));
+
   const { mutate, data, isPending } = useMutation({
     mutationFn: ({ challengeId, code }: SubmissionMutationProps) =>
       submitUserSubmission(challengeId, code),
   });
 
   async function saveSubmission() {
-    mutate({ challengeId: 1, code });
+    mutate({ challengeId, code });
   }
 
   useEffect(() => {
@@ -32,7 +37,11 @@ export function SaveSubmission({ setSelectedIndex }: Props) {
   }, [data, setSelectedIndex]);
 
   if (!context.user) {
-    return "Please sign in to save your submission";
+    return (
+      <>
+        Please <Link href={routes.signIn}>Sign in</Link> to save your submission
+      </>
+    );
   }
 
   return (

@@ -1,15 +1,16 @@
 import "server-only";
 
-import { Databases } from "node-appwrite";
+import { Databases, Query } from "node-appwrite";
 import { createSessionClient, getUniqueID } from "../services";
 
-export async function getSubmissionsRecords() {
+export async function getSubmissionsRecords(challengeId: number) {
   const { client } = await createSessionClient();
   const databases = new Databases(client);
 
   return await databases.listDocuments(
     "672c61c5003770288bcd",
-    "672c6704001691915536"
+    "672c6704001691915536",
+    [Query.equal("challengeId", challengeId)]
   );
 }
 

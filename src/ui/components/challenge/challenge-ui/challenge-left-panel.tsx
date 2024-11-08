@@ -1,13 +1,17 @@
 import { useEffect, useState } from "react";
-import { problem } from "@/data/1";
 import { Tab, TabGroup, TabList, TabPanel, TabPanels } from "@headlessui/react";
 import { Solution } from "@/ui/components/challenge/challenge-details/solution";
 import { TestResults } from "@/ui/components/challenge/challenge-details/test-results";
 import { ProblemStatement } from "@/ui/components/challenge/challenge-details/problem-statement";
 import { Submissions } from "@/ui/components/challenge/challenge-details/submissions";
 import { useChallengeStore } from "@/ui/store/challenge.store";
+import { ProblemProps } from "@/common/types/problem";
 
-export function ChallengeLeftPanel() {
+interface Props {
+  problem: ProblemProps;
+}
+
+export function ChallengeLeftPanel({ problem }: Props) {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const testResults = useChallengeStore((state) => state.results);
 

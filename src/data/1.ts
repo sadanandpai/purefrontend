@@ -40,14 +40,6 @@ export default function sum(num1, num2) {
   return num1 + num2;
 }
 `,
-  testCode: (num1 = 1, num2 = 2) => `import userSolution from './code';
-import systemSolution from './solution';
-
-describe('inputTest', () => {
-  test('should check if sum of 2 numbers is correct', () => {
-    expect(userSolution(${num1}, ${num2})).toEqual(systemSolution(${num1}, ${num2}));
-  });
-});`,
   testCases: `import userSolution from './code';
 import systemSolution from './solution';
 

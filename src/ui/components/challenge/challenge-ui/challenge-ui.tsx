@@ -1,24 +1,22 @@
 "use client";
 
-import { problem } from "@/data/1";
 import { Panel, PanelGroup, PanelResizeHandle } from "react-resizable-panels";
 import { ChallengeLeftPanel } from "@/ui/components/challenge/challenge-ui/challenge-left-panel";
 import { ChallengeRightPanel } from "@/ui/components/challenge/challenge-ui/challenge-right-panel";
-import classes from "./challenge.module.scss";
 import { SandpackProvider } from "@codesandbox/sandpack-react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { AppContextProvider } from "@/ui/context/app.context";
+import { ProblemProps } from "@/common/types/problem";
+import { testCode } from "@/ui/utils/test-code";
+import classes from "./challenge-ui.module.scss";
 
 const queryClient = new QueryClient();
 
-const files = {
-  "/code.ts": problem.code,
-  "/add.test.ts": problem.testCode(),
-  "/test-cases.test.ts": problem.testCases,
-  "/solution.ts": problem.solution,
-};
+interface Props {
+  problem: ProblemProps;
+}
 
-export default function Challenge() {
+export default function ChallengeUI({ problem }: Props) {
   return (
     <AppContextProvider>
       <QueryClientProvider client={queryClient}>
@@ -29,7 +27,12 @@ export default function Challenge() {
             initMode: "immediate",
             autorun: true,
           }}
-          files={files}
+          files={{
+            "/code.ts": problem.code,
+            "/add.test.ts": testCode(problem.sampleInput),
+            "/test-cases.test.ts": problem.testCases,
+            "/solution.ts": problem.solution,
+          }}
           template="test-ts"
           theme="auto"
           style={{ height: "100%" }}
@@ -37,16 +40,16 @@ export default function Challenge() {
           <div className={classes.challengeWrapper}>
             <PanelGroup direction="horizontal">
               <Panel
-                defaultSize={40}
                 minSize={25}
-                maxSize={75}
+                maxSize={70}
+                defaultSize={40}
                 className="panel left"
               >
-                <ChallengeLeftPanel />
+                <ChallengeLeftPanel problem={problem} />
               </Panel>
               <PanelResizeHandle className="resize-handle" />
-              <Panel minSize={30}>
-                <ChallengeRightPanel />
+              <Panel minSize={30} maxSize={75} defaultSize={60}>
+                <ChallengeRightPanel sampleInput={problem.sampleInput} />
               </Panel>
               <PanelResizeHandle />
             </PanelGroup>
