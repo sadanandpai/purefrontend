@@ -38,9 +38,10 @@ export function SaveSubmission({ setSelectedIndex }: Props) {
 
   if (!context.user) {
     return (
-      <>
-        Please <Link href={routes.signIn}>Sign in</Link> to save your submission
-      </>
+      <p>
+        Please&nbsp;<Link href={routes.signIn}>Sign in</Link>&nbsp;to save your
+        submission
+      </p>
     );
   }
 

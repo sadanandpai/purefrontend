@@ -3,7 +3,7 @@ export function testCode(arg: string) {
 import systemSolution from './solution';
 
 describe('inputTest', () => {
-  test('should check if sum of 2 numbers is correct', () => {
+  test('should check if program runs correctly for the user input', () => {
     expect(userSolution(${arg})).toEqual(systemSolution(${arg}));
   });
 });`;

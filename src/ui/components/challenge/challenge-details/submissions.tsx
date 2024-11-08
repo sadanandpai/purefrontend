@@ -20,10 +20,10 @@ export function Submissions() {
 
   if (!context.user) {
     return (
-      <div className={classes.verticalCenter}>
-        Please <Link href={routes.signIn}>Sign in</Link> to view your
+      <p className={classes.verticalCenter}>
+        Please&nbsp;<Link href={routes.signIn}>Sign in</Link>&nbsp;to view your
         submissions
-      </div>
+      </p>
     );
   }
 
