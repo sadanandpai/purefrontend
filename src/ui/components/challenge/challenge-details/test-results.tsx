@@ -1,20 +1,26 @@
-import { useChallengeStore } from "@/ui/store/challenge.store";
 import { TestResult } from "@/ui/components/challenge/challenge-controls/test-result";
 import { SaveSubmission } from "./save-submission";
-import { TestResultProps } from "@/common/types/test";
+import { OutputsStateProps, TestOutputProps } from "@/common/types/test";
 import classes from "./challenge-details.module.scss";
 
 interface Props {
+  testOutputs: OutputsStateProps | null;
   setSelectedIndex: (index: number) => void;
 }
 
-export function TestResults({ setSelectedIndex }: Props) {
-  const testResults = useChallengeStore((state) => state.results);
-
-  if (!testResults.length) {
+export function TestResults({ setSelectedIndex, testOutputs }: Props) {
+  if (!testOutputs) {
     return (
       <div className={classes.verticalCenter}>
-        <p>Click on submit button to see the output</p>
+        <p>Click on &apos;Run all&apos; button to see the output</p>
+      </div>
+    );
+  }
+
+  if (testOutputs.isLoading) {
+    return (
+      <div className={classes.verticalCenter}>
+        <p>Loading...</p>
       </div>
     );
   }
@@ -22,11 +28,15 @@ export function TestResults({ setSelectedIndex }: Props) {
   return (
     <div className={classes.testResultsWrapper}>
       <div className={classes.testResults}>
-        {testResults.map((result: TestResultProps, index: number) => (
+        {testOutputs.outputs?.map((result: TestOutputProps, index: number) => (
           <TestResult key={index} {...result} />
         ))}
       </div>
-      <SaveSubmission setSelectedIndex={setSelectedIndex} />
+
+      <SaveSubmission
+        status={testOutputs.status}
+        setSelectedIndex={setSelectedIndex}
+      />
     </div>
   );
 }

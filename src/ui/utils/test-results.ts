@@ -1,9 +1,9 @@
-import { TestResultProps } from "@/common/types/test";
+import { TestOutputProps } from "@/common/types/test";
 import { SandpackClientListen } from "@codesandbox/sandpack-react";
 
 export function getTestResult(
   listen: SandpackClientListen,
-  onComplete: (result: TestResultProps) => void
+  onComplete: (result: { status: boolean; output: TestOutputProps }) => void
 ) {
   return listen((data) => {
     if (
@@ -12,9 +12,12 @@ export function getTestResult(
       data.test.path === "/add.test.ts"
     ) {
       onComplete({
-        name: data.test.name,
-        status: data.test.status,
-        error: data.test.errors?.[0]?.message,
+        status: data.test.status === "pass",
+        output: {
+          name: data.test.name,
+          status: data.test.status,
+          error: data.test.errors?.[0]?.message,
+        },
       });
     }
   });
@@ -22,12 +25,13 @@ export function getTestResult(
 
 export function getTestResults(
   listen: SandpackClientListen,
-  onComplete: (results: TestResultProps[]) => void
+  onComplete: (result: { status: boolean; outputs: TestOutputProps[] }) => void
 ) {
-  let allTestResults: TestResultProps[] = [];
+  let status = true;
+  let outputs: TestOutputProps[] = [];
   return listen((data) => {
     if (data.type === "test" && data.event === "total_test_start") {
-      allTestResults = [];
+      outputs = [];
     }
 
     if (
@@ -35,7 +39,8 @@ export function getTestResults(
       data.event === "test_end" &&
       data.test.path === "/test-cases.test.ts"
     ) {
-      allTestResults.push({
+      status &&= data.test.status === "pass";
+      outputs.push({
         name: data.test.name,
         status: data.test.status,
         error: data.test.errors?.[0]?.message,
@@ -43,7 +48,7 @@ export function getTestResults(
     }
 
     if (data.type === "test" && data.event === "total_test_end") {
-      onComplete(allTestResults);
+      onComplete({ status, outputs });
     }
   });
 }

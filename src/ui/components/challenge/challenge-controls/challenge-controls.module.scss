@@ -25,7 +25,7 @@
   border: 1px solid #ccc;
 
   .title {
-    font-weight: 500;
+    font-weight: 600;
     font-size: 1.5rem;
     padding: 1rem;
     text-transform: capitalize;
@@ -33,13 +33,11 @@
     border-bottom: 1px solid lightgray;
 
     &[data-status="pass"] {
-      color: green;
-      font-weight: 600;
+      background-color: green;
     }
 
     &[data-status="fail"] {
-      color: red;
-      font-weight: 600;
+      background-color: brown;
     }
   }
 

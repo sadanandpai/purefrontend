@@ -10,24 +10,28 @@ import Link from "next/link";
 interface SubmissionMutationProps {
   challengeId: number;
   code: string;
+  status: boolean;
 }
 
 interface Props {
   setSelectedIndex: (index: number) => void;
+  status?: boolean;
 }
 
-export function SaveSubmission({ setSelectedIndex }: Props) {
+export function SaveSubmission({ status, setSelectedIndex }: Props) {
   const context = useContext(appContext);
   const { code } = useActiveCode();
   const challengeId = Number(usePathname().split("/").at(-1));
 
   const { mutate, data, isPending } = useMutation({
-    mutationFn: ({ challengeId, code }: SubmissionMutationProps) =>
-      submitUserSubmission(challengeId, code),
+    mutationFn: ({ challengeId, code, status }: SubmissionMutationProps) =>
+      submitUserSubmission(challengeId, code, status),
   });
 
   async function saveSubmission() {
-    mutate({ challengeId, code });
+    if (status !== undefined) {
+      mutate({ challengeId, code, status });
+    }
   }
 
   useEffect(() => {

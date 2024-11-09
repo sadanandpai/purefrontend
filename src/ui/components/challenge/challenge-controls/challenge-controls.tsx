@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from "react";
 import { TestInput } from "./test-input";
 import { TestConsole } from "./test-console";
@@ -13,13 +12,13 @@ interface Props {
 
 export function ChallengeControls({ defaultInput }: Props) {
   const [selectedIndex, setSelectedIndex] = useState(0);
-  const testResult = useChallengeStore((state) => state.result);
+  const testOutput = useChallengeStore((state) => state.testOutput);
 
   useEffect(() => {
-    if (testResult?.status) {
+    if (testOutput?.status !== undefined) {
       setSelectedIndex(1);
     }
-  }, [testResult]);
+  }, [testOutput?.status]);
 
   return (
     <div className="panel-layout">
@@ -39,7 +38,7 @@ export function ChallengeControls({ defaultInput }: Props) {
             <TestInput defaultInput={defaultInput} />
           </TabPanel>
           <TabPanel className="tab-panel" unmount={false}>
-            <TestOutput {...testResult} />
+            <TestOutput testOutput={testOutput} />
           </TabPanel>
           <TabPanel className="tab-panel" unmount={false}>
             <TestConsole />

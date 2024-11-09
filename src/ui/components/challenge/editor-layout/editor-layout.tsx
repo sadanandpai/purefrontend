@@ -2,8 +2,8 @@ import dynamic from "next/dynamic";
 import { useSandpack } from "@codesandbox/sandpack-react";
 import { getTestResult, getTestResults } from "@/ui/utils/test-results";
 import { useChallengeStore } from "@/ui/store/challenge.store";
-import classes from "./editor-layout.module.scss";
 import { SandpackTestComponent } from "../challenge-controls/test-cases";
+import classes from "./editor-layout.module.scss";
 
 // const SandpackEditor = dynamic(
 //   () =>
@@ -23,12 +23,12 @@ const MonacoEditor = dynamic(
 
 export function EditorLayout() {
   const { dispatch, listen } = useSandpack();
-  const setResult = useChallengeStore((state) => state.setResult);
-  const setResults = useChallengeStore((state) => state.setResults);
+  const setOutput = useChallengeStore((state) => state.setOutput);
+  const setOutputs = useChallengeStore((state) => state.setOutputs);
 
   function runUserTest() {
     const unsubscribe = getTestResult(listen, (result) => {
-      setResult(result);
+      setOutput({ isLoading: false, ...result });
       unsubscribe();
     });
 
@@ -39,8 +39,8 @@ export function EditorLayout() {
   }
 
   function runAllTests() {
-    const unsubscribe = getTestResults(listen, (results) => {
-      setResults(results);
+    const unsubscribe = getTestResults(listen, (result) => {
+      setOutputs({ isLoading: false, ...result });
       unsubscribe();
     });
 
@@ -60,7 +60,7 @@ export function EditorLayout() {
         </button>
 
         <button className="btn" onClick={runAllTests}>
-          Submit
+          Run All
         </button>
       </div>
     </div>

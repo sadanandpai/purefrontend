@@ -1,16 +1,35 @@
-import { TestResultProps } from "@/common/types/test";
 import { create } from "zustand";
+import { produce } from "immer";
+import { OutputsStateProps, OutputStateProps } from "@/common/types/test";
 
 interface ChallengeState {
-  result: TestResultProps | null;
-  results: TestResultProps[];
-  setResult: (result: TestResultProps) => void;
-  setResults: (results: TestResultProps[]) => void;
+  testOutput: OutputStateProps | null;
+  testOutputs: OutputsStateProps | null;
+  setOutput: (output: OutputStateProps) => void;
+  setOutputs: (outputs: OutputsStateProps) => void;
 }
 
 export const useChallengeStore = create<ChallengeState>()((set) => ({
-  result: null,
-  results: [],
-  setResult: (result) => set(() => ({ result })),
-  setResults: (results) => set(() => ({ results })),
+  testOutput: null,
+  testOutputs: null,
+  setOutput: ({ isLoading, status, output }) =>
+    set(
+      produce<ChallengeState>((state) => {
+        state.testOutput = {
+          isLoading: isLoading ?? state.testOutput?.isLoading,
+          status: status ?? state.testOutput?.status,
+          output: output ?? state.testOutput?.output,
+        };
+      })
+    ),
+  setOutputs: ({ isLoading, status, outputs }) =>
+    set(
+      produce<ChallengeState>((state) => {
+        state.testOutputs = {
+          isLoading: isLoading ?? state.testOutputs?.isLoading,
+          status: status ?? state.testOutputs?.status,
+          outputs: outputs ?? state.testOutputs?.outputs,
+        };
+      })
+    ),
 }));

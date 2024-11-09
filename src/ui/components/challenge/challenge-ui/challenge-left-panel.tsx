@@ -13,14 +13,14 @@ interface Props {
 
 export function ChallengeLeftPanel({ problem }: Props) {
   const [selectedIndex, setSelectedIndex] = useState(0);
-  const testResults = useChallengeStore((state) => state.results);
+  const testOutputs = useChallengeStore((state) => state.testOutputs);
 
   useEffect(() => {
-    if (testResults.length) {
+    if (testOutputs?.outputs?.length) {
       setSelectedIndex(1);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [testResults, setSelectedIndex]);
+  }, [testOutputs, setSelectedIndex]);
 
   return (
     <div className="panel-layout">
@@ -41,7 +41,10 @@ export function ChallengeLeftPanel({ problem }: Props) {
             <ProblemStatement {...problem} />
           </TabPanel>
           <TabPanel className="tab-panel">
-            <TestResults setSelectedIndex={setSelectedIndex} />
+            <TestResults
+              setSelectedIndex={setSelectedIndex}
+              testOutputs={testOutputs}
+            />
           </TabPanel>
           <TabPanel className="tab-panel">
             <Solution code={problem.solution} />
