@@ -32,8 +32,8 @@ export function ChallengeLeftPanel({ problem }: Props) {
         <TabList className="tab-list">
           <Tab className="tab">Question</Tab>
           <Tab className="tab">Result</Tab>
-          <Tab className="tab">Submissions</Tab>
           <Tab className="tab">Solution</Tab>
+          <Tab className="tab">Submissions</Tab>
         </TabList>
 
         <TabPanels className="tab-panels">
@@ -44,10 +44,10 @@ export function ChallengeLeftPanel({ problem }: Props) {
             <TestResults setSelectedIndex={setSelectedIndex} />
           </TabPanel>
           <TabPanel className="tab-panel">
-            <Submissions />
+            <Solution code={problem.solution} />
           </TabPanel>
           <TabPanel className="tab-panel">
-            <Solution code={problem.solution} />
+            <Submissions />
           </TabPanel>
         </TabPanels>
       </TabGroup>

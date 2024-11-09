@@ -3,6 +3,7 @@ import { useSandpack } from "@codesandbox/sandpack-react";
 import { getTestResult, getTestResults } from "@/ui/utils/test-results";
 import { useChallengeStore } from "@/ui/store/challenge.store";
 import classes from "./editor-layout.module.scss";
+import { SandpackTestComponent } from "../challenge-controls/test-cases";
 
 // const SandpackEditor = dynamic(
 //   () =>
@@ -52,7 +53,7 @@ export function EditorLayout() {
   return (
     <div className="panel-layout">
       <MonacoEditor />
-
+      <SandpackTestComponent />
       <div className={classes.execution}>
         <button className="btn" onClick={runUserTest}>
           Run

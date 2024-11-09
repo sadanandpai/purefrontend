@@ -1,3 +1,4 @@
+import { routes } from "@/common/routes";
 import { NavBar } from "@/ui/components/common/nav-bar/nav-bar";
 import Link from "next/link";
 
@@ -6,11 +7,11 @@ export default function Home() {
     <>
       <NavBar />
       <div className="text-center">
-        <p className="mb-8 text-4xl">
+        <h2 className="mb-8 text-6xl">
           Prepare for your next frontend coding interview
-        </p>
+        </h2>
 
-        <Link href="/challenge/1" className="btn">
+        <Link href={routes.challenges} className="btn">
           Get started
         </Link>
       </div>

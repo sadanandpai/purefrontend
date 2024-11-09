@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from "react";
 import { TestInput } from "./test-input";
-import { TestCases } from "./test-cases";
 import { TestConsole } from "./test-console";
 import { TestOutput } from "./test-output";
 import { useChallengeStore } from "@/ui/store/challenge.store";
@@ -32,7 +31,6 @@ export function ChallengeControls({ defaultInput }: Props) {
         <TabList className="tab-list">
           <Tab className="tab">Input</Tab>
           <Tab className="tab">Output</Tab>
-          <Tab className="tab">Test Execution</Tab>
           <Tab className="tab">Console</Tab>
         </TabList>
 
@@ -42,9 +40,6 @@ export function ChallengeControls({ defaultInput }: Props) {
           </TabPanel>
           <TabPanel className="tab-panel" unmount={false}>
             <TestOutput {...testResult} />
-          </TabPanel>
-          <TabPanel className="tab-panel" unmount={false}>
-            <TestCases />
           </TabPanel>
           <TabPanel className="tab-panel" unmount={false}>
             <TestConsole />

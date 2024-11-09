@@ -5,5 +5,6 @@ export const routes = {
   forgotPassword: "/forgot-password",
   profile: "/profile",
   oauth: "/oauth",
+  challenges: "/challenges",
   oauthRedirection: "/oauth/redirection",
 };

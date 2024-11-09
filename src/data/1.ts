@@ -1,10 +1,10 @@
 export const problem = {
   id: 1,
-  name: "Sum",
+  name: "Two Sum",
   statement:
     "Implement a function <strong>sum</strong>, that sums the given 2 numbers.",
   description: "",
-  difficulty: "medium",
+  difficulty: "easy",
   languages: ["javascript"],
   examples: [
     {

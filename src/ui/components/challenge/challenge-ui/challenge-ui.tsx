@@ -51,7 +51,6 @@ export default function ChallengeUI({ problem }: Props) {
               <Panel minSize={30} maxSize={75} defaultSize={60}>
                 <ChallengeRightPanel sampleInput={problem.sampleInput} />
               </Panel>
-              <PanelResizeHandle />
             </PanelGroup>
           </div>
         </SandpackProvider>
