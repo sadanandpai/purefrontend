@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "@/ui/styles/globals.scss";
 import "@/ui/styles/styles.scss";
+import { Toaster } from "sonner";
 
 export const metadata: Metadata = {
   title: "PureFrontend",
@@ -14,7 +15,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="antialiased">{children}</body>
+      <body className="antialiased">
+        <Toaster richColors />
+        {children}
+      </body>
     </html>
   );
 }

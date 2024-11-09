@@ -2,6 +2,7 @@
 
 import {
   createSubmissionsRecord,
+  deleteSubmissionsRecord,
   getSubmissionsRecords,
 } from "@/server/data-access/submissions";
 
@@ -15,4 +16,8 @@ export async function submitUserSubmission(
   status: boolean
 ) {
   return await createSubmissionsRecord(challengeId, code, status);
+}
+
+export async function deleteUserSubmission(submissionId: string) {
+  return await deleteSubmissionsRecord(submissionId);
 }

@@ -33,3 +33,14 @@ export async function createSubmissionsRecord(
     }
   );
 }
+
+export async function deleteSubmissionsRecord(submissionId: string) {
+  const { client } = await createSessionClient();
+  const databases = new Databases(client);
+
+  return await databases.deleteDocument(
+    "672c61c5003770288bcd",
+    "672c6704001691915536",
+    submissionId
+  );
+}

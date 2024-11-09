@@ -36,7 +36,7 @@ export function SaveSubmission({ status, setSelectedIndex }: Props) {
 
   useEffect(() => {
     if (data) {
-      setSelectedIndex(2);
+      setSelectedIndex(3);
     }
   }, [data, setSelectedIndex]);
 

@@ -1,22 +1,49 @@
 import { useContext } from "react";
 import { usePathname } from "next/navigation";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { appContext } from "@/ui/context/app.context";
-import { getUserSubmissions } from "@/server/actions/submissions";
+import {
+  deleteUserSubmission,
+  getUserSubmissions,
+} from "@/server/actions/submissions";
 import { SubmissionsTable } from "@/ui/pure-components/submissions-table/submissions-table";
 import classes from "./challenge-details.module.scss";
 import { routes } from "@/common/routes";
 import Link from "next/link";
+import { toast } from "sonner";
+
+interface SubmissionMutationProp {
+  submissionId: string;
+}
 
 export function Submissions() {
+  const queryClient = useQueryClient();
   const context = useContext(appContext);
   const challengeId = Number(usePathname().split("/").at(-1));
 
-  const { isLoading, data } = useQuery({
+  const { isLoading: isRecordsLoading, data: submissionsData } = useQuery({
     queryKey: ["submissions"],
     queryFn: () => getUserSubmissions(challengeId),
     enabled: !!context.user,
   });
+
+  const { mutate, isPending: isDeletionPending } = useMutation({
+    mutationFn: ({ submissionId }: SubmissionMutationProp) =>
+      deleteUserSubmission(submissionId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["submissions"] });
+      toast.success("Submission deleted successfully");
+    },
+    onError: () => {
+      toast.error("Failed to delete submission");
+    },
+  });
+
+  async function deleteSubmission(submissionId: string) {
+    if (submissionId !== undefined) {
+      mutate({ submissionId });
+    }
+  }
 
   if (!context.user) {
     return (
@@ -27,11 +54,11 @@ export function Submissions() {
     );
   }
 
-  if (isLoading) {
+  if (isRecordsLoading) {
     return <div className={classes.verticalCenter}>Loading...</div>;
   }
 
-  if (!data?.documents?.length) {
+  if (!submissionsData?.documents?.length) {
     return (
       <div className={classes.verticalCenter}>
         <p>You have not submitted any code yet</p>
@@ -41,7 +68,11 @@ export function Submissions() {
 
   return (
     <div className={classes.tableWrapper}>
-      <SubmissionsTable records={data?.documents} />
+      <SubmissionsTable
+        records={submissionsData.documents}
+        deleteSubmission={deleteSubmission}
+        isLoading={isDeletionPending}
+      />
     </div>
   );
 }
