@@ -27,6 +27,7 @@ export function EditorLayout() {
   const setOutputs = useChallengeStore((state) => state.setOutputs);
 
   function runUserTest() {
+    setOutput({ isLoading: true });
     const unsubscribe = getTestResult(listen, (result) => {
       setOutput({ isLoading: false, ...result });
       unsubscribe();
@@ -39,8 +40,9 @@ export function EditorLayout() {
   }
 
   function runAllTests() {
+    setOutputs({ isLoading: true });
     const unsubscribe = getTestResults(listen, (result) => {
-      setOutputs({ isLoading: false, ...result });
+      setOutputs({ isLoading: false, ...result, executionId: Date.now() });
       unsubscribe();
     });
 

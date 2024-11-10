@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { useActiveCode } from "@codesandbox/sandpack-react";
 import { submitUserSubmission } from "@/server/actions/submissions";
 import { useMutation } from "@tanstack/react-query";
@@ -14,18 +14,22 @@ interface SubmissionMutationProps {
 }
 
 interface Props {
-  setSelectedIndex: (index: number) => void;
   status?: boolean;
+  disabled?: boolean;
+  onSubmit?: () => void;
 }
 
-export function SaveSubmission({ status, setSelectedIndex }: Props) {
+export function SaveSubmission({ status, onSubmit, disabled }: Props) {
   const context = useContext(appContext);
   const { code } = useActiveCode();
   const challengeId = Number(usePathname().split("/").at(-1));
 
-  const { mutate, data, isPending } = useMutation({
+  const { mutate, isPending } = useMutation({
     mutationFn: ({ challengeId, code, status }: SubmissionMutationProps) =>
       submitUserSubmission(challengeId, code, status),
+    onSuccess: () => {
+      onSubmit?.();
+    },
   });
 
   async function saveSubmission() {
@@ -33,12 +37,6 @@ export function SaveSubmission({ status, setSelectedIndex }: Props) {
       mutate({ challengeId, code, status });
     }
   }
-
-  useEffect(() => {
-    if (data) {
-      setSelectedIndex(3);
-    }
-  }, [data, setSelectedIndex]);
 
   if (!context.user) {
     return (
@@ -50,7 +48,11 @@ export function SaveSubmission({ status, setSelectedIndex }: Props) {
   }
 
   return (
-    <button className="btn" onClick={saveSubmission} disabled={isPending}>
+    <button
+      className="btn"
+      onClick={saveSubmission}
+      disabled={disabled || isPending}
+    >
       {isPending ? "Submitting..." : "Save Submission"}
     </button>
   );

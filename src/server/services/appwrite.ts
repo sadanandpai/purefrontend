@@ -1,7 +1,7 @@
 import "server-only";
 
 import { Client, Account, ID, OAuthProvider } from "node-appwrite";
-import { cookieName } from "@/server/config/auth";
+import { COOKIE_NAME } from "@/server/config/server";
 import { getCookie } from "@/server/utils/cookies";
 
 export function getUniqueID() {
@@ -20,7 +20,7 @@ export async function createSessionClient() {
     throw new Error("Appwrite endpoint or project not provided");
   }
 
-  const sessionCookie = await getCookie(cookieName);
+  const sessionCookie = await getCookie(COOKIE_NAME);
   if (!sessionCookie || !sessionCookie.value) {
     throw new Error("No session");
   }

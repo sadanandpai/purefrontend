@@ -1,4 +1,4 @@
-import { cookieName } from "@/server/config/auth";
+import { COOKIE_NAME } from "@/server/config/server";
 import { NextRequest, NextResponse } from "next/server";
 import { createSessionWithSecret } from "@/server/data-access/session";
 import { routes } from "@/common/routes";
@@ -13,7 +13,7 @@ export async function GET(request: NextRequest) {
   }
 
   const sessionSecret = await createSessionWithSecret(userId, secret);
-  await createCookie(cookieName, sessionSecret);
+  await createCookie(COOKIE_NAME, sessionSecret);
   return NextResponse.redirect(
     `${request.nextUrl.origin}${routes.oauthRedirection}`
   );

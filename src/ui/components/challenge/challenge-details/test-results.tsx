@@ -8,7 +8,14 @@ interface Props {
   setSelectedIndex: (index: number) => void;
 }
 
+let submittedExecutionId: number | undefined;
+
 export function TestResults({ setSelectedIndex, testOutputs }: Props) {
+  function onSubmit() {
+    submittedExecutionId = testOutputs?.executionId;
+    setSelectedIndex(3);
+  }
+
   if (!testOutputs) {
     return (
       <div className={classes.verticalCenter}>
@@ -34,8 +41,9 @@ export function TestResults({ setSelectedIndex, testOutputs }: Props) {
       </div>
 
       <SaveSubmission
+        onSubmit={onSubmit}
         status={testOutputs.status}
-        setSelectedIndex={setSelectedIndex}
+        disabled={submittedExecutionId === testOutputs.executionId}
       />
     </div>
   );

@@ -21,7 +21,11 @@ export function Submissions() {
   const context = useContext(appContext);
   const challengeId = Number(usePathname().split("/").at(-1));
 
-  const { isLoading: isRecordsLoading, data: submissionsData } = useQuery({
+  const {
+    isLoading: isRecordsLoading,
+    data: submissionsData,
+    error: submissionsError,
+  } = useQuery({
     queryKey: ["submissions"],
     queryFn: () => getUserSubmissions(challengeId),
     enabled: !!context.user,
@@ -51,6 +55,14 @@ export function Submissions() {
         Please&nbsp;<Link href={routes.signIn}>Sign in</Link>&nbsp;to view your
         submissions
       </p>
+    );
+  }
+
+  if (submissionsError) {
+    return (
+      <div className={classes.verticalCenter}>
+        <p>Failed to load submissions</p>
+      </div>
     );
   }
 

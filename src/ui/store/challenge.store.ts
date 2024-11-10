@@ -22,13 +22,14 @@ export const useChallengeStore = create<ChallengeState>()((set) => ({
         };
       })
     ),
-  setOutputs: ({ isLoading, status, outputs }) =>
+  setOutputs: ({ isLoading, status, outputs, executionId }) =>
     set(
       produce<ChallengeState>((state) => {
         state.testOutputs = {
           isLoading: isLoading ?? state.testOutputs?.isLoading,
           status: status ?? state.testOutputs?.status,
           outputs: outputs ?? state.testOutputs?.outputs,
+          executionId: executionId ?? state.testOutputs?.executionId,
         };
       })
     ),

@@ -1,7 +1,7 @@
 "use server";
 
 import { redirect } from "next/navigation";
-import { cookieName } from "@/server/config/auth";
+import { COOKIE_NAME } from "@/server/config/server";
 import {
   getSession,
   createSessionWithEmail,
@@ -28,7 +28,7 @@ export async function signInWithEmail(
   try {
     const { email, password } = validateSignIn(formData);
     const secret = await createSessionWithEmail(email, password);
-    await createCookie(cookieName, secret);
+    await createCookie(COOKIE_NAME, secret);
     redirect(routes.profile);
   } catch (error) {
     return respondWithError(error);
@@ -49,7 +49,7 @@ export async function signUpWithEmail(
   try {
     const { name, email, password } = validateSignUp(formData);
     const secret = await initiateSessionWithEmail(name, email, password);
-    await createCookie(cookieName, secret);
+    await createCookie(COOKIE_NAME, secret);
     redirect(routes.profile);
   } catch (error) {
     return respondWithError(error);
@@ -58,7 +58,7 @@ export async function signUpWithEmail(
 
 export async function signOut() {
   destroySession();
-  deleteCookie(cookieName);
+  deleteCookie(COOKIE_NAME);
   redirect(routes.signIn);
 }
 

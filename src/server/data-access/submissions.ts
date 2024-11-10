@@ -2,16 +2,15 @@ import "server-only";
 
 import { Databases, Query } from "node-appwrite";
 import { createSessionClient, getUniqueID } from "../services";
+import { DB, SUBMISSIONS_COLLECTION } from "@/server/config/server";
 
 export async function getSubmissionsRecords(challengeId: number) {
   const { client } = await createSessionClient();
   const databases = new Databases(client);
 
-  return await databases.listDocuments(
-    "672c61c5003770288bcd",
-    "672c6704001691915536",
-    [Query.equal("challengeId", challengeId)]
-  );
+  return await databases.listDocuments(DB, SUBMISSIONS_COLLECTION, [
+    Query.equal("challengeId", challengeId),
+  ]);
 }
 
 export async function createSubmissionsRecord(
@@ -23,8 +22,8 @@ export async function createSubmissionsRecord(
   const databases = new Databases(client);
 
   return await databases.createDocument(
-    "672c61c5003770288bcd",
-    "672c6704001691915536",
+    DB,
+    SUBMISSIONS_COLLECTION,
     getUniqueID(),
     {
       challengeId,
@@ -39,8 +38,8 @@ export async function deleteSubmissionsRecord(submissionId: string) {
   const databases = new Databases(client);
 
   return await databases.deleteDocument(
-    "672c61c5003770288bcd",
-    "672c6704001691915536",
+    DB,
+    SUBMISSIONS_COLLECTION,
     submissionId
   );
 }

@@ -14,4 +14,5 @@ export interface OutputsStateProps {
   isLoading?: boolean;
   status?: boolean;
   outputs?: TestOutputProps[];
+  executionId?: number;
 }
