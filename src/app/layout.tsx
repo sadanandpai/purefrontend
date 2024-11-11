@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import "@/ui/styles/globals.scss";
 import "@/ui/styles/styles.scss";
-import { Toaster } from "sonner";
+import { GlobalWrapper } from "./glabal.wrapper";
 
 export const metadata: Metadata = {
   title: "PureFrontend",
@@ -16,8 +16,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="antialiased">
-        <Toaster richColors />
-        {children}
+        <GlobalWrapper>{children}</GlobalWrapper>
       </body>
     </html>
   );

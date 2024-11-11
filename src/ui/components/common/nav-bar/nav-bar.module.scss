@@ -1,5 +1,7 @@
 .navBar {
   display: flex;
+  justify-content: space-between;
+  align-items: center;
   gap: 1rem;
   background-color: #333;
   color: white;
@@ -14,5 +16,9 @@
       color: white;
       text-decoration: none;
     }
+  }
+
+  .profile {
+    color: white;
   }
 }

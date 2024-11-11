@@ -1,6 +1,6 @@
 "use server";
 
-import { redirect } from "next/navigation";
+import { redirect, RedirectType } from "next/navigation";
 import { COOKIE_NAME } from "@/server/config/server";
 import {
   getSession,
@@ -29,7 +29,7 @@ export async function signInWithEmail(
     const { email, password } = validateSignIn(formData);
     const secret = await createSessionWithEmail(email, password);
     await createCookie(COOKIE_NAME, secret);
-    redirect(routes.profile);
+    redirect(`${routes.profile}?auth=true`, RedirectType.replace);
   } catch (error) {
     return respondWithError(error);
   }
@@ -50,7 +50,7 @@ export async function signUpWithEmail(
     const { name, email, password } = validateSignUp(formData);
     const secret = await initiateSessionWithEmail(name, email, password);
     await createCookie(COOKIE_NAME, secret);
-    redirect(routes.profile);
+    redirect(`${routes.profile}?auth=true`, RedirectType.replace);
   } catch (error) {
     return respondWithError(error);
   }
@@ -59,7 +59,7 @@ export async function signUpWithEmail(
 export async function signOut() {
   destroySession();
   deleteCookie(COOKIE_NAME);
-  redirect(routes.signIn);
+  redirect(`${routes.signIn}?auth=false`, RedirectType.replace);
 }
 
 export async function updatePassword(
