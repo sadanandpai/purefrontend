@@ -12,10 +12,13 @@ body {
   background: var(--background);
 }
 
+.radix-themes {
+  --cursor-button: pointer;
+}
+
 div,
 span,
-p,
-button {
+p {
   font-size: 1.6rem;
   line-height: normal;
 }

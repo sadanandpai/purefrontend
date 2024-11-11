@@ -1,5 +1,6 @@
 import { useRef } from "react";
 import { SandpackConsole } from "@codesandbox/sandpack-react";
+import { Button } from "@radix-ui/themes";
 
 interface SandpackConsoleRef {
   reset: () => void;
@@ -19,11 +20,7 @@ export function TestConsole() {
         showSyntaxError={false}
         showResetConsoleButton={false}
         resetOnPreviewRestart={true}
-        actionsChildren={
-          <button className="btn" onClick={onClear}>
-            Clear
-          </button>
-        }
+        actionsChildren={<Button onClick={onClear}>Clear</Button>}
       />
     </>
   );

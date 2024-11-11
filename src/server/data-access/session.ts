@@ -73,3 +73,21 @@ export async function updateSessionPassword(
     respondWithDataAccessError(error);
   }
 }
+
+export async function updateFullName(name: string) {
+  try {
+    const { account } = await createSessionClient();
+    await account.updateName(name);
+  } catch (error) {
+    respondWithDataAccessError(error);
+  }
+}
+
+export async function updateUserEmail(email: string, password: string) {
+  try {
+    const { account } = await createSessionClient();
+    await account.updateEmail(email, password);
+  } catch (error) {
+    respondWithDataAccessError(error);
+  }
+}

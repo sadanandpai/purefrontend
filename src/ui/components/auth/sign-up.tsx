@@ -1,32 +1,34 @@
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, useState } from "react";
 import Link from "next/link";
 import { OAuth } from "./oauth";
 import { routes } from "@/common/routes";
 import { signUpWithEmail } from "@/server/actions/auth";
-import { ErrorField } from "@/ui/components/common/form/error-field";
+import { ErrorField } from "@/ui/pure-components/form/error-field";
 import {
   EmailField,
   FullNameField,
   PasswordField,
-} from "@/ui/components/common/form/input-fields";
+} from "@/ui/pure-components/form/input-fields";
 import classes from "./auth-form.module.scss";
-import { SubmitButton } from "@/ui/components/common/form/submit-button";
+import { SubmitButton } from "@/ui/pure-components/form/submit-button";
 
 export function SignUp() {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
   const [state, formAction, pending] = useActionState(signUpWithEmail, {});
 
   return (
     <div className={classes.authFormWrapper}>
       <form action={formAction} className={classes.authForm}>
         <div className="form-field">
-          <FullNameField />
+          <FullNameField setValue={setName} value={name} />
           <ErrorField error={state.fieldErrors?.name?.[0]} />
         </div>
 
         <div className="form-field">
-          <EmailField />
+          <EmailField setValue={setEmail} value={email} />
           <ErrorField error={state.fieldErrors?.email?.[0]} />
         </div>
 

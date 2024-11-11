@@ -1,4 +1,4 @@
-import { NavBar } from "@/ui/components/common/nav-bar/nav-bar";
+import { NavBar } from "@/ui/pure-components/nav-bar/nav-bar";
 import classes from "./auth.module.scss";
 
 export default function Layout({

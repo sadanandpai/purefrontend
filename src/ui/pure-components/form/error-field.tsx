@@ -1,3 +1,4 @@
+import { Text } from "@radix-ui/themes";
 import { useFormStatus } from "react-dom";
 
 interface Props {
@@ -12,7 +13,11 @@ export function ErrorField({ error }: Props) {
   }
 
   if (error) {
-    return <p className="error">{error}</p>;
+    return (
+      <Text size="2" color="red">
+        {error}
+      </Text>
+    );
   }
 
   return null;

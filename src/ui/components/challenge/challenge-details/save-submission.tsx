@@ -6,6 +6,7 @@ import { appContext } from "@/ui/context/app.context";
 import { usePathname } from "next/navigation";
 import { routes } from "@/common/routes";
 import Link from "next/link";
+import { Button } from "@radix-ui/themes";
 
 interface SubmissionMutationProps {
   challengeId: number;
@@ -48,12 +49,8 @@ export function SaveSubmission({ status, onSubmit, disabled }: Props) {
   }
 
   return (
-    <button
-      className="btn"
-      onClick={saveSubmission}
-      disabled={disabled || isPending}
-    >
+    <Button onClick={saveSubmission} disabled={disabled || isPending}>
       {isPending ? "Submitting..." : "Save Submission"}
-    </button>
+    </Button>
   );
 }

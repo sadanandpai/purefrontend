@@ -4,6 +4,7 @@ import { getTestResult, getTestResults } from "@/ui/utils/test-results";
 import { useChallengeStore } from "@/ui/store/challenge.store";
 import { SandpackTestComponent } from "../challenge-controls/test-cases";
 import classes from "./editor-layout.module.scss";
+import { Button } from "@radix-ui/themes";
 
 // const SandpackEditor = dynamic(
 //   () =>
@@ -57,13 +58,8 @@ export function EditorLayout() {
       <MonacoEditor />
       <SandpackTestComponent />
       <div className={classes.execution}>
-        <button className="btn" onClick={runUserTest}>
-          Run
-        </button>
-
-        <button className="btn" onClick={runAllTests}>
-          Run All
-        </button>
+        <Button onClick={runUserTest}>Run</Button>
+        <Button onClick={runAllTests}>Run All</Button>
       </div>
     </div>
   );

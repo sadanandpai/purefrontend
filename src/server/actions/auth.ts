@@ -9,8 +9,12 @@ import {
   destroySession,
   initiateSessionWithEmail,
   updateSessionPassword,
+  updateFullName,
+  updateUserEmail,
 } from "@/server/data-access/session";
 import {
+  validateEmail,
+  validateName,
   validatePassword,
   validateSignIn,
   validateSignUp,
@@ -70,6 +74,26 @@ export async function updatePassword(
     const { password, newPassword } = validatePassword(formData);
     await updateSessionPassword(newPassword, password);
     return respondWithSuccess("Password updated successfully");
+  } catch (error) {
+    return respondWithError(error);
+  }
+}
+
+export async function updateName(_prev: GlobalResponse, formData: FormData) {
+  try {
+    const { name } = validateName(formData);
+    await updateFullName(name);
+    return respondWithSuccess("Name updated successfully");
+  } catch (error) {
+    return respondWithError(error);
+  }
+}
+
+export async function updateEmail(_prev: GlobalResponse, formData: FormData) {
+  try {
+    const { email, password } = validateEmail(formData);
+    await updateUserEmail(email, password);
+    return respondWithSuccess("Email updated successfully");
   } catch (error) {
     return respondWithError(error);
   }

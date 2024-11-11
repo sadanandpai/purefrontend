@@ -31,3 +31,12 @@ export const updatePasswordSchema = z.object({
   password: passwordSchema,
   newPassword: passwordSchema,
 });
+
+export const updateNameSchema = z.object({
+  name: nameSchema,
+});
+
+export const updateEmailSchema = z.object({
+  email: emailSchema,
+  password: passwordSchema,
+});

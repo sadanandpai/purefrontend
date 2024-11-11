@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, useState } from "react";
 import Link from "next/link";
 import { OAuth } from "./oauth";
 import { routes } from "@/common/routes";
@@ -8,19 +8,20 @@ import { signInWithEmail } from "@/server/actions/auth";
 import {
   EmailField,
   PasswordField,
-} from "@/ui/components/common/form/input-fields";
-import { SubmitButton } from "@/ui/components/common/form/submit-button";
-import { ErrorField } from "@/ui/components/common/form/error-field";
+} from "@/ui/pure-components/form/input-fields";
+import { SubmitButton } from "@/ui/pure-components/form/submit-button";
+import { ErrorField } from "@/ui/pure-components/form/error-field";
 import classes from "./auth-form.module.scss";
 
 export function SignIn() {
+  const [email, setEmail] = useState("");
   const [state, formAction, pending] = useActionState(signInWithEmail, {});
 
   return (
     <div className={classes.authFormWrapper}>
       <form action={formAction} className={classes.authForm}>
         <div className="form-field">
-          <EmailField />
+          <EmailField value={email} setValue={setEmail} />
           <ErrorField error={state.fieldErrors?.email?.[0]} />
         </div>
 

@@ -1,3 +1,5 @@
+import { Button } from "@radix-ui/themes";
+
 interface Props {
   label: string;
   pending?: boolean;
@@ -5,8 +7,8 @@ interface Props {
 
 export function SubmitButton({ label, pending }: Props) {
   return (
-    <button type="submit" className="btn" disabled={pending}>
-      {pending ? "Submitting..." : label}
-    </button>
+    <Button type="submit" loading={pending}>
+      {label}
+    </Button>
   );
 }

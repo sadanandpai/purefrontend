@@ -4,6 +4,7 @@ import classes from "./submissions-table.module.scss";
 import { Trash } from "lucide-react";
 import { Code } from "lucide-react";
 import { Fragment, useState } from "react";
+import { Button } from "@radix-ui/themes";
 
 interface Props {
   records: any[];
@@ -38,29 +39,29 @@ export function SubmissionsTable({
                 <td>JavaScript</td>
                 <td>{record.status ? "Pass" : "Fail"}</td>
                 <td>
-                  <button
+                  <Button
                     onClick={() => {
                       setShouldDisplayCode(
                         shouldDisplayCode === record.$id ? null : record.$id
                       );
                     }}
-                    className={classes.viewButton}
+                    variant="ghost"
                     title="code"
                     aria-label="code"
                   >
                     <Code />
-                  </button>
+                  </Button>
                 </td>
                 <td>
-                  <button
-                    className={classes.viewButton}
-                    onClick={() => deleteSubmission(record.$id)}
-                    disabled={isLoading}
+                  <Button
                     title="delete"
+                    variant="ghost"
+                    onClick={() => deleteSubmission(record.$id)}
+                    loading={isLoading}
                     aria-label="delete"
                   >
                     <Trash />
-                  </button>
+                  </Button>
                 </td>
               </tr>
               {shouldDisplayCode === record.$id && (

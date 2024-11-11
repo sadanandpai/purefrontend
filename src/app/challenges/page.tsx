@@ -1,4 +1,4 @@
-import { NavBar } from "@/ui/components/common/nav-bar/nav-bar";
+import { NavBar } from "@/ui/pure-components/nav-bar/nav-bar";
 import { ChallengeList } from "@/ui/components/challenge/challenge-list/challenge-list";
 import { challenges } from "@/data/challenges";
 
