@@ -8,6 +8,10 @@
     gap: 1rem;
     margin-bottom: 2rem;
 
+    label {
+      font-weight: 500;
+    }
+
     .submission {
       display: flex;
       justify-content: space-between;

@@ -3,7 +3,7 @@
   justify-content: space-between;
   align-items: center;
   gap: 1rem;
-  background-color: #333;
+  background-color: brown;
   color: white;
   padding: 0.5rem 1rem;
 
@@ -21,4 +21,10 @@
   .profile {
     color: white;
   }
+}
+
+.themeSwitcher {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }

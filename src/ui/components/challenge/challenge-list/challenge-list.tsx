@@ -1,6 +1,7 @@
 import Link from "next/link";
-import classes from "./challenge-list.module.scss";
+import { Link as Anchor } from "@radix-ui/themes";
 import { routes } from "@/common/routes";
+import classes from "./challenge-list.module.scss";
 
 interface Props {
   challenges: {
@@ -27,8 +28,12 @@ export function ChallengeList({ challenges }: Props) {
           <tr key={challenge.id}>
             <td>{index + 1}</td>
             <td>
-              <Link href={`${routes.challenges}/${challenge.id}`}>
-                {challenge.name}
+              <Link
+                href={`${routes.challenges}/${challenge.id}`}
+                passHref
+                legacyBehavior
+              >
+                <Anchor>{challenge.name}</Anchor>
               </Link>
             </td>
             <td>{challenge.difficulty}</td>

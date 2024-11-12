@@ -3,8 +3,10 @@
 import { TextField } from "@radix-ui/themes";
 
 interface Props {
-  value: string;
-  setValue: (value: string) => void;
+  value?: string;
+  setValue?: (value: string) => void;
+  field?: string;
+  placeHolder?: string;
 }
 
 export function FullNameField({ value = "", setValue }: Props) {
@@ -14,11 +16,11 @@ export function FullNameField({ value = "", setValue }: Props) {
       name="name"
       placeholder="Full Name"
       type="text"
-      minLength={1}
+      minLength={3}
       maxLength={50}
       required
       value={value}
-      onChange={(e) => setValue(e.target.value)}
+      onChange={(e) => setValue?.(e.target.value)}
     />
   );
 }
@@ -32,32 +34,18 @@ export function EmailField({ value = "", setValue }: Props) {
       type="email"
       required
       value={value}
-      onChange={(e) => setValue(e.target.value)}
+      onChange={(e) => setValue?.(e.target.value)}
     />
   );
 }
 
-export function PasswordField() {
+export function PasswordField({ field = "password", placeHolder }: Props) {
   return (
     <TextField.Root
-      id="password"
-      name="password"
-      placeholder="Password"
+      id={field}
+      name={field}
+      placeholder={placeHolder}
       minLength={8}
-      maxLength={20}
-      type="password"
-      required
-    />
-  );
-}
-
-export function NewPasswordField() {
-  return (
-    <TextField.Root
-      id="newPassword"
-      name="newPassword"
-      placeholder="New password"
-      minLength={1}
       maxLength={20}
       type="password"
       required

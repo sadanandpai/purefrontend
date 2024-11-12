@@ -6,7 +6,7 @@ export default async function Challenge() {
   return (
     <>
       <NavBar />
-      <ChallengeList challenges={challenges} />;
+      <ChallengeList challenges={challenges} />
     </>
   );
 }

@@ -1,6 +1,7 @@
 import Link from "next/link";
-import classes from "./nav-bar.module.scss";
 import { routes } from "@/common/routes";
+import { ThemeSwitch } from "./theme-switch";
+import classes from "./nav-bar.module.scss";
 
 export function NavBar() {
   return (
@@ -8,6 +9,8 @@ export function NavBar() {
       <h1>
         <Link href="/">PureFrontend</Link>
       </h1>
+
+      <ThemeSwitch />
 
       <Link href={routes.profile} className={classes.profile}>
         Profile

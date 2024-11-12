@@ -4,6 +4,7 @@ import { useActionState, useState } from "react";
 import Link from "next/link";
 import { OAuth } from "./oauth";
 import { routes } from "@/common/routes";
+import { Button } from "@radix-ui/themes";
 import { signUpWithEmail } from "@/server/actions/auth";
 import { ErrorField } from "@/ui/pure-components/form/error-field";
 import {
@@ -12,7 +13,6 @@ import {
   PasswordField,
 } from "@/ui/pure-components/form/input-fields";
 import classes from "./auth-form.module.scss";
-import { SubmitButton } from "@/ui/pure-components/form/submit-button";
 
 export function SignUp() {
   const [name, setName] = useState("");
@@ -37,7 +37,9 @@ export function SignUp() {
           <ErrorField error={state.fieldErrors?.password?.[0]} />
         </div>
 
-        <SubmitButton label="Sign up" pending={pending} />
+        <Button type="submit" loading={pending}>
+          Sign up
+        </Button>
         <ErrorField error={state.error} />
       </form>
 

@@ -9,9 +9,9 @@ import {
   EmailField,
   PasswordField,
 } from "@/ui/pure-components/form/input-fields";
-import { SubmitButton } from "@/ui/pure-components/form/submit-button";
 import { ErrorField } from "@/ui/pure-components/form/error-field";
 import classes from "./auth-form.module.scss";
+import { Button } from "@radix-ui/themes";
 
 export function SignIn() {
   const [email, setEmail] = useState("");
@@ -30,7 +30,9 @@ export function SignIn() {
           <ErrorField error={state.fieldErrors?.password?.[0]} />
         </div>
 
-        <SubmitButton label="Sign in" pending={pending} />
+        <Button type="submit" loading={pending}>
+          Sign in
+        </Button>
         <ErrorField error={state.error} />
       </form>
 

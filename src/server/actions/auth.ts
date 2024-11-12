@@ -71,8 +71,8 @@ export async function updatePassword(
   formData: FormData
 ) {
   try {
-    const { password, newPassword } = validatePassword(formData);
-    await updateSessionPassword(newPassword, password);
+    const { currentPassword, newPassword } = validatePassword(formData);
+    await updateSessionPassword(newPassword, currentPassword);
     return respondWithSuccess("Password updated successfully");
   } catch (error) {
     return respondWithError(error);

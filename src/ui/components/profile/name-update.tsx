@@ -1,12 +1,12 @@
 "use client";
 
-import { updateName } from "@/server/actions/auth";
 import { useActionState, useEffect, useState } from "react";
+import { toast } from "sonner";
+import { Button } from "@radix-ui/themes";
+import { Label } from "@radix-ui/react-label";
+import { updateName } from "@/server/actions/auth";
 import { FullNameField } from "@/ui/pure-components/form/input-fields";
 import { ErrorField } from "@/ui/pure-components/form/error-field";
-import { SubmitButton } from "@/ui/pure-components/form/submit-button";
-import { Label } from "@radix-ui/react-label";
-import { toast } from "sonner";
 import classes from "./profile.module.scss";
 
 interface Props {
@@ -33,7 +33,9 @@ export function NameUpdate({ name }: Props) {
 
       <div className={classes.submission}>
         <ErrorField error={state.error} />
-        <SubmitButton pending={pending} label="Update Name" />
+        <Button type="submit" loading={pending} disabled={fullName === name}>
+          Update Name
+        </Button>
       </div>
     </form>
   );

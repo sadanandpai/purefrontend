@@ -1,19 +1,32 @@
 "use client";
 
-import { updatePassword } from "@/server/actions/auth";
-import { useActionState, useEffect } from "react";
-import {
-  NewPasswordField,
-  PasswordField,
-} from "@/ui/pure-components/form/input-fields";
-import { ErrorField } from "@/ui/pure-components/form/error-field";
-import { SubmitButton } from "@/ui/pure-components/form/submit-button";
-import classes from "./profile.module.scss";
-import { Label } from "@radix-ui/react-label";
+import { useActionState, useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
+import { Button } from "@radix-ui/themes";
+import { Label } from "@radix-ui/react-label";
+import { updatePassword } from "@/server/actions/auth";
+import { PasswordField } from "@/ui/pure-components/form/input-fields";
+import { ErrorField } from "@/ui/pure-components/form/error-field";
+import classes from "./profile.module.scss";
 
 export function PasswordUpdate() {
   const [state, formAction, pending] = useActionState(updatePassword, {});
+  const formRef = useRef<HTMLFormElement>(null);
+  const [isPasswordFilled, setIsPasswordFilled] = useState(false);
+
+  function checkPassword() {
+    if (formRef.current) {
+      const password = formRef.current?.elements.namedItem(
+        "currentPassword"
+      ) as HTMLInputElement;
+      const newPassword = formRef.current?.elements.namedItem(
+        "newPassword"
+      ) as HTMLInputElement;
+      setIsPasswordFilled(
+        password.value.length > 0 && newPassword.value.length > 0
+      );
+    }
+  }
 
   useEffect(() => {
     if (state.message) {
@@ -22,21 +35,28 @@ export function PasswordUpdate() {
   }, [state]);
 
   return (
-    <form action={formAction} className={classes.updateForm}>
+    <form
+      action={formAction}
+      className={classes.updateForm}
+      onChange={checkPassword}
+      ref={formRef}
+    >
       <Label htmlFor="password">Password</Label>
       <div>
-        <PasswordField />
+        <PasswordField field="currentPassword" placeHolder="Current password" />
         <ErrorField error={state.fieldErrors?.password?.[0]} />
       </div>
 
       <div>
-        <NewPasswordField />
+        <PasswordField field="newPassword" placeHolder="New password" />
         <ErrorField error={state.fieldErrors?.newPassword?.[0]} />
       </div>
 
       <div className={classes.submission}>
         <ErrorField error={state.error} />
-        <SubmitButton label="Update Password" pending={pending} />
+        <Button type="submit" loading={pending} disabled={!isPasswordFilled}>
+          Update Password
+        </Button>
       </div>
     </form>
   );

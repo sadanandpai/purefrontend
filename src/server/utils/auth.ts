@@ -33,7 +33,7 @@ export function validateSignUp(formData: FormData) {
 export function validatePassword(formData: FormData) {
   try {
     return updatePasswordSchema.parse({
-      password: formData.get("password"),
+      currentPassword: formData.get("currentPassword"),
       newPassword: formData.get("newPassword"),
     });
   } catch (error) {

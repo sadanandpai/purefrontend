@@ -28,7 +28,7 @@ export const signUpSchema = z.object({
 });
 
 export const updatePasswordSchema = z.object({
-  password: passwordSchema,
+  currentPassword: passwordSchema,
   newPassword: passwordSchema,
 });
 
