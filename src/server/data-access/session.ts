@@ -7,6 +7,7 @@ import {
 } from "@/server/services";
 import { getOAuthProvider } from "../services/appwrite";
 import { respondWithDataAccessError } from "../handlers/data-access";
+import { routes } from "@/common/routes";
 
 export async function getSession() {
   const { account } = await createSessionClient();
@@ -52,6 +53,17 @@ export async function initiateSessionWithEmail(
     await account.create(getUniqueID(), email, password, name);
     const session = await account.createEmailPasswordSession(email, password);
     return session.secret;
+  } catch (error) {
+    respondWithDataAccessError(error);
+  }
+}
+
+export async function sendVerificationEmail() {
+  try {
+    const { account } = await createSessionClient();
+    await account.createVerification(
+      `https://purefrontend.vercel.app${routes.verifyEmail}`
+    );
   } catch (error) {
     respondWithDataAccessError(error);
   }

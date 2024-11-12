@@ -10,13 +10,14 @@ import {
 import { ErrorField } from "@/ui/pure-components/form/error-field";
 import { Label } from "@radix-ui/react-label";
 import classes from "./profile.module.scss";
-import { Button } from "@radix-ui/themes";
+import { Badge, Button } from "@radix-ui/themes";
 
 interface Props {
   email: string;
+  emailVerification: boolean;
 }
 
-export function EmailUpdate({ email }: Props) {
+export function EmailUpdate({ email, emailVerification }: Props) {
   const [newEmail, setNewEmail] = useState(email);
   const [state, formAction, pending] = useActionState(updateEmail, {});
 
@@ -28,7 +29,18 @@ export function EmailUpdate({ email }: Props) {
 
   return (
     <form action={formAction} className={classes.updateForm}>
-      <Label htmlFor="email">Email</Label>
+      <Label htmlFor="email" className={classes.emailLabel}>
+        Email
+        {emailVerification ? (
+          <Badge color="green" variant="solid">
+            Verified
+          </Badge>
+        ) : (
+          <Badge color="red" variant="solid">
+            Unverified
+          </Badge>
+        )}
+      </Label>
 
       <div>
         <EmailField value={newEmail} setValue={setNewEmail} />

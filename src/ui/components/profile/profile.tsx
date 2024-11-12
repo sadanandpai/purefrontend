@@ -15,7 +15,10 @@ export function Profile({ user }: Props) {
     <main className={classes.main}>
       <NameUpdate name={user.name} />
       <PasswordUpdate />
-      <EmailUpdate email={user.email} />
+      <EmailUpdate
+        email={user.email}
+        emailVerification={user.emailVerification}
+      />
 
       <form action={signOut}>
         <Button type="submit">Sign out</Button>

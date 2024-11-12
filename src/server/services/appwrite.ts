@@ -12,6 +12,28 @@ export function getOAuthProvider() {
   return OAuthProvider;
 }
 
+export function createClient() {
+  if (
+    !process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT ||
+    !process.env.NEXT_PUBLIC_APPWRITE_PROJECT
+  ) {
+    throw new Error("Appwrite endpoint or project not provided");
+  }
+
+  const client = new Client()
+    .setEndpoint(process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT)
+    .setProject(process.env.NEXT_PUBLIC_APPWRITE_PROJECT);
+
+  return {
+    get account() {
+      return new Account(client);
+    },
+    get client() {
+      return client;
+    },
+  };
+}
+
 export async function createSessionClient() {
   if (
     !process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT ||

@@ -11,6 +11,7 @@ import {
   updateSessionPassword,
   updateFullName,
   updateUserEmail,
+  sendVerificationEmail,
 } from "@/server/data-access/session";
 import {
   validateEmail,
@@ -54,6 +55,7 @@ export async function signUpWithEmail(
     const { name, email, password } = validateSignUp(formData);
     const secret = await initiateSessionWithEmail(name, email, password);
     await createCookie(COOKIE_NAME, secret);
+    await sendVerificationEmail();
     redirect(`${routes.profile}?auth=true`, RedirectType.replace);
   } catch (error) {
     return respondWithError(error);
