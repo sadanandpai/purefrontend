@@ -1,4 +1,4 @@
-import { SandpackCodeEditor } from "@codesandbox/sandpack-react";
+import { SandpackCodeEditor } from "@codesandbox/sandpack-react/unstyled";
 
 export function SandpackEditor() {
   return (

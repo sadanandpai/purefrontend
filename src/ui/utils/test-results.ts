@@ -1,5 +1,5 @@
 import { TestOutputProps } from "@/common/types/test";
-import { SandpackClientListen } from "@codesandbox/sandpack-react";
+import { SandpackClientListen } from "@codesandbox/sandpack-react/unstyled";
 
 export function getTestResult(
   listen: SandpackClientListen,

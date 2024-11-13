@@ -3,19 +3,21 @@ import {
   useActiveCode,
   FileTabs,
   useSandpack,
-} from "@codesandbox/sandpack-react";
+} from "@codesandbox/sandpack-react/unstyled";
+import { useTheme } from "next-themes";
 
 export function MonacoEditor() {
   const { sandpack } = useSandpack();
   const { code, updateCode } = useActiveCode();
+  const theme = useTheme();
 
   return (
     <>
       <FileTabs />
       <Editor
-        height="calc(100% - 9.2rem)"
+        height="calc(100% - 7.1rem)"
         language="javascript"
-        theme="vs-light"
+        theme={theme.theme === "dark" ? "vs-dark" : "vs-light"}
         options={{
           minimap: {
             enabled: false,

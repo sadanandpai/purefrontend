@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import ContentEditable from "react-contenteditable";
-import { useSandpack } from "@codesandbox/sandpack-react";
+import { useSandpack } from "@codesandbox/sandpack-react/unstyled";
 import { testCode } from "@/ui/utils/test-code";
 import classes from "./challenge-controls.module.scss";
 

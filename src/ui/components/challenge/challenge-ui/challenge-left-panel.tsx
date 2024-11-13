@@ -23,37 +23,35 @@ export function ChallengeLeftPanel({ problem }: Props) {
   }, [testOutputs, setSelectedIndex]);
 
   return (
-    <div className="panel-layout">
-      <TabGroup
-        selectedIndex={selectedIndex}
-        onChange={setSelectedIndex}
-        className="h-full"
-      >
-        <TabList className="tab-list">
-          <Tab className="tab">Question</Tab>
-          <Tab className="tab">Result</Tab>
-          <Tab className="tab">Solution</Tab>
-          <Tab className="tab">Submissions</Tab>
-        </TabList>
+    <TabGroup
+      selectedIndex={selectedIndex}
+      onChange={setSelectedIndex}
+      className="h-full"
+    >
+      <TabList className="tab-list">
+        <Tab className="tab">Question</Tab>
+        <Tab className="tab">Result</Tab>
+        <Tab className="tab">Solution</Tab>
+        <Tab className="tab">Submissions</Tab>
+      </TabList>
 
-        <TabPanels className="tab-panels">
-          <TabPanel className="tab-panel">
-            <ProblemStatement {...problem} />
-          </TabPanel>
-          <TabPanel className="tab-panel">
-            <TestResults
-              setSelectedIndex={setSelectedIndex}
-              testOutputs={testOutputs}
-            />
-          </TabPanel>
-          <TabPanel className="tab-panel">
-            <Solution code={problem.solution} />
-          </TabPanel>
-          <TabPanel className="tab-panel">
-            <Submissions />
-          </TabPanel>
-        </TabPanels>
-      </TabGroup>
-    </div>
+      <TabPanels className="tab-panels">
+        <TabPanel className="tab-panel">
+          <ProblemStatement {...problem} />
+        </TabPanel>
+        <TabPanel className="tab-panel">
+          <TestResults
+            setSelectedIndex={setSelectedIndex}
+            testOutputs={testOutputs}
+          />
+        </TabPanel>
+        <TabPanel className="tab-panel">
+          <Solution code={problem.solution} />
+        </TabPanel>
+        <TabPanel className="tab-panel">
+          <Submissions />
+        </TabPanel>
+      </TabPanels>
+    </TabGroup>
   );
 }

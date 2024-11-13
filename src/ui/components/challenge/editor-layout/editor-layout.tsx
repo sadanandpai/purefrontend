@@ -1,5 +1,5 @@
 import dynamic from "next/dynamic";
-import { useSandpack } from "@codesandbox/sandpack-react";
+import { useSandpack } from "@codesandbox/sandpack-react/unstyled";
 import { getTestResult, getTestResults } from "@/ui/utils/test-results";
 import { useChallengeStore } from "@/ui/store/challenge.store";
 import { SandpackTestComponent } from "../challenge-controls/test-cases";

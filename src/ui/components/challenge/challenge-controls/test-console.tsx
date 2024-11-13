@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import { SandpackConsole } from "@codesandbox/sandpack-react";
+import { SandpackConsole } from "@codesandbox/sandpack-react/unstyled";
 import { Button } from "@radix-ui/themes";
 
 interface SandpackConsoleRef {
@@ -14,14 +14,12 @@ export function TestConsole() {
   }
 
   return (
-    <>
-      <SandpackConsole
-        ref={consoleRef}
-        showSyntaxError={false}
-        showResetConsoleButton={false}
-        resetOnPreviewRestart={true}
-        actionsChildren={<Button onClick={onClear}>Clear</Button>}
-      />
-    </>
+    <SandpackConsole
+      ref={consoleRef}
+      showSyntaxError={false}
+      showResetConsoleButton={false}
+      resetOnPreviewRestart={true}
+      actionsChildren={<Button onClick={onClear}>Clear</Button>}
+    />
   );
 }

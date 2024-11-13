@@ -1,5 +1,5 @@
 import React from "react";
-import { SandpackTests } from "@codesandbox/sandpack-react";
+import { SandpackTests } from "@codesandbox/sandpack-react/unstyled";
 
 export function SandpackTestComponent() {
   return (
