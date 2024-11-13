@@ -9,7 +9,7 @@ interface Props {
 export function Solution({ code }: Props) {
   return (
     <div className={classes.solution}>
-      <Highlight theme={themes.vsLight} code={code} language="js">
+      <Highlight theme={themes.vsDark} code={code} language="js">
         {({ style, tokens, getLineProps, getTokenProps }) => (
           <pre style={style}>
             {tokens.map((line, i) => (

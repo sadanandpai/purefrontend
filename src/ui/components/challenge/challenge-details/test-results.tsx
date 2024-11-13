@@ -5,15 +5,15 @@ import classes from "./challenge-details.module.scss";
 
 interface Props {
   testOutputs: OutputsStateProps | null;
-  setSelectedIndex: (index: number) => void;
+  setSelectedTab: (tabName: string) => void;
 }
 
 let submittedExecutionId: number | undefined;
 
-export function TestResults({ setSelectedIndex, testOutputs }: Props) {
+export function TestResults({ setSelectedTab, testOutputs }: Props) {
   function onSubmit() {
     submittedExecutionId = testOutputs?.executionId;
-    setSelectedIndex(3);
+    setSelectedTab("submissions");
   }
 
   if (!testOutputs) {

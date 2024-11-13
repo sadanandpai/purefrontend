@@ -5,7 +5,7 @@ import "@radix-ui/themes/styles.css";
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
   return (
     <NextThemeProvider attribute="class">
-      <Theme accentColor="purple">{children}</Theme>
+      <Theme accentColor="ruby">{children}</Theme>
     </NextThemeProvider>
   );
 }

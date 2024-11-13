@@ -14,12 +14,14 @@ export function TestConsole() {
   }
 
   return (
-    <SandpackConsole
-      ref={consoleRef}
-      showSyntaxError={false}
-      showResetConsoleButton={false}
-      resetOnPreviewRestart={true}
-      actionsChildren={<Button onClick={onClear}>Clear</Button>}
-    />
+    <>
+      <SandpackConsole
+        ref={consoleRef}
+        showSyntaxError={false}
+        showResetConsoleButton={false}
+        resetOnPreviewRestart={true}
+      />
+      <Button onClick={onClear}>Clear</Button>
+    </>
   );
 }

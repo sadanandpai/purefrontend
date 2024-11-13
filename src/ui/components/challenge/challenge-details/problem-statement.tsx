@@ -35,7 +35,12 @@ export function ProblemStatement({
               <b>Example {idx + 1}</b>
             </p>
 
-            <pre className="bg-gray-200 rounded-md p-4 mt-2 text-md">
+            <pre
+              className="rounded-md p-4 mt-2 text-md"
+              style={{
+                backgroundColor: "var(--gray-5)",
+              }}
+            >
               <span>Input: {example.input}</span>
               <span>Output: {example.output}</span>
             </pre>
