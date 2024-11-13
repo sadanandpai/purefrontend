@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import { ChallengeInput } from "../../challenge-elements/challenge-input/challenge-input";
-import { ChallengeConsole } from "../../challenge-elements/challenge-console/challenge-console";
-import { ChallengeOutput } from "../../challenge-elements/challenge-output/challenge-output";
-import { useChallengeStore } from "@/ui/store/challenge.store";
 import { Box, Tabs } from "@radix-ui/themes";
+import { ChallengeInput } from "@/ui/components/modules/challenge/challenge-elements/challenge-input/challenge-input";
+import { ChallengeConsole } from "@/ui/components/modules/challenge/challenge-elements/challenge-console/challenge-console";
+import { ChallengeOutput } from "@/ui/components/modules/challenge/challenge-elements/challenge-output/challenge-output";
+import { useChallengeStore } from "@/ui/store/challenge.store";
 import classes from "./challenge-controls.module.scss";
 
 interface Props {
@@ -18,7 +18,7 @@ export function ChallengeControls({ defaultInput }: Props) {
     if (testOutput?.status !== undefined) {
       setSelectedTab("output");
     }
-  }, [testOutput?.status]);
+  }, [testOutput]);
 
   return (
     <div className="panel-layout">

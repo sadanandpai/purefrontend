@@ -1,6 +1,6 @@
-import { SaveSubmission } from "../../challenge-components/save-submission";
 import { OutputsStateProps, TestOutputProps } from "@/common/types/test";
 import { TestResult } from "@/ui/components/core/test-result/test-result";
+import { SaveSubmission } from "@/ui/components/modules/challenge/challenge-components/save-submission";
 import classes from "./challenge-results.module.scss";
 
 interface Props {

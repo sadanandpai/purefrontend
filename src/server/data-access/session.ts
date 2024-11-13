@@ -5,9 +5,9 @@ import {
   createSessionClient,
   getUniqueID,
 } from "@/server/services";
-import { getOAuthProvider } from "../services/appwrite";
-import { respondWithDataAccessError } from "../handlers/data-access";
 import { routes } from "@/common/routes";
+import { getOAuthProvider } from "@/server/services/appwrite";
+import { respondWithDataAccessError } from "@/server/handlers/data-access";
 
 export async function getSession() {
   const { account } = await createSessionClient();

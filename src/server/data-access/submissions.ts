@@ -1,7 +1,7 @@
 import "server-only";
 
 import { Databases, Query } from "node-appwrite";
-import { createSessionClient, getUniqueID } from "../services";
+import { createSessionClient, getUniqueID } from "@/server/services";
 import { DB, SUBMISSIONS_COLLECTION } from "@/server/config/server";
 
 export async function getSubmissionsRecords(challengeId: number) {

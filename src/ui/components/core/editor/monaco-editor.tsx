@@ -15,7 +15,7 @@ export function MonacoEditor() {
     <>
       <FileTabs />
       <Editor
-        height="calc(100% - 7.1rem)"
+        height="calc(100% - 6.4rem)"
         language="javascript"
         theme={theme.theme === "dark" ? "vs-dark" : "vs-light"}
         options={{

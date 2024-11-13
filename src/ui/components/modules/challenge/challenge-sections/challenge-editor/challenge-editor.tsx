@@ -3,7 +3,7 @@ import { Button } from "@radix-ui/themes";
 import { useChallengeStore } from "@/ui/store/challenge.store";
 import { useSandpack } from "@codesandbox/sandpack-react/unstyled";
 import { getTestResult, getTestResults } from "@/ui/utils/test-results";
-import { TestRunner } from "../../../../core/test-runner/test-runner";
+import { TestRunner } from "@/ui/components/core/test-runner/test-runner";
 import classes from "./challenge-editor.module.scss";
 
 const MonacoEditor = dynamic(

@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import { appContext } from "../context/app.context";
 import { Models } from "node-appwrite";
-import { getLoggedInUser } from "@/server/actions/auth";
 import { useSearchParams } from "next/navigation";
+import { appContext } from "@/ui/context/app.context";
+import { getLoggedInUser } from "@/server/actions/auth";
 
 interface Props {
   children: React.ReactNode;
