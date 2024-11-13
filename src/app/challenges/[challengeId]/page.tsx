@@ -1,5 +1,5 @@
 import { ProblemProps } from "@/common/types/problem";
-import ChallengeUI from "@/ui/components/challenge/challenge-ui/challenge-ui";
+import ChallengeUI from "@/ui/components/modules/challenge/challenge-ui";
 
 interface Props {
   params: Promise<{ challengeId: string }>;

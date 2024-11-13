@@ -1,0 +1,24 @@
+.navBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  background-color: brown;
+  color: white;
+  padding: 0.5rem 1rem;
+
+  h1 {
+    font-size: 2rem;
+    line-height: 3rem;
+    font-weight: 600;
+
+    a {
+      color: white;
+      text-decoration: none;
+    }
+  }
+
+  .profile {
+    color: white;
+  }
+}

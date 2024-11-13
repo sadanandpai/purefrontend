@@ -1,5 +1,5 @@
 import { redirect } from "next/navigation";
-import { SignIn } from "@/ui/components/auth/sign-in";
+import { SignIn } from "@/ui/components/modules/auth/sign-in";
 import { getLoggedInUser } from "@/server/actions/auth";
 import { routes } from "@/common/routes";
 

@@ -1,0 +1,17 @@
+.codeSnippet {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+
+  .lineNumber {
+    margin: 0 2rem 0 1rem;
+    user-select: none;
+    color: lightgray;
+  }
+
+  pre {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}

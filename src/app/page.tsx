@@ -1,5 +1,5 @@
 import { routes } from "@/common/routes";
-import { NavBar } from "@/ui/pure-components/nav-bar/nav-bar";
+import { NavBar } from "@/ui/components/common/nav-bar/nav-bar";
 import { Link as Anchor } from "@radix-ui/themes";
 import Link from "next/link";
 
