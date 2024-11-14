@@ -36,7 +36,7 @@ export function SubmissionsTable({
             <Fragment key={record.$id}>
               <tr>
                 <td>{new Date(record.$createdAt).toDateString()}</td>
-                <td>JavaScript</td>
+                <td>JS</td>
                 <td>{record.status ? "Pass" : "Fail"}</td>
                 <td>
                   <Button
@@ -57,7 +57,7 @@ export function SubmissionsTable({
                     title="delete"
                     variant="ghost"
                     onClick={() => deleteSubmission(record.$id)}
-                    loading={isLoading}
+                    disabled={isLoading}
                     aria-label="delete"
                   >
                     <Trash />

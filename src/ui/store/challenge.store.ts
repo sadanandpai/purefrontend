@@ -7,6 +7,8 @@ interface ChallengeState {
   testOutputs: OutputsStateProps | null;
   setOutput: (output: OutputStateProps) => void;
   setOutputs: (outputs: OutputsStateProps) => void;
+  resetOutput: () => void;
+  resetOutputs: () => void;
 }
 
 export const useChallengeStore = create<ChallengeState>()((set) => ({
@@ -33,4 +35,6 @@ export const useChallengeStore = create<ChallengeState>()((set) => ({
         };
       })
     ),
+  resetOutput: () => set({ testOutput: null }),
+  resetOutputs: () => set({ testOutputs: null }),
 }));

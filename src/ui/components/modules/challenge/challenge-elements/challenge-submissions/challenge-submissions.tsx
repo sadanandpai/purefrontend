@@ -26,16 +26,17 @@ export function ChallengeSubmissions() {
     data: submissionsData,
     error: submissionsError,
   } = useQuery({
-    queryKey: ["submissions"],
+    queryKey: ["submissions", challengeId],
     queryFn: () => getUserSubmissions(challengeId),
     enabled: !!context.user,
+    staleTime: Infinity,
   });
 
   const { mutate, isPending: isDeletionPending } = useMutation({
     mutationFn: ({ submissionId }: SubmissionMutationProp) =>
       deleteUserSubmission(submissionId),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["submissions"] });
+      queryClient.invalidateQueries({ queryKey: ["submissions", challengeId] });
       toast.success("Submission deleted successfully");
     },
     onError: () => {

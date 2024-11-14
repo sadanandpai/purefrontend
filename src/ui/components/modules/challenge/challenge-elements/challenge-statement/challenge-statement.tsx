@@ -1,5 +1,5 @@
 import Image from "next/image";
-import classes from "./challenge-statement.module.scss";
+import { Badge, Flex, Heading, Text } from "@radix-ui/themes";
 
 interface Props {
   name: string;
@@ -19,24 +19,38 @@ export function ProblemStatement({
   description,
   examples,
 }: Props) {
+  const difficultyColor =
+    difficulty === "easy"
+      ? "green"
+      : difficulty === "medium"
+      ? "yellow"
+      : "red";
+
   return (
-    <div className={classes.statement}>
-      <h2>{name}</h2>
-      <div className={classes.info}>
+    <div>
+      <Heading size="5">{name}</Heading>
+      <Flex my="4" gap="4">
         <Image src="/js.svg" height={24} width={24} alt="JavaScript" />
-        <span className={classes.difficulty}>{difficulty}</span>
-      </div>
-      <p dangerouslySetInnerHTML={{ __html: statement }}></p>
-      <p dangerouslySetInnerHTML={{ __html: description }}></p>
+        <Badge
+          color={difficultyColor}
+          variant="solid"
+          size="3"
+          className="capitalize"
+        >
+          {difficulty}
+        </Badge>
+      </Flex>
+
+      <Text dangerouslySetInnerHTML={{ __html: statement }}></Text>
+      <Text dangerouslySetInnerHTML={{ __html: description }}></Text>
+
       <div>
         {examples.map((example, idx) => (
-          <div key={idx}>
-            <p>
-              <b>Example {idx + 1}</b>
-            </p>
+          <div key={idx} className="pt-8">
+            <Text weight="bold">Example {idx + 1}</Text>
 
             <pre
-              className="rounded-md p-4 mt-2 text-md"
+              className="rounded-md p-4 mt-2 text-md flex flex-col gap-4"
               style={{
                 backgroundColor: "var(--gray-5)",
               }}

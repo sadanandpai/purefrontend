@@ -8,6 +8,8 @@ import { ChallengeControls } from "./challenge-sections/challenge-controls/chall
 import { ProblemProps } from "@/common/types/problem";
 import { testCode } from "@/ui/utils/test-code";
 import classes from "./challenge-ui.module.scss";
+import { useEffect } from "react";
+import { useChallengeStore } from "@/ui/store/challenge.store";
 
 interface Props {
   problem: ProblemProps;
@@ -20,6 +22,15 @@ export default function ChallengeUI({ problem }: Props) {
     "/test-cases.test.ts": problem.testCases,
     "/solution.ts": problem.solution,
   };
+  const resetOutput = useChallengeStore((state) => state.resetOutput);
+  const resetOutputs = useChallengeStore((state) => state.resetOutputs);
+
+  useEffect(() => {
+    return () => {
+      resetOutput();
+      resetOutputs();
+    };
+  }, [problem]);
 
   return (
     <SandpackProvider
@@ -38,7 +49,7 @@ export default function ChallengeUI({ problem }: Props) {
           <ChallengeDetails problem={problem} />
         </Panel>
         <PanelResizeHandle className="resize-handle" />
-        <Panel minSize={30} defaultSize={60}>
+        <Panel minSize={30} defaultSize={60} className="hidden md:block">
           <PanelGroup direction="vertical">
             <Panel defaultSize={75} minSize={50} className="panel right top">
               <ChallengeEditor />

@@ -31,7 +31,9 @@ export function ChallengeDetails({ problem }: Props) {
     >
       <Tabs.List className="flex-shrink-0">
         <Tabs.Trigger value="question">Question</Tabs.Trigger>
-        <Tabs.Trigger value="result">Result</Tabs.Trigger>
+        <Tabs.Trigger value="result" className="hidden md:block">
+          Result
+        </Tabs.Trigger>
         <Tabs.Trigger value="solution">Solution</Tabs.Trigger>
         <Tabs.Trigger value="submissions">Submissions</Tabs.Trigger>
       </Tabs.List>
