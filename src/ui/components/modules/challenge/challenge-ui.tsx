@@ -48,13 +48,13 @@ export default function ChallengeUI({ problem }: Props) {
         <Panel minSize={25} defaultSize={40} className="panel left">
           <ChallengeDetails problem={problem} />
         </Panel>
-        <PanelResizeHandle className="resize-handle" />
+        <PanelResizeHandle />
         <Panel minSize={30} defaultSize={60} className="hidden md:block">
           <PanelGroup direction="vertical">
             <Panel defaultSize={75} minSize={50} className="panel right top">
               <ChallengeEditor />
             </Panel>
-            <PanelResizeHandle className="resize-handle" />
+            <PanelResizeHandle />
             <Panel defaultSize={25} minSize={25} className="panel right bottom">
               <ChallengeControls defaultInput={problem.sampleInput} />
             </Panel>

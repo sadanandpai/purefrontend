@@ -81,12 +81,10 @@ export function ChallengeSubmissions() {
   }
 
   return (
-    <div className={classes.tableWrapper}>
-      <SubmissionsTable
-        records={submissionsData.documents}
-        deleteSubmission={deleteSubmission}
-        isLoading={isDeletionPending}
-      />
-    </div>
+    <SubmissionsTable
+      records={submissionsData.documents}
+      deleteSubmission={deleteSubmission}
+      isLoading={isDeletionPending}
+    />
   );
 }

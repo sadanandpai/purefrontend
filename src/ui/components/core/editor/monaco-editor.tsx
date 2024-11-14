@@ -1,21 +1,22 @@
 import Editor from "@monaco-editor/react";
+import { useTheme } from "next-themes";
 import {
   useActiveCode,
   FileTabs,
   useSandpack,
 } from "@codesandbox/sandpack-react/unstyled";
-import { useTheme } from "next-themes";
+import classes from "./editor.module.scss";
 
 export function MonacoEditor() {
+  const theme = useTheme();
   const { sandpack } = useSandpack();
   const { code, updateCode } = useActiveCode();
-  const theme = useTheme();
 
   return (
     <>
-      <FileTabs />
+      <FileTabs closableTabs={true} className={classes.fileTabs} />
       <Editor
-        height="calc(100% - 6.4rem)"
+        height="calc(100% - 7.6rem)"
         language="javascript"
         theme={theme.theme === "dark" ? "vs-dark" : "vs-light"}
         options={{

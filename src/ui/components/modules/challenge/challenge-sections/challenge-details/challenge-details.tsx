@@ -27,7 +27,7 @@ export function ChallengeDetails({ problem }: Props) {
     <Tabs.Root
       value={selectedTab}
       onValueChange={setSelectedTab}
-      className={classes.controlsWrapper}
+      className={`panel-layout ${classes.controlsWrapper}`}
     >
       <Tabs.List className="flex-shrink-0">
         <Tabs.Trigger value="question">Question</Tabs.Trigger>
@@ -38,7 +38,7 @@ export function ChallengeDetails({ problem }: Props) {
         <Tabs.Trigger value="submissions">Submissions</Tabs.Trigger>
       </Tabs.List>
 
-      <Box pt="3" className={classes.controlsBox}>
+      <Box p="3" className={classes.controlsBox}>
         <Tabs.Content value="question">
           <ProblemStatement {...problem} />
         </Tabs.Content>
