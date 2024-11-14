@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 import { routes } from "@/common/routes";
-import { Profile } from "@/ui/components/modules/profile/profile";
+import { Profile } from "@/ui/components/modules/auth/profile/profile";
 import { getLoggedInUser } from "@/server/actions/auth";
 
 export const dynamic = "force-dynamic";

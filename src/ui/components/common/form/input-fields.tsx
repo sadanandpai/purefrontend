@@ -31,7 +31,7 @@ export function EmailField({ value = "", setValue }: Props) {
       id="email"
       name="email"
       placeholder="Email"
-      type="email"
+      type="text"
       required
       value={value}
       onChange={(e) => setValue?.(e.target.value)}
@@ -39,7 +39,10 @@ export function EmailField({ value = "", setValue }: Props) {
   );
 }
 
-export function PasswordField({ field = "password", placeHolder }: Props) {
+export function PasswordField({
+  field = "password",
+  placeHolder = "Password",
+}: Props) {
   return (
     <TextField.Root
       id={field}

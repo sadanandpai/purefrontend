@@ -1,5 +1,4 @@
 import { useContext } from "react";
-import Link from "next/link";
 import { toast } from "sonner";
 import { usePathname } from "next/navigation";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
@@ -10,6 +9,7 @@ import {
   deleteUserSubmission,
   getUserSubmissions,
 } from "@/server/actions/submissions";
+import { RadixNextLink } from "@/ui/components/core/radix-next-link/radix-next-link";
 import classes from "./challenge-submissions.module.scss";
 
 interface SubmissionMutationProp {
@@ -52,8 +52,9 @@ export function ChallengeSubmissions() {
   if (!context.user) {
     return (
       <p className={classes.verticalCenter}>
-        Please&nbsp;<Link href={routes.signIn}>Sign in</Link>&nbsp;to view your
-        submissions
+        Please&nbsp;
+        <RadixNextLink href={routes.signIn}>Sign in</RadixNextLink>
+        &nbsp;to view your submissions
       </p>
     );
   }

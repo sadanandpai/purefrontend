@@ -12,26 +12,29 @@ import {
   updateFullName,
   updateUserEmail,
   sendVerificationEmail,
+  sendPasswordRecoveryEmail,
+  resetPassword,
 } from "@/server/data-access/session";
 import {
   validateEmail,
   validateName,
   validatePassword,
-  validateSignIn,
+  validateEmailPassword,
   validateSignUp,
+  validateResetPassword,
 } from "@/server/utils/auth";
 import { routes } from "@/common/routes";
 import { createCookie, deleteCookie } from "@/server/utils/cookies";
 import { headers } from "next/headers";
 import { respondWithError, respondWithSuccess } from "@/server/handlers/action";
-import { GlobalResponse } from "@/common/types/globals";
+import { GlobalError, GlobalResponse } from "@/common/types/globals";
 
 export async function signInWithEmail(
   _prev: GlobalResponse,
   formData: FormData
 ) {
   try {
-    const { email, password } = validateSignIn(formData);
+    const { email, password } = validateEmailPassword(formData);
     const secret = await createSessionWithEmail(email, password);
     await createCookie(COOKIE_NAME, secret);
     redirect(`${routes.profile}?auth=true`, RedirectType.replace);
@@ -93,9 +96,44 @@ export async function updateName(_prev: GlobalResponse, formData: FormData) {
 
 export async function updateEmail(_prev: GlobalResponse, formData: FormData) {
   try {
-    const { email, password } = validateEmail(formData);
+    const { email, password } = validateEmailPassword(formData);
     await updateUserEmail(email, password);
     return respondWithSuccess("Email updated successfully");
+  } catch (error) {
+    return respondWithError(error);
+  }
+}
+
+export async function forgotPassword(
+  _prev: GlobalResponse,
+  formData: FormData
+) {
+  try {
+    const { email } = validateEmail(formData);
+    await sendPasswordRecoveryEmail(email);
+    return respondWithSuccess("Reset link sent to your email");
+  } catch (error) {
+    return respondWithError(error);
+  }
+}
+
+export async function resetForgotPassword(
+  _prev: GlobalResponse,
+  formData: FormData
+) {
+  try {
+    const { userId, secret, newPassword, confirmPassword } =
+      validateResetPassword(formData);
+    if (newPassword !== confirmPassword) {
+      return respondWithError(
+        new GlobalError({
+          error: "Passwords do not match",
+        })
+      );
+    }
+
+    await resetPassword(userId, secret, newPassword);
+    return respondWithSuccess("Password reset successfully");
   } catch (error) {
     return respondWithError(error);
   }

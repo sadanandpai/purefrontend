@@ -6,8 +6,9 @@ import {
   getUniqueID,
 } from "@/server/services";
 import { routes } from "@/common/routes";
-import { getOAuthProvider } from "@/server/services/appwrite";
+import { createClient, getOAuthProvider } from "@/server/services/appwrite";
 import { respondWithDataAccessError } from "@/server/handlers/data-access";
+import { HOST_URL } from "@/server/config/server";
 
 export async function getSession() {
   const { account } = await createSessionClient();
@@ -61,9 +62,7 @@ export async function initiateSessionWithEmail(
 export async function sendVerificationEmail() {
   try {
     const { account } = await createSessionClient();
-    await account.createVerification(
-      `https://purefrontend.vercel.app${routes.verifyEmail}`
-    );
+    await account.createVerification(`${HOST_URL}${routes.verifyEmail}`);
   } catch (error) {
     respondWithDataAccessError(error);
   }
@@ -99,6 +98,28 @@ export async function updateUserEmail(email: string, password: string) {
   try {
     const { account } = await createSessionClient();
     await account.updateEmail(email, password);
+  } catch (error) {
+    respondWithDataAccessError(error);
+  }
+}
+
+export async function sendPasswordRecoveryEmail(email: string) {
+  try {
+    const { account } = createClient();
+    await account.createRecovery(email, `${HOST_URL}${routes.resetPassword}`);
+  } catch (error) {
+    respondWithDataAccessError(error);
+  }
+}
+
+export async function resetPassword(
+  userId: string,
+  secret: string,
+  password: string
+) {
+  try {
+    const { account } = createClient();
+    await account.updateRecovery(userId, secret, password);
   } catch (error) {
     respondWithDataAccessError(error);
   }

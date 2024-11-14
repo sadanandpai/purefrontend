@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { signInWithGoogle } from "@/server/actions/auth";
-import classes from "./auth-form.module.scss";
 import { Button } from "@radix-ui/themes";
+import classes from "./oauth.module.scss";
 
 export function OAuth() {
   return (

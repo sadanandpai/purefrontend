@@ -5,8 +5,8 @@ import { useMutation } from "@tanstack/react-query";
 import { appContext } from "@/ui/context/app.context";
 import { usePathname } from "next/navigation";
 import { routes } from "@/common/routes";
-import Link from "next/link";
 import { Button } from "@radix-ui/themes";
+import { RadixNextLink } from "@/ui/components/core/radix-next-link/radix-next-link";
 
 interface SubmissionMutationProps {
   challengeId: number;
@@ -42,8 +42,9 @@ export function SaveSubmission({ status, onSubmit, disabled }: Props) {
   if (!context.user) {
     return (
       <p>
-        Please&nbsp;<Link href={routes.signIn}>Sign in</Link>&nbsp;to save your
-        submission
+        Please&nbsp;
+        <RadixNextLink href={routes.signIn}>Sign in</RadixNextLink>
+        &nbsp;to save your submission
       </p>
     );
   }

@@ -1,13 +1,14 @@
 import {
+  forgotPasswordSchema,
+  resetPasswordSchema,
   signInSchema,
   signUpSchema,
-  updateEmailSchema,
   updateNameSchema,
   updatePasswordSchema,
 } from "@/server/definitions/auth";
 import { respondWithValidationError } from "@/server/handlers/validation";
 
-export function validateSignIn(formData: FormData) {
+export function validateEmailPassword(formData: FormData) {
   try {
     return signInSchema.parse({
       email: formData.get("email"),
@@ -41,6 +42,19 @@ export function validatePassword(formData: FormData) {
   }
 }
 
+export function validateResetPassword(formData: FormData) {
+  try {
+    return resetPasswordSchema.parse({
+      newPassword: formData.get("newPassword"),
+      confirmPassword: formData.get("confirmPassword"),
+      userId: formData.get("userId"),
+      secret: formData.get("secret"),
+    });
+  } catch (error) {
+    respondWithValidationError(error);
+  }
+}
+
 export function validateName(formData: FormData) {
   try {
     return updateNameSchema.parse({
@@ -53,9 +67,8 @@ export function validateName(formData: FormData) {
 
 export function validateEmail(formData: FormData) {
   try {
-    return updateEmailSchema.parse({
+    return forgotPasswordSchema.parse({
       email: formData.get("email"),
-      password: formData.get("password"),
     });
   } catch (error) {
     respondWithValidationError(error);

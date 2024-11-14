@@ -1,18 +1,18 @@
 "use client";
 
 import { useActionState, useState } from "react";
-import Link from "next/link";
-import { OAuth } from "./oauth";
 import { routes } from "@/common/routes";
 import { Button } from "@radix-ui/themes";
 import { signUpWithEmail } from "@/server/actions/auth";
+import { OAuth } from "@/ui/components/modules/auth/oauth/oauth";
 import { ErrorField } from "@/ui/components/common/form/error-field";
 import {
   EmailField,
   FullNameField,
   PasswordField,
 } from "@/ui/components/common/form/input-fields";
-import classes from "./auth-form.module.scss";
+import { RadixNextLink } from "@/ui/components/core/radix-next-link/radix-next-link";
+import classes from "./sign-in-up.module.scss";
 
 export function SignUp() {
   const [name, setName] = useState("");
@@ -44,7 +44,7 @@ export function SignUp() {
       </form>
 
       <div className={classes.authFormLinks}>
-        <Link href={routes.signIn}>Sign in</Link>
+        <RadixNextLink href={routes.signIn}>Sign in</RadixNextLink>
       </div>
 
       <OAuth />

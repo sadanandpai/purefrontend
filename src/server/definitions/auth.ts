@@ -3,6 +3,8 @@ import { z } from "zod";
 export const nameSchema = z.string().min(3).max(50).trim();
 export const emailSchema = z.string().email().trim().toLowerCase();
 export const passwordSchema = z.string().min(8).max(20).trim();
+export const userIdSchema = z.string().min(1).max(50);
+export const secretSchema = z.string().min(128).max(256);
 
 export type SignInSchemaErrors = z.inferFlattenedErrors<
   typeof signInSchema
@@ -32,11 +34,17 @@ export const updatePasswordSchema = z.object({
   newPassword: passwordSchema,
 });
 
+export const resetPasswordSchema = z.object({
+  newPassword: passwordSchema,
+  confirmPassword: passwordSchema,
+  userId: userIdSchema,
+  secret: secretSchema,
+});
+
 export const updateNameSchema = z.object({
   name: nameSchema,
 });
 
-export const updateEmailSchema = z.object({
+export const forgotPasswordSchema = z.object({
   email: emailSchema,
-  password: passwordSchema,
 });
