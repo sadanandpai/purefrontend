@@ -12,10 +12,6 @@ body {
   background: var(--background);
 }
 
-.radix-themes {
-  --cursor-button: pointer;
-}
-
 div,
 span,
 p {
@@ -23,7 +19,10 @@ p {
   line-height: normal;
 }
 
-a.disabled {
-  color: gray;
-  pointer-events: none;
+.radix-themes {
+  --cursor-button: pointer;
+}
+
+:disabled {
+  cursor: var(--cursor-disabled);
 }

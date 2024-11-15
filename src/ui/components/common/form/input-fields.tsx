@@ -7,6 +7,7 @@ interface Props {
   setValue?: (value: string) => void;
   field?: string;
   placeHolder?: string;
+  disabled?: boolean;
 }
 
 export function FullNameField({ value = "", setValue }: Props) {
@@ -42,6 +43,7 @@ export function EmailField({ value = "", setValue }: Props) {
 export function PasswordField({
   field = "password",
   placeHolder = "Password",
+  disabled = false,
 }: Props) {
   return (
     <TextField.Root
@@ -51,6 +53,7 @@ export function PasswordField({
       minLength={8}
       maxLength={20}
       type="password"
+      disabled={disabled}
       required
     />
   );

@@ -15,14 +15,14 @@ export function getOAuthProvider() {
 export function createClient() {
   if (
     !process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT ||
-    !process.env.NEXT_PUBLIC_APPWRITE_PROJECT
+    !process.env.NEXT_APPWRITE_PROJECT
   ) {
     throw new Error("Appwrite endpoint or project not provided");
   }
 
   const client = new Client()
     .setEndpoint(process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT)
-    .setProject(process.env.NEXT_PUBLIC_APPWRITE_PROJECT);
+    .setProject(process.env.NEXT_APPWRITE_PROJECT);
 
   return {
     get account() {
@@ -37,7 +37,7 @@ export function createClient() {
 export async function createSessionClient() {
   if (
     !process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT ||
-    !process.env.NEXT_PUBLIC_APPWRITE_PROJECT
+    !process.env.NEXT_APPWRITE_PROJECT
   ) {
     throw new Error("Appwrite endpoint or project not provided");
   }
@@ -49,7 +49,7 @@ export async function createSessionClient() {
 
   const client = new Client()
     .setEndpoint(process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT)
-    .setProject(process.env.NEXT_PUBLIC_APPWRITE_PROJECT)
+    .setProject(process.env.NEXT_APPWRITE_PROJECT)
     .setSession(sessionCookie.value);
 
   return {
@@ -65,7 +65,7 @@ export async function createSessionClient() {
 export async function createAdminClient() {
   if (
     !process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT ||
-    !process.env.NEXT_PUBLIC_APPWRITE_PROJECT ||
+    !process.env.NEXT_APPWRITE_PROJECT ||
     !process.env.NEXT_APPWRITE_KEY
   ) {
     throw new Error("Appwrite endpoint or project or key not provided");
@@ -73,7 +73,7 @@ export async function createAdminClient() {
 
   const client = new Client()
     .setEndpoint(process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT)
-    .setProject(process.env.NEXT_PUBLIC_APPWRITE_PROJECT)
+    .setProject(process.env.NEXT_APPWRITE_PROJECT)
     .setKey(process.env.NEXT_APPWRITE_KEY);
 
   return {

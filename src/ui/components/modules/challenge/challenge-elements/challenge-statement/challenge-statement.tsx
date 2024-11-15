@@ -1,35 +1,24 @@
 import Image from "next/image";
 import { Badge, Flex, Heading, Text } from "@radix-ui/themes";
+import { ProblemProps } from "@/common/types/problem";
 
 interface Props {
-  name: string;
-  statement: string;
-  difficulty: string;
-  description: string;
-  examples: {
-    input: string;
-    output: string;
-  }[];
+  problem: ProblemProps;
+  views: number;
 }
 
-export function ProblemStatement({
-  name,
-  difficulty,
-  statement,
-  description,
-  examples,
-}: Props) {
+export function ProblemStatement({ problem, views }: Props) {
   const difficultyColor =
-    difficulty === "easy"
+    problem.difficulty === "easy"
       ? "green"
-      : difficulty === "medium"
+      : problem.difficulty === "medium"
       ? "yellow"
       : "red";
 
   return (
     <div>
-      <Heading size="5">{name}</Heading>
-      <Flex my="4" gap="4">
+      <Heading size="5">{problem.name}</Heading>
+      <Flex my="4" gap="4" align="center">
         <Image src="/js.svg" height={24} width={24} alt="JavaScript" />
         <Badge
           color={difficultyColor}
@@ -37,15 +26,21 @@ export function ProblemStatement({
           size="3"
           className="capitalize"
         >
-          {difficulty}
+          {problem.difficulty}
         </Badge>
+
+        {views !== -1 && (
+          <Badge color="gray" variant="solid" size="1" radius="full">
+            {views} views
+          </Badge>
+        )}
       </Flex>
 
-      <Text dangerouslySetInnerHTML={{ __html: statement }}></Text>
-      <Text dangerouslySetInnerHTML={{ __html: description }}></Text>
+      <Text dangerouslySetInnerHTML={{ __html: problem.statement }}></Text>
+      <Text dangerouslySetInnerHTML={{ __html: problem.description }}></Text>
 
       <div>
-        {examples.map((example, idx) => (
+        {problem.examples.map((example, idx) => (
           <div key={idx} className="pt-8">
             <Text weight="bold">Example {idx + 1}</Text>
 

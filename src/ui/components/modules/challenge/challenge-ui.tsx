@@ -13,9 +13,10 @@ import { useChallengeStore } from "@/ui/store/challenge.store";
 
 interface Props {
   problem: ProblemProps;
+  views: number;
 }
 
-export default function ChallengeUI({ problem }: Props) {
+export default function ChallengeUI({ problem, views }: Props) {
   const files = {
     "/code.ts": problem.code,
     "/add.test.ts": testCode(problem.sampleInput),
@@ -30,6 +31,7 @@ export default function ChallengeUI({ problem }: Props) {
       resetOutput();
       resetOutputs();
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [problem]);
 
   return (
@@ -46,7 +48,7 @@ export default function ChallengeUI({ problem }: Props) {
     >
       <PanelGroup direction="horizontal">
         <Panel minSize={25} defaultSize={40} className="panel left">
-          <ChallengeDetails problem={problem} />
+          <ChallengeDetails problem={problem} views={views} />
         </Panel>
         <PanelResizeHandle />
         <Panel minSize={30} defaultSize={60} className="hidden md:block">

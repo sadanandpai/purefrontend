@@ -48,7 +48,7 @@ export function EmailUpdate({ email, emailVerification }: Props) {
       </div>
 
       <div>
-        <PasswordField />
+        <PasswordField disabled={newEmail === email} />
         <ErrorField error={state.fieldErrors?.name?.[0]} />
       </div>
 
