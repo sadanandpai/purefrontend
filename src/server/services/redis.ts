@@ -1,10 +1,12 @@
 import { Redis } from "ioredis";
 
-export const redis = new Redis({
+const redis = new Redis({
   host: "redis-17396.c301.ap-south-1-1.ec2.redns.redis-cloud.com",
   port: 17396,
   password: process.env.NEXT_REDIS_PASSWORD,
 });
+
+const viewsCache = new Map<number, number>();
 
 export async function getCacheViews(challengeId: number) {
   const views = await redis.get(`views:${challengeId}`);
@@ -12,7 +14,13 @@ export async function getCacheViews(challengeId: number) {
 }
 
 export async function incrementCacheViews(challengeId: number) {
-  const views = await getCacheViews(challengeId);
-  await redis.set(`views:${challengeId}`, views + 1);
-  return views + 1;
+  // asynchronously increment views in redis
+  getCacheViews(challengeId).then(async (views = 0) => {
+    await redis.set(`views:${challengeId}`, views + 1);
+    viewsCache.set(challengeId, views + 1);
+  });
+
+  // respond quickly with the current views, so that UI loading will not be delayed
+  // if local cache is not available, return -1 (wont't respond with views till the cache is updated)
+  return viewsCache.get(challengeId) ?? -1;
 }

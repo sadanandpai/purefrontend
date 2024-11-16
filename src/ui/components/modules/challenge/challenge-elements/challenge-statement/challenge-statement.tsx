@@ -1,40 +1,26 @@
-import Image from "next/image";
 import { Badge, Flex, Heading, Text } from "@radix-ui/themes";
 import { ProblemProps } from "@/common/types/problem";
+import { InfoBar } from "@/ui/components/modules/challenge/challenge-components/info-bar/info-bar";
 
 interface Props {
   problem: ProblemProps;
   views: number;
+  liked: boolean;
 }
 
-export function ProblemStatement({ problem, views }: Props) {
-  const difficultyColor =
-    problem.difficulty === "easy"
-      ? "green"
-      : problem.difficulty === "medium"
-      ? "yellow"
-      : "red";
-
+export function ProblemStatement({ problem, views, liked }: Props) {
   return (
     <div>
-      <Heading size="5">{problem.name}</Heading>
-      <Flex my="4" gap="4" align="center">
-        <Image src="/js.svg" height={24} width={24} alt="JavaScript" />
-        <Badge
-          color={difficultyColor}
-          variant="solid"
-          size="3"
-          className="capitalize"
-        >
-          {problem.difficulty}
-        </Badge>
-
+      <Flex gap="2" align="center">
+        <Heading size="5">{problem.name}</Heading>
         {views !== -1 && (
           <Badge color="gray" variant="solid" size="1" radius="full">
             {views} views
           </Badge>
         )}
       </Flex>
+
+      <InfoBar difficulty={problem.difficulty} liked={liked} />
 
       <Text dangerouslySetInnerHTML={{ __html: problem.statement }}></Text>
       <Text dangerouslySetInnerHTML={{ __html: problem.description }}></Text>

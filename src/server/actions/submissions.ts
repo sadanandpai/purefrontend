@@ -1,18 +1,14 @@
 "use server";
 
-import { challenges } from "@/data/challenges";
 import {
   createSubmissionsRecord,
   deleteSubmissionsRecord,
   getSubmissionsRecords,
 } from "@/server/data-access/submissions";
+import { isValidChallengeId } from "../utils/challenge";
 
 export async function getUserSubmissions(challengeId: number) {
-  if (
-    typeof challengeId !== "number" ||
-    challengeId <= 0 ||
-    challengeId > challenges.length
-  ) {
+  if (!isValidChallengeId(challengeId)) {
     throw new Error("Invalid challenge ID");
   }
 
@@ -24,11 +20,7 @@ export async function submitUserSubmission(
   code: string,
   status: boolean
 ) {
-  if (
-    typeof challengeId !== "number" ||
-    challengeId <= 0 ||
-    challengeId > challenges.length
-  ) {
+  if (!isValidChallengeId(challengeId)) {
     throw new Error("Invalid challenge ID");
   }
 

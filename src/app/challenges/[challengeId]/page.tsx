@@ -1,6 +1,7 @@
 import { ProblemProps } from "@/common/types/problem";
-import { challenges } from "@/data/challenges";
+import { getUserChallengeInfo } from "@/server/actions/challenge";
 import { getIncrementedViews } from "@/server/data-access/views";
+import { isValidChallengeId } from "@/server/utils/challenge";
 import ChallengeUI from "@/ui/components/modules/challenge/challenge-ui";
 import { notFound } from "next/navigation";
 
@@ -12,11 +13,7 @@ export default async function Challenge({ params }: Props) {
   const { challengeId } = await params;
   const challengeIdAsNum = Number(challengeId);
 
-  if (
-    isNaN(challengeIdAsNum) ||
-    challengeIdAsNum <= 0 ||
-    challengeIdAsNum > challenges.length
-  ) {
+  if (!isValidChallengeId(challengeIdAsNum)) {
     notFound();
   }
 
@@ -24,6 +21,10 @@ export default async function Challenge({ params }: Props) {
     (module) => module.problem
   );
 
+  const info = await getUserChallengeInfo(challengeIdAsNum);
   const views = await getIncrementedViews(Number(challengeId));
-  return <ChallengeUI problem={problem} views={views} />;
+
+  return (
+    <ChallengeUI problem={problem} views={views} liked={info?.liked ?? false} />
+  );
 }
