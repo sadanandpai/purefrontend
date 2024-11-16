@@ -1,34 +1,47 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
+import { toast } from "sonner";
 import { Heart } from "lucide-react";
 import { Button } from "@radix-ui/themes";
 import { usePathname } from "next/navigation";
-import { useMutation } from "@tanstack/react-query";
-import { setUserChallengeInfo } from "@/server/actions/challenge";
-import { toast } from "sonner";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { appContext } from "@/ui/context/app.context";
+import {
+  getUserChallengeInfo,
+  setUserChallengeInfo,
+} from "@/server/actions/challenge";
 
-interface Props {
-  liked: boolean;
-}
-
-export function UserLike({ liked }: Props) {
+export function UserLike() {
+  const queryClient = useQueryClient();
   const context = useContext(appContext);
   const challengeId = Number(usePathname().split("/").at(-1));
-  const [isLiked, setIsLiked] = useState(liked);
+
+  const { data: infoData, isLoading } = useQuery({
+    queryKey: ["isLiked", challengeId],
+    queryFn: () => getUserChallengeInfo(challengeId),
+    enabled: !!context.user,
+    staleTime: Infinity,
+  });
 
   const { mutate, isPending } = useMutation({
     mutationKey: ["userChallengeInfo", challengeId],
-    mutationFn: (isLiked: boolean) =>
+    mutationFn: () =>
       setUserChallengeInfo(challengeId, {
-        liked: !isLiked,
+        like: !infoData?.like,
       }),
-    onSuccess: () => {
-      const isUpdatedLiked = !isLiked;
-      setIsLiked(isUpdatedLiked);
-      if (isUpdatedLiked) {
-        toast.success("Challenge liked successfully");
+    onSuccess: (data) => {
+      // update the cache of query (this helps to update the UI without invoking the API again)
+      queryClient.setQueryData(
+        ["isLiked", challengeId],
+        (oldData: typeof infoData) => ({
+          ...oldData,
+          like: data.like,
+        })
+      );
+
+      if (data.like) {
+        toast.success("Challenge is liked");
       } else {
-        toast("Challenge unliked successfully");
+        toast("Challenge is un-liked");
       }
     },
     onError: () => {
@@ -46,7 +59,7 @@ export function UserLike({ liked }: Props) {
       return;
     }
 
-    mutate(isLiked);
+    mutate();
   }
 
   return (
@@ -54,12 +67,12 @@ export function UserLike({ liked }: Props) {
       variant="ghost"
       size="1"
       className="text-gray-500"
-      loading={isPending}
+      loading={isLoading || isPending || infoData === undefined}
       onClick={handleLike}
     >
       <Heart
-        fill={isLiked ? "red" : "none"}
-        color={isLiked ? "red" : "black"}
+        fill={infoData?.like ? "red" : "none"}
+        color={infoData?.like ? "red" : "black"}
       />
     </Button>
   );

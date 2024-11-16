@@ -5,10 +5,9 @@ import { InfoBar } from "@/ui/components/modules/challenge/challenge-components/
 interface Props {
   problem: ProblemProps;
   views: number;
-  liked: boolean;
 }
 
-export function ProblemStatement({ problem, views, liked }: Props) {
+export function ProblemStatement({ problem, views }: Props) {
   return (
     <div>
       <Flex gap="2" align="center">
@@ -20,7 +19,7 @@ export function ProblemStatement({ problem, views, liked }: Props) {
         )}
       </Flex>
 
-      <InfoBar difficulty={problem.difficulty} liked={liked} />
+      <InfoBar difficulty={problem.difficulty} />
 
       <Text dangerouslySetInnerHTML={{ __html: problem.statement }}></Text>
       <Text dangerouslySetInnerHTML={{ __html: problem.description }}></Text>

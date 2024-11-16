@@ -10,7 +10,7 @@ import { getLoggedInUser } from "./auth";
 
 export async function getUserChallengeInfo(challengeId: number) {
   if ((await getLoggedInUser()) === null) {
-    return { liked: null, bookmarked: null, completed: null };
+    return { like: null, done: null };
   }
 
   if (!isValidChallengeId(challengeId)) {
@@ -22,7 +22,7 @@ export async function getUserChallengeInfo(challengeId: number) {
 
 export async function setUserChallengeInfo(
   challengeId: number,
-  data: Partial<{ liked: boolean; bookmarked: boolean; completed: boolean }>
+  data: Partial<{ like: boolean; done: boolean }>
 ) {
   if (!isValidChallengeId(challengeId)) {
     throw new Error("Invalid challenge ID");

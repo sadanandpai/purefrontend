@@ -12,7 +12,7 @@ export default function Layout({
       <NavBar />
       <section className={classes.authSection}>
         <Text size={"8"} mb={"6"} as="p">
-          PureFrontend
+          ClearFrontend
         </Text>
         {children}
       </section>

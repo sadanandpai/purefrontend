@@ -9,23 +9,22 @@ export async function readUserChallengeInfo(challengeId: number) {
   const result = await databases.listDocuments(
     DB,
     USER_CHALLENGE_INFO_COLLECTION,
-    [Query.equal("challengeId", challengeId), Query.limit(1)]
+    [Query.equal("cId", challengeId), Query.limit(1)]
   );
 
   const document = result.documents[0];
   return document
     ? {
         $id: document.$id,
-        liked: document.liked,
-        bookmarked: document.bookmarked,
-        completed: document.completed,
+        like: document.like,
+        done: document.done,
       }
     : null;
 }
 
 export async function createChallengeInfo(
   challengeId: number,
-  data: Partial<{ liked: boolean; bookmarked: boolean; completed: boolean }>
+  data: Partial<{ like: boolean; done: boolean }>
 ) {
   const { client } = await createSessionClient();
   const databases = new Databases(client);
@@ -35,7 +34,7 @@ export async function createChallengeInfo(
     USER_CHALLENGE_INFO_COLLECTION,
     getUniqueID(),
     {
-      challengeId,
+      cId: challengeId,
       ...data,
     }
   );
@@ -44,7 +43,7 @@ export async function createChallengeInfo(
 export async function updateUserChallengeInfo(
   documentId: string,
   challengeId: number,
-  data: Partial<{ liked: boolean; bookmarked: boolean; completed: boolean }>
+  data: Partial<{ liked: boolean; done: boolean }>
 ) {
   const { client } = await createSessionClient();
   const databases = new Databases(client);
@@ -54,15 +53,14 @@ export async function updateUserChallengeInfo(
     USER_CHALLENGE_INFO_COLLECTION,
     documentId,
     {
-      challengeId,
+      cId: challengeId,
       ...data,
     }
   );
 
   return {
     $id: doc.$id,
-    liked: doc.liked,
-    bookmarked: doc.bookmarked,
-    completed: doc.completed,
+    like: doc.like,
+    done: doc.done,
   };
 }

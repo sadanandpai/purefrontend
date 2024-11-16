@@ -1,5 +1,4 @@
 import { ProblemProps } from "@/common/types/problem";
-import { getUserChallengeInfo } from "@/server/actions/challenge";
 import { getIncrementedViews } from "@/server/data-access/views";
 import { isValidChallengeId } from "@/server/utils/challenge";
 import ChallengeUI from "@/ui/components/modules/challenge/challenge-ui";
@@ -21,10 +20,7 @@ export default async function Challenge({ params }: Props) {
     (module) => module.problem
   );
 
-  const info = await getUserChallengeInfo(challengeIdAsNum);
   const views = await getIncrementedViews(Number(challengeId));
 
-  return (
-    <ChallengeUI problem={problem} views={views} liked={info?.liked ?? false} />
-  );
+  return <ChallengeUI problem={problem} views={views} />;
 }

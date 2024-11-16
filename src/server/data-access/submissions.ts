@@ -9,7 +9,7 @@ export async function getSubmissionsRecords(challengeId: number) {
   const databases = new Databases(client);
 
   return await databases.listDocuments(DB, SUBMISSIONS_COLLECTION, [
-    Query.equal("challengeId", challengeId),
+    Query.equal("cId", challengeId),
   ]);
 }
 
@@ -26,7 +26,7 @@ export async function createSubmissionsRecord(
     SUBMISSIONS_COLLECTION,
     getUniqueID(),
     {
-      challengeId,
+      cId: challengeId,
       code,
       status,
     }

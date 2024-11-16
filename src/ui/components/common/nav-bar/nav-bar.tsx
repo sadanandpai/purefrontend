@@ -9,7 +9,7 @@ export function NavBar({ children }: React.PropsWithChildren) {
   return (
     <nav className={classes.navBar} role="navigation">
       <RadixNextLink href={routes.root} size="6" weight="bold">
-        PureFrontend
+        ClearFrontend
       </RadixNextLink>
 
       {children}

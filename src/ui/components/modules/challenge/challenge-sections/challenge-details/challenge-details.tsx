@@ -11,10 +11,9 @@ import classes from "./challenge-details.module.scss";
 interface Props {
   problem: ProblemProps;
   views: number;
-  liked: boolean;
 }
 
-export function ChallengeDetails({ problem, views, liked }: Props) {
+export function ChallengeDetails({ problem, views }: Props) {
   const [selectedTab, setSelectedTab] = useState("question");
   const testOutputs = useChallengeStore((state) => state.testOutputs);
 
@@ -42,7 +41,7 @@ export function ChallengeDetails({ problem, views, liked }: Props) {
 
       <Box p="3" className={classes.controlsBox}>
         <Tabs.Content value="question">
-          <ProblemStatement problem={problem} views={views} liked={liked} />
+          <ProblemStatement problem={problem} views={views} />
         </Tabs.Content>
 
         <Tabs.Content value="result">

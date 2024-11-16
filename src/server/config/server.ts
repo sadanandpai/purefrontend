@@ -1,8 +1,8 @@
 export const COOKIE_NAME = "auth-session";
 
-export const DB = "672c61c5003770288bcd";
-export const SUBMISSIONS_COLLECTION = "672c6704001691915536";
-export const CHALLENGE_INFO_COLLECTION = "67374ce0002fe2726741";
-export const USER_CHALLENGE_INFO_COLLECTION = "67374e1b002fe6f31237";
+export const DB = "67386dba000f93af0abb";
+export const SUBMISSIONS_COLLECTION = "67386eee001a3e5e130d";
+export const CHALLENGE_INFO_COLLECTION = "67386e57002ded7c3dc9";
+export const USER_CHALLENGE_INFO_COLLECTION = "67386e57002ded7c3dc9";
 
 export const HOST_URL = "https://purefrontend.vercel.app";

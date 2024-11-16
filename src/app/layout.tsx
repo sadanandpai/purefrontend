@@ -4,7 +4,7 @@ import "@/ui/styles/styles.scss";
 import { GlobalWrapper } from "./glabal.wrapper";
 
 export const metadata: Metadata = {
-  title: "PureFrontend",
+  title: "ClearFrontend",
   description: "Online Coding Platform",
 };
 
