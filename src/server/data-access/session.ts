@@ -4,6 +4,7 @@ import {
   createAdminClient,
   createSessionClient,
   getUniqueID,
+  oAuthProvidersType,
 } from "@/server/services/appwrite";
 import { routes } from "@/common/routes";
 import { createClient, getOAuthProvider } from "@/server/services/appwrite";
@@ -35,10 +36,14 @@ export async function createSessionWithSecret(userId: string, secret: string) {
   }
 }
 
-export async function redirectToOAuth(origin: string | null) {
+export async function redirectToOAuth(
+  origin: string | null,
+  provider: oAuthProvidersType
+) {
   const { account } = await createAdminClient();
+
   return await account.createOAuth2Token(
-    getOAuthProvider().Google,
+    getOAuthProvider(provider),
     `${origin}/oauth`,
     `${origin}/signin`
   );
@@ -120,6 +125,15 @@ export async function resetPassword(
   try {
     const { account } = createClient();
     await account.updateRecovery(userId, secret, password);
+  } catch (error) {
+    respondWithDataAccessError(error);
+  }
+}
+
+export async function updatePhoneNumber(phone: string, password: string) {
+  try {
+    const { account } = await createSessionClient();
+    await account.updatePhone(phone, password);
   } catch (error) {
     respondWithDataAccessError(error);
   }

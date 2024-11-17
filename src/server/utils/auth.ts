@@ -5,6 +5,7 @@ import {
   signUpSchema,
   updateNameSchema,
   updatePasswordSchema,
+  updatePhoneSchema,
 } from "@/server/definitions/auth";
 import { respondWithValidationError } from "@/server/handlers/validation";
 
@@ -69,6 +70,17 @@ export function validateEmail(formData: FormData) {
   try {
     return forgotPasswordSchema.parse({
       email: formData.get("email"),
+    });
+  } catch (error) {
+    respondWithValidationError(error);
+  }
+}
+
+export function validatePhone(formData: FormData) {
+  try {
+    return updatePhoneSchema.parse({
+      phone: formData.get("phone"),
+      password: formData.get("password"),
     });
   } catch (error) {
     respondWithValidationError(error);

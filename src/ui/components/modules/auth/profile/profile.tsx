@@ -6,6 +6,7 @@ import { NameUpdate } from "./name-update";
 import { EmailUpdate } from "./email-update";
 import classes from "./profile.module.scss";
 import { EmailVerification } from "./email-verification";
+import { PhoneUpdate } from "./phone-update";
 
 interface Props {
   user: Models.User<Models.Preferences>;
@@ -19,6 +20,10 @@ export function Profile({ user }: Props) {
       <EmailUpdate
         email={user.email}
         emailVerification={user.emailVerification}
+      />
+      <PhoneUpdate
+        phone={user.phone}
+        phoneVerification={user.phoneVerification}
       />
 
       <Flex gap="2">

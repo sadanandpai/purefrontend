@@ -14,6 +14,7 @@ import {
   sendVerificationEmail,
   sendPasswordRecoveryEmail,
   resetPassword,
+  updatePhoneNumber,
 } from "@/server/data-access/session";
 import {
   validateEmail,
@@ -22,6 +23,7 @@ import {
   validateEmailPassword,
   validateSignUp,
   validateResetPassword,
+  validatePhone,
 } from "@/server/utils/auth";
 import { headers } from "next/headers";
 import { routes } from "@/common/routes";
@@ -43,10 +45,10 @@ export async function signInWithEmail(
   }
 }
 
-export async function signInWithGoogle() {
+export async function signInWithOAuth(provider: "Google" | "Github") {
   const reqHeaders = await headers();
   const origin = reqHeaders.get("origin");
-  const redirectUrl = await redirectToOAuth(origin);
+  const redirectUrl = await redirectToOAuth(origin, provider);
   redirect(redirectUrl);
 }
 
@@ -89,6 +91,16 @@ export async function updateName(_prev: GlobalResponse, formData: FormData) {
     const { name } = validateName(formData);
     await updateFullName(name);
     return respondWithSuccess("Name updated successfully");
+  } catch (error) {
+    return respondWithError(error);
+  }
+}
+
+export async function updatePhone(_prev: GlobalResponse, formData: FormData) {
+  try {
+    const { phone, password } = validatePhone(formData);
+    await updatePhoneNumber(phone, password);
+    return respondWithSuccess("Phone updated successfully");
   } catch (error) {
     return respondWithError(error);
   }

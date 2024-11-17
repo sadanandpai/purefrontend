@@ -4,12 +4,19 @@ import { Client, Account, ID, OAuthProvider } from "node-appwrite";
 import { COOKIE_NAME } from "@/server/config/server.config";
 import { getCookie } from "@/server/utils/cookies";
 
+const oAuthProviders = {
+  Google: OAuthProvider.Google,
+  Github: OAuthProvider.Github,
+};
+
+export type oAuthProvidersType = keyof typeof oAuthProviders;
+
 export function getUniqueID() {
   return ID.unique();
 }
 
-export function getOAuthProvider() {
-  return OAuthProvider;
+export function getOAuthProvider(provider: keyof typeof oAuthProviders) {
+  return oAuthProviders[provider];
 }
 
 export function createClient() {

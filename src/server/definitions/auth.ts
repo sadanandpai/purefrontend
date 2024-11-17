@@ -5,6 +5,7 @@ export const emailSchema = z.string().email().trim().toLowerCase();
 export const passwordSchema = z.string().min(8).max(20).trim();
 export const userIdSchema = z.string().min(1).max(50);
 export const secretSchema = z.string().min(128).max(256);
+export const phoneSchema = z.string().regex(/^\+[0-9]{1,15}$/);
 
 export type SignInSchemaErrors = z.inferFlattenedErrors<
   typeof signInSchema
@@ -47,4 +48,9 @@ export const updateNameSchema = z.object({
 
 export const forgotPasswordSchema = z.object({
   email: emailSchema,
+});
+
+export const updatePhoneSchema = z.object({
+  phone: phoneSchema,
+  password: passwordSchema,
 });

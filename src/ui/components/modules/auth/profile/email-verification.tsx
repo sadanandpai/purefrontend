@@ -31,7 +31,7 @@ export function EmailVerification() {
       disabled={!!data?.message}
       title={
         data?.message
-          ? "Verfiication email sent"
+          ? "Verification email sent"
           : "Click to send verification email"
       }
     >

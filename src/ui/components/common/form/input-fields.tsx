@@ -58,3 +58,17 @@ export function PasswordField({
     />
   );
 }
+
+export function PhoneField({ value = "", setValue }: Props) {
+  return (
+    <TextField.Root
+      id="phone"
+      name="phone"
+      placeholder="Phone"
+      type="tel"
+      required
+      value={value}
+      onChange={(e) => setValue?.(e.target.value)}
+    />
+  );
+}
