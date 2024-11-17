@@ -62,11 +62,18 @@ export function UserLike() {
     mutate();
   }
 
+  if (!context.user) {
+    return (
+      <Button size="1" variant="ghost" onClick={handleLike}>
+        <Heart color="black" />
+      </Button>
+    );
+  }
+
   return (
     <Button
-      variant="ghost"
       size="1"
-      className="text-gray-500"
+      variant="ghost"
       loading={isLoading || isPending || infoData === undefined}
       onClick={handleLike}
     >
