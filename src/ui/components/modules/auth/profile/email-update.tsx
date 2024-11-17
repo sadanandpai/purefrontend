@@ -36,7 +36,7 @@ export function EmailUpdate({ email, emailVerification }: Props) {
             Verified
           </Badge>
         ) : (
-          <Badge color="red" variant="solid">
+          <Badge color="orange" variant="solid">
             Unverified
           </Badge>
         )}

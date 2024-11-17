@@ -5,7 +5,7 @@ import {
   readUserChallengeInfo,
   updateUserChallengeInfo,
 } from "@/server/data-access/challenge";
-import { isValidChallengeId } from "../utils/challenge";
+import { isValidChallengeId } from "@/server/utils/challenge";
 import { getLoggedInUser } from "./auth";
 
 export async function getUserChallengeInfo(challengeId: number) {

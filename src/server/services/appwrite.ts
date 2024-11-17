@@ -1,7 +1,7 @@
 import "server-only";
 
 import { Client, Account, ID, OAuthProvider } from "node-appwrite";
-import { COOKIE_NAME } from "@/server/config/server";
+import { COOKIE_NAME } from "@/server/config/server.config";
 import { getCookie } from "@/server/utils/cookies";
 
 export function getUniqueID() {

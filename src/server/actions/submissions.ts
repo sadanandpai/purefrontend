@@ -5,7 +5,7 @@ import {
   deleteSubmissionsRecord,
   getSubmissionsRecords,
 } from "@/server/data-access/submissions";
-import { isValidChallengeId } from "../utils/challenge";
+import { isValidChallengeId } from "@/server/utils/challenge";
 
 export async function getUserSubmissions(challengeId: number) {
   if (!isValidChallengeId(challengeId)) {

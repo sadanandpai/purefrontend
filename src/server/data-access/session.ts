@@ -4,11 +4,11 @@ import {
   createAdminClient,
   createSessionClient,
   getUniqueID,
-} from "@/server/services";
+} from "@/server/services/appwrite";
 import { routes } from "@/common/routes";
 import { createClient, getOAuthProvider } from "@/server/services/appwrite";
 import { respondWithDataAccessError } from "@/server/handlers/data-access";
-import { HOST_URL } from "@/server/config/server";
+import { HOST_URL } from "@/server/config/server.config";
 
 export async function getSession() {
   const { account } = await createSessionClient();

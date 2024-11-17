@@ -1,5 +1,8 @@
 import { Databases, Query } from "node-appwrite";
-import { DB, USER_CHALLENGE_INFO_COLLECTION } from "@/server/config/server";
+import {
+  DB,
+  USER_CHALLENGE_INFO_COLLECTION,
+} from "@/server/config/appwrite.config";
 import { createSessionClient, getUniqueID } from "@/server/services/appwrite";
 
 export async function readUserChallengeInfo(challengeId: number) {

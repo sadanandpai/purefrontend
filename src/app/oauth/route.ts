@@ -1,4 +1,4 @@
-import { COOKIE_NAME } from "@/server/config/server";
+import { COOKIE_NAME } from "@/server/config/server.config";
 import { NextRequest, NextResponse } from "next/server";
 import { createSessionWithSecret } from "@/server/data-access/session";
 import { routes } from "@/common/routes";

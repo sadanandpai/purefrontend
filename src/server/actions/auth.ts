@@ -1,7 +1,7 @@
 "use server";
 
 import { redirect, RedirectType } from "next/navigation";
-import { COOKIE_NAME } from "@/server/config/server";
+import { COOKIE_NAME } from "@/server/config/server.config";
 import {
   getSession,
   createSessionWithEmail,
@@ -23,11 +23,11 @@ import {
   validateSignUp,
   validateResetPassword,
 } from "@/server/utils/auth";
+import { headers } from "next/headers";
 import { routes } from "@/common/routes";
 import { createCookie, deleteCookie } from "@/server/utils/cookies";
-import { headers } from "next/headers";
-import { respondWithError, respondWithSuccess } from "@/server/handlers/action";
 import { GlobalError, GlobalResponse } from "@/common/types/globals";
+import { respondWithError, respondWithSuccess } from "@/server/handlers/action";
 
 export async function signInWithEmail(
   _prev: GlobalResponse,
@@ -137,6 +137,21 @@ export async function resetForgotPassword(
   } catch (error) {
     return respondWithError(error);
   }
+}
+
+export async function sendVerificationEmailAction() {
+  const session = await getLoggedInUser();
+
+  if (!session) {
+    throw "User not logged in";
+  }
+
+  if (session.emailVerification) {
+    throw "Email already verified. Please refresh the page";
+  }
+
+  await sendVerificationEmail();
+  return respondWithSuccess("Verification email sent");
 }
 
 export async function getLoggedInUser() {
