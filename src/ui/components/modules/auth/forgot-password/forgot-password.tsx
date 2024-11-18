@@ -3,12 +3,12 @@
 import { useActionState, useEffect, useState } from "react";
 import { routes } from "@/common/routes";
 import { Button } from "@radix-ui/themes";
-import { forgotPassword } from "@/server/actions/auth";
 import { ErrorField } from "@/ui/components/common/form/error-field";
 import { EmailField } from "@/ui/components/common/form/input-fields";
 import classes from "./forgot-password.module.scss";
 import { RadixNextLink } from "@/ui/components/core/radix-next-link/radix-next-link";
 import { toast } from "sonner";
+import { forgotPassword } from "@/server/actions/user";
 
 export function ForgotPassword() {
   const [email, setEmail] = useState("");

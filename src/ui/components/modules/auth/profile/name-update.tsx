@@ -4,10 +4,10 @@ import { useActionState, useEffect, useState } from "react";
 import { toast } from "sonner";
 import { Button } from "@radix-ui/themes";
 import { Label } from "@radix-ui/react-label";
-import { updateName } from "@/server/actions/auth";
 import { FullNameField } from "@/ui/components/common/form/input-fields";
 import { ErrorField } from "@/ui/components/common/form/error-field";
 import classes from "./profile.module.scss";
+import { updateName } from "@/server/actions/user";
 
 interface Props {
   name: string;

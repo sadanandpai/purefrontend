@@ -4,13 +4,14 @@ import { useActionState, useEffect, useState } from "react";
 import { toast } from "sonner";
 import { Label } from "@radix-ui/react-label";
 import { Badge, Button, Flex } from "@radix-ui/themes";
-import { updatePhone } from "@/server/actions/auth";
 import {
   PasswordField,
   PhoneField,
 } from "@/ui/components/common/form/input-fields";
 import { ErrorField } from "@/ui/components/common/form/error-field";
 import classes from "./profile.module.scss";
+import { OTPUpdate } from "./otp-update";
+import { updatePhone } from "@/server/actions/user";
 
 interface Props {
   phone: string;
@@ -54,9 +55,16 @@ export function PhoneUpdate({ phone, phoneVerification }: Props) {
 
       <div className={classes.submission}>
         <ErrorField error={state.error} />
-        <Button type="submit" loading={pending} disabled={phone === phoneInput}>
-          Update Phone
-        </Button>
+        <Flex gap="2">
+          {!phoneVerification && <OTPUpdate />}
+          <Button
+            type="submit"
+            loading={pending}
+            disabled={phone === phoneInput}
+          >
+            Update Phone
+          </Button>
+        </Flex>
       </div>
     </form>
   );

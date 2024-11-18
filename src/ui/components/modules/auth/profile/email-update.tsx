@@ -1,7 +1,6 @@
 "use client";
 
 import { useActionState, useEffect, useState } from "react";
-import { updateEmail } from "@/server/actions/auth";
 import { toast } from "sonner";
 import {
   EmailField,
@@ -11,6 +10,7 @@ import { ErrorField } from "@/ui/components/common/form/error-field";
 import { Label } from "@radix-ui/react-label";
 import classes from "./profile.module.scss";
 import { Badge, Button } from "@radix-ui/themes";
+import { updateEmail } from "@/server/actions/user";
 
 interface Props {
   email: string;

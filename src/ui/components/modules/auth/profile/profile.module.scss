@@ -23,7 +23,7 @@
       justify-content: space-between;
       align-items: center;
 
-      button:only-child {
+      :only-child {
         margin-left: auto;
       }
     }

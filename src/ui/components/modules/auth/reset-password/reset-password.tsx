@@ -4,12 +4,12 @@ import { useActionState, useEffect, useState } from "react";
 import { toast } from "sonner";
 import { routes } from "@/common/routes";
 import { Button } from "@radix-ui/themes";
-import { resetForgotPassword } from "@/server/actions/auth";
 import { ErrorField } from "@/ui/components/common/form/error-field";
 import { PasswordField } from "@/ui/components/common/form/input-fields";
 import { RadixNextLink } from "@/ui/components/core/radix-next-link/radix-next-link";
 import { redirect, RedirectType, useSearchParams } from "next/navigation";
 import classes from "./reset-password.module.scss";
+import { resetForgotPassword } from "@/server/actions/user";
 
 export function ResetPassword() {
   const searchParams = useSearchParams();

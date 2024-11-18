@@ -1,0 +1,44 @@
+.slot {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 3rem;
+  height: 5rem;
+  border: 1px solid var(--gray-8);
+  border-radius: var(--radius-2);
+  transition: all 0.1s;
+  position: relative;
+
+  &[data-active="true"] {
+    background: var(--gray-6);
+  }
+}
+
+.fakeCaret {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  pointer-events: none;
+  inset: 0;
+
+  .caret {
+    position: absolute;
+    width: 1px;
+    height: 40%;
+    background: var(--gray-10);
+    animation: caret-blink 1.5s infinite;
+  }
+}
+
+@keyframes caret-blink {
+  0%,
+  70%,
+  100% {
+    opacity: 1;
+  }
+  20%,
+  50% {
+    opacity: 0;
+  }
+}

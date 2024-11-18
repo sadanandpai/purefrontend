@@ -4,10 +4,10 @@ import { useActionState, useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 import { Button } from "@radix-ui/themes";
 import { Label } from "@radix-ui/react-label";
-import { updatePassword } from "@/server/actions/auth";
 import { PasswordField } from "@/ui/components/common/form/input-fields";
 import { ErrorField } from "@/ui/components/common/form/error-field";
 import classes from "./profile.module.scss";
+import { updatePassword } from "@/server/actions/user";
 
 export function PasswordUpdate() {
   const [state, formAction, pending] = useActionState(updatePassword, {});

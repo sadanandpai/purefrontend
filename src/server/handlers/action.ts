@@ -1,10 +1,21 @@
-import { GlobalError, GlobalResponse } from "@/common/types/globals";
+import { ZodError } from "zod";
+
+export interface GlobalResponse {
+  fieldErrors?: Record<string, string[] | undefined | null>;
+  error?: string;
+  message?: string;
+}
 
 export function respondWithError(error: unknown): GlobalResponse {
-  if (error instanceof GlobalError) {
+  if (error instanceof ZodError) {
     return {
-      ...(error.fieldErrors && { fieldErrors: error.fieldErrors }),
-      ...(error.error && { error: error.error }),
+      fieldErrors: error.flatten().fieldErrors,
+    };
+  }
+
+  if (error instanceof Error) {
+    return {
+      error: error.message,
     };
   }
 

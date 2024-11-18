@@ -1,6 +1,6 @@
 "use client";
 
-import { sendVerificationEmailAction } from "@/server/actions/auth";
+import { sendVerificationEmailAction } from "@/server/actions/user";
 import { appContext } from "@/ui/context/app.context";
 import { Button } from "@radix-ui/themes";
 import { useMutation } from "@tanstack/react-query";

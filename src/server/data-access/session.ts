@@ -1,15 +1,15 @@
 import "server-only";
 
+import { routes } from "@/common/routes";
+import { HOST_URL } from "@/server/config/server.config";
 import {
+  createClient,
+  getOAuthProvider,
   createAdminClient,
   createSessionClient,
   getUniqueID,
   oAuthProvidersType,
 } from "@/server/services/appwrite";
-import { routes } from "@/common/routes";
-import { createClient, getOAuthProvider } from "@/server/services/appwrite";
-import { respondWithDataAccessError } from "@/server/handlers/data-access";
-import { HOST_URL } from "@/server/config/server.config";
 
 export async function getSession() {
   const { account } = await createSessionClient();
@@ -17,23 +17,15 @@ export async function getSession() {
 }
 
 export async function createSessionWithEmail(email: string, password: string) {
-  try {
-    const { account } = await createAdminClient();
-    const session = await account.createEmailPasswordSession(email, password);
-    return session.secret;
-  } catch (error) {
-    respondWithDataAccessError(error);
-  }
+  const { account } = await createAdminClient();
+  const session = await account.createEmailPasswordSession(email, password);
+  return session.secret;
 }
 
 export async function createSessionWithSecret(userId: string, secret: string) {
-  try {
-    const { account } = await createAdminClient();
-    const session = await account.createSession(userId, secret);
-    return session.secret;
-  } catch (error) {
-    respondWithDataAccessError(error);
-  }
+  const { account } = await createAdminClient();
+  const session = await account.createSession(userId, secret);
+  return session.secret;
 }
 
 export async function redirectToOAuth(
@@ -54,23 +46,15 @@ export async function initiateSessionWithEmail(
   email: string,
   password: string
 ) {
-  try {
-    const { account } = await createAdminClient();
-    await account.create(getUniqueID(), email, password, name);
-    const session = await account.createEmailPasswordSession(email, password);
-    return session.secret;
-  } catch (error) {
-    respondWithDataAccessError(error);
-  }
+  const { account } = await createAdminClient();
+  await account.create(getUniqueID(), email, password, name);
+  const session = await account.createEmailPasswordSession(email, password);
+  return session.secret;
 }
 
 export async function sendVerificationEmail() {
-  try {
-    const { account } = await createSessionClient();
-    await account.createVerification(`${HOST_URL}${routes.verifyEmail}`);
-  } catch (error) {
-    respondWithDataAccessError(error);
-  }
+  const { account } = await createSessionClient();
+  await account.createVerification(`${HOST_URL}${routes.verifyEmail}`);
 }
 
 export async function destroySession() {
@@ -82,39 +66,23 @@ export async function updateSessionPassword(
   password: string,
   oldPassword: string
 ) {
-  try {
-    const { account } = await createSessionClient();
-    await account.updatePassword(password.toString(), oldPassword.toString());
-  } catch (error) {
-    respondWithDataAccessError(error);
-  }
+  const { account } = await createSessionClient();
+  await account.updatePassword(password.toString(), oldPassword.toString());
 }
 
 export async function updateFullName(name: string) {
-  try {
-    const { account } = await createSessionClient();
-    await account.updateName(name);
-  } catch (error) {
-    respondWithDataAccessError(error);
-  }
+  const { account } = await createSessionClient();
+  await account.updateName(name);
 }
 
 export async function updateUserEmail(email: string, password: string) {
-  try {
-    const { account } = await createSessionClient();
-    await account.updateEmail(email, password);
-  } catch (error) {
-    respondWithDataAccessError(error);
-  }
+  const { account } = await createSessionClient();
+  await account.updateEmail(email, password);
 }
 
 export async function sendPasswordRecoveryEmail(email: string) {
-  try {
-    const { account } = createClient();
-    await account.createRecovery(email, `${HOST_URL}${routes.resetPassword}`);
-  } catch (error) {
-    respondWithDataAccessError(error);
-  }
+  const { account } = createClient();
+  await account.createRecovery(email, `${HOST_URL}${routes.resetPassword}`);
 }
 
 export async function resetPassword(
@@ -122,19 +90,18 @@ export async function resetPassword(
   secret: string,
   password: string
 ) {
-  try {
-    const { account } = createClient();
-    await account.updateRecovery(userId, secret, password);
-  } catch (error) {
-    respondWithDataAccessError(error);
-  }
+  const { account } = createClient();
+  await account.updateRecovery(userId, secret, password);
 }
 
 export async function updatePhoneNumber(phone: string, password: string) {
-  try {
-    const { account } = await createSessionClient();
-    await account.updatePhone(phone, password);
-  } catch (error) {
-    respondWithDataAccessError(error);
-  }
+  const { account } = await createSessionClient();
+  await account.updatePhone(phone, password);
+  await account.createPhoneVerification();
+}
+
+export async function verifyPhoneNumber(otp: string) {
+  const { account } = await createSessionClient();
+  const session = await getSession();
+  await account.updatePhoneVerification(session.$id, otp);
 }
