@@ -9,28 +9,44 @@ interface Props {
 }
 
 export function AppProvider({ children }: Props) {
-  const [user, setUser] = useState<null | Models.Preferences>(null);
+  const [user, setUser] = useState<null | Models.User<Models.Preferences>>(
+    null
+  );
+  const [userDataLoading, setUserDataLoading] = useState(false);
+
   const searchParams = useSearchParams();
   const authParam = searchParams.get("auth");
 
-  function setLoggedInUser() {
-    getLoggedInUser().then((user) => {
-      setUser(user);
-    });
+  function resetLoggedInUser() {
+    setUserDataLoading(true);
+    getLoggedInUser()
+      .then((user) => {
+        setUser(user);
+      })
+      .catch(() => {
+        setUser(null);
+      })
+      .finally(() => {
+        setUserDataLoading(false);
+      });
   }
 
   useEffect(() => {
-    setLoggedInUser();
+    resetLoggedInUser();
   }, []);
 
   useEffect(() => {
     if (authParam === "true" && user === null) {
-      setLoggedInUser();
+      resetLoggedInUser();
     } else if (authParam === "false" && user !== null) {
       setUser(null);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [authParam]);
 
-  return <appContext.Provider value={{ user }}>{children}</appContext.Provider>;
+  return (
+    <appContext.Provider value={{ user, userDataLoading, resetLoggedInUser }}>
+      {children}
+    </appContext.Provider>
+  );
 }

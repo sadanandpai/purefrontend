@@ -97,6 +97,10 @@ export async function resetPassword(
 export async function updatePhoneNumber(phone: string, password: string) {
   const { account } = await createSessionClient();
   await account.updatePhone(phone, password);
+}
+
+export async function sendPhoneVerification() {
+  const { account } = await createSessionClient();
   await account.createPhoneVerification();
 }
 

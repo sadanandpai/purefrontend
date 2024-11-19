@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState, useEffect, useState } from "react";
+import { useActionState, useContext, useEffect, useState } from "react";
 import { toast } from "sonner";
 import {
   EmailField,
@@ -9,8 +9,10 @@ import {
 import { ErrorField } from "@/ui/components/common/form/error-field";
 import { Label } from "@radix-ui/react-label";
 import classes from "./profile.module.scss";
-import { Badge, Button } from "@radix-ui/themes";
+import { Button } from "@radix-ui/themes";
 import { updateEmail } from "@/server/actions/user";
+import { appContext } from "@/ui/context/app.context";
+import { VerificationBadge } from "@/ui/components/core/verification-badge/verification-badge";
 
 interface Props {
   email: string;
@@ -18,12 +20,14 @@ interface Props {
 }
 
 export function EmailUpdate({ email, emailVerification }: Props) {
+  const { resetLoggedInUser } = useContext(appContext);
   const [newEmail, setNewEmail] = useState(email);
   const [state, formAction, pending] = useActionState(updateEmail, {});
 
   useEffect(() => {
     if (state.message) {
       toast.success(state.message);
+      resetLoggedInUser();
     }
   }, [state]);
 
@@ -31,15 +35,7 @@ export function EmailUpdate({ email, emailVerification }: Props) {
     <form action={formAction} className={classes.updateForm}>
       <Label htmlFor="email" className={classes.emailLabel}>
         Email
-        {emailVerification ? (
-          <Badge color="green" variant="solid">
-            Verified
-          </Badge>
-        ) : (
-          <Badge color="orange" variant="solid">
-            Unverified
-          </Badge>
-        )}
+        <VerificationBadge isVerified={emailVerification} />
       </Label>
 
       <div>

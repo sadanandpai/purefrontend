@@ -9,6 +9,7 @@ import {
   resetPassword,
   updatePhoneNumber,
   verifyPhoneNumber,
+  sendPhoneVerification,
 } from "@/server/data-access/session";
 import {
   validateEmail,
@@ -53,6 +54,7 @@ export async function updatePhone(_prev: GlobalResponse, formData: FormData) {
   try {
     const { phone, password } = validatePhone(formData);
     await updatePhoneNumber(phone, password);
+    await sendPhoneVerification();
     return respondWithSuccess("Phone updated successfully");
   } catch (error) {
     return respondWithError(error);
@@ -119,4 +121,9 @@ export async function sendVerificationEmailAction() {
 
   await sendVerificationEmail();
   return respondWithSuccess("Verification email sent");
+}
+
+export async function sendPhoneVerificationAction() {
+  await sendPhoneVerification();
+  return respondWithSuccess("Verification code sent to your phone");
 }

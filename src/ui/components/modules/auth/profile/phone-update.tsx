@@ -3,7 +3,7 @@
 import { useActionState, useEffect, useState } from "react";
 import { toast } from "sonner";
 import { Label } from "@radix-ui/react-label";
-import { Badge, Button, Flex } from "@radix-ui/themes";
+import { Button, Flex } from "@radix-ui/themes";
 import {
   PasswordField,
   PhoneField,
@@ -12,6 +12,7 @@ import { ErrorField } from "@/ui/components/common/form/error-field";
 import classes from "./profile.module.scss";
 import { OTPUpdate } from "./otp-update";
 import { updatePhone } from "@/server/actions/user";
+import { VerificationBadge } from "@/ui/components/core/verification-badge/verification-badge";
 
 interface Props {
   phone: string;
@@ -32,15 +33,7 @@ export function PhoneUpdate({ phone, phoneVerification }: Props) {
     <form action={formAction} className={classes.updateForm}>
       <Flex gap="2" align="center">
         <Label htmlFor="phone">Phone</Label>
-        {phoneVerification ? (
-          <Badge color="green" variant="solid">
-            Verified
-          </Badge>
-        ) : (
-          <Badge color="orange" variant="solid">
-            Unverified
-          </Badge>
-        )}
+        <VerificationBadge isVerified={phoneVerification} />
       </Flex>
 
       <div>
