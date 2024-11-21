@@ -1,6 +1,6 @@
 import { OutputsStateProps, TestOutputProps } from "@/common/types/test";
 import { TestResult } from "@/ui/components/core/test-result/test-result";
-import { SaveSubmission } from "@/ui/components/modules/challenge/challenge-components/save-submission";
+import { SaveSubmission } from "@/ui/components/modules/challenge/challenge-components/save-submission/save-submission";
 import classes from "./challenge-results.module.scss";
 import { useQueryClient } from "@tanstack/react-query";
 import { usePathname } from "next/navigation";

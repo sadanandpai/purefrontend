@@ -1,10 +1,8 @@
 import dynamic from "next/dynamic";
-import { Button } from "@radix-ui/themes";
-import { useChallengeStore } from "@/ui/store/challenge.store";
-import { useSandpack } from "@codesandbox/sandpack-react/unstyled";
-import { getTestResult, getTestResults } from "@/ui/utils/test-results";
 import { TestRunner } from "@/ui/components/core/test-runner/test-runner";
-import classes from "./challenge-editor.module.scss";
+import { Executor } from "../../challenge-components/executor/executor";
+import { useState } from "react";
+import { EditorControls } from "../../challenge-components/editor-controls/editor-controls";
 
 const MonacoEditor = dynamic(
   () =>
@@ -15,44 +13,14 @@ const MonacoEditor = dynamic(
 );
 
 export function ChallengeEditor() {
-  const { dispatch, listen } = useSandpack();
-  const setOutput = useChallengeStore((state) => state.setOutput);
-  const setOutputs = useChallengeStore((state) => state.setOutputs);
-
-  function runUserTest() {
-    setOutput({ isLoading: true });
-    const unsubscribe = getTestResult(listen, (result) => {
-      setOutput({ isLoading: false, ...result });
-      unsubscribe();
-    });
-
-    dispatch({
-      type: "run-tests",
-      path: "/add.test.ts",
-    });
-  }
-
-  function runAllTests() {
-    setOutputs({ isLoading: true });
-    const unsubscribe = getTestResults(listen, (result) => {
-      setOutputs({ isLoading: false, ...result, executionId: Date.now() });
-      unsubscribe();
-    });
-
-    dispatch({
-      type: "run-tests",
-      path: "/test-cases.test.ts",
-    });
-  }
+  const [fontSize, setFontSize] = useState(14);
 
   return (
     <div className="panel-layout">
-      <MonacoEditor />
+      <EditorControls fontSize={fontSize} setFontSize={setFontSize} />
+      <MonacoEditor fontSize={fontSize} />
       <TestRunner />
-      <div className={classes.execution}>
-        <Button onClick={runUserTest}>Run</Button>
-        <Button onClick={runAllTests}>Run All</Button>
-      </div>
+      <Executor />
     </div>
   );
 }
