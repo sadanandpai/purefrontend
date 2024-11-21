@@ -1,15 +1,15 @@
 "use client";
 
-import { sendVerificationEmailAction } from "@/server/actions/user";
-import { appContext } from "@/ui/context/app.context";
+import { toast } from "sonner";
 import { Button } from "@radix-ui/themes";
 import { useMutation } from "@tanstack/react-query";
-import { useContext } from "react";
-import { toast } from "sonner";
+import { sendVerificationEmailAction } from "@/server/actions/user";
 
-export function EmailVerification() {
-  const context = useContext(appContext);
+interface Props {
+  emailVerification: boolean;
+}
 
+export function EmailVerification({ emailVerification }: Props) {
   const { mutate, data, isPending } = useMutation({
     mutationFn: sendVerificationEmailAction,
     onSuccess: (response) => {
@@ -20,7 +20,7 @@ export function EmailVerification() {
     },
   });
 
-  if (!context.user || context.user.emailVerification) {
+  if (emailVerification) {
     return null;
   }
 

@@ -12,18 +12,12 @@
       font-weight: 500;
     }
 
-    .emailLabel {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-    }
-
     .submission {
       display: flex;
       justify-content: space-between;
       align-items: center;
 
-      :only-child {
+      > :last-child {
         margin-left: auto;
       }
     }

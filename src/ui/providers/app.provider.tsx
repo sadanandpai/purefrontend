@@ -17,14 +17,16 @@ export function AppProvider({ children }: Props) {
   const searchParams = useSearchParams();
   const authParam = searchParams.get("auth");
 
-  function resetLoggedInUser() {
+  async function resetLoggedInUser() {
     setUserDataLoading(true);
-    getLoggedInUser()
+    return getLoggedInUser()
       .then((user) => {
         setUser(user);
+        return user;
       })
       .catch(() => {
         setUser(null);
+        return null;
       })
       .finally(() => {
         setUserDataLoading(false);

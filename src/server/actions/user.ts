@@ -71,6 +71,7 @@ export async function updateEmail(_prev: GlobalResponse, formData: FormData) {
   try {
     const { email, password } = validateEmailPassword(formData);
     await updateUserEmail(email, password);
+    await sendVerificationEmail();
     return respondWithSuccess("Email updated successfully");
   } catch (error) {
     return respondWithError(error);

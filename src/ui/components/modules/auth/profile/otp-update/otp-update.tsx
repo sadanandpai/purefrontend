@@ -1,12 +1,14 @@
+import { useContext, useState } from "react";
+import { toast } from "sonner";
+import { useMutation } from "@tanstack/react-query";
 import { verifyPhone } from "@/server/actions/user";
+import { Button, Dialog, Flex, Text } from "@radix-ui/themes";
 import { ErrorField } from "@/ui/components/common/form/error-field";
 import { UserOTPInput } from "@/ui/components/core/user-input-otp/input-otp";
-import { Button, Dialog, Flex, Text } from "@radix-ui/themes";
-import { useMutation } from "@tanstack/react-query";
-import { useState } from "react";
-import { toast } from "sonner";
+import { appContext } from "@/ui/context/app.context";
 
 export function OTPUpdate() {
+  const { resetLoggedInUser } = useContext(appContext);
   const [otp, setOTP] = useState("");
   const [open, setOpen] = useState(false);
   const [validationError, setValidationError] = useState("");
@@ -14,8 +16,9 @@ export function OTPUpdate() {
   const { mutate, error, isPending } = useMutation({
     mutationFn: () => verifyPhone(otp),
     onSuccess: (response) => {
-      toast.success(response.message);
       setOpen(false);
+      resetLoggedInUser();
+      toast.success(response.message);
     },
   });
 

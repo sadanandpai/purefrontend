@@ -10,7 +10,7 @@ interface Props {
   disabled?: boolean;
 }
 
-export function FullNameField({ value = "", setValue }: Props) {
+export function FullNameField({ value = "", setValue, disabled }: Props) {
   return (
     <TextField.Root
       id="name"
@@ -21,6 +21,7 @@ export function FullNameField({ value = "", setValue }: Props) {
       maxLength={50}
       required
       value={value}
+      disabled={disabled}
       onChange={(e) => setValue?.(e.target.value)}
     />
   );

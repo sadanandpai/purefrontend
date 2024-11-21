@@ -1,19 +1,26 @@
+"use client";
+
+import { useContext } from "react";
 import { Models } from "node-appwrite";
 import { signOut } from "@/server/actions/auth";
 import { Button, Flex } from "@radix-ui/themes";
-import { PasswordUpdate } from "./password-update";
-import { NameUpdate } from "./name-update";
-import { EmailUpdate } from "./email-update";
+import { NameUpdate } from "./name-update/name-update";
+import { EmailUpdate } from "./email-update/email-update";
+import { PhoneUpdate } from "./phone-update/phone-update";
+import { PasswordUpdate } from "./password-update/password-update";
+import { EmailVerification } from "@/ui/components/modules/auth/profile/email-verification/email-verification";
+import { PhoneVerification } from "@/ui/components/modules/auth/profile/phone-verification/phone-verification";
+import { appContext } from "@/ui/context/app.context";
 import classes from "./profile.module.scss";
-import { EmailVerification } from "./email-verification";
-import { PhoneUpdate } from "./phone-update";
-import { PhoneVerification } from "./phone-verification";
 
 interface Props {
   user: Models.User<Models.Preferences>;
 }
 
-export function Profile({ user }: Props) {
+export function Profile({ user: serverUser }: Props) {
+  const { user: contextUser } = useContext(appContext);
+  const user = contextUser ?? serverUser;
+
   return (
     <main className={classes.main}>
       <NameUpdate name={user.name} />
@@ -28,8 +35,8 @@ export function Profile({ user }: Props) {
       />
 
       <Flex gap="2">
-        <EmailVerification />
-        <PhoneVerification />
+        <EmailVerification emailVerification={user.emailVerification} />
+        <PhoneVerification phoneVerification={user.phoneVerification} />
 
         <form action={signOut}>
           <Button type="submit" color="tomato">

@@ -55,7 +55,7 @@ export function validateEmail(formData: FormData) {
 export function validatePhone(formData: FormData) {
   return updatePhoneSchema.parse({
     phone: formData.get("phone"),
-    password: formData.get("password"),
+    password: formData.get("userPassword"),
   });
 }
 

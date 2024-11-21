@@ -1,27 +1,26 @@
 "use client";
 
-import { sendPhoneVerificationAction } from "@/server/actions/user";
-import { appContext } from "@/ui/context/app.context";
+import { toast } from "sonner";
 import { Button } from "@radix-ui/themes";
 import { useMutation } from "@tanstack/react-query";
-import { useContext } from "react";
-import { toast } from "sonner";
+import { sendPhoneVerificationAction } from "@/server/actions/user";
 
-export function PhoneVerification() {
-  const { user, resetLoggedInUser } = useContext(appContext);
+interface Props {
+  phoneVerification: boolean;
+}
 
+export function PhoneVerification({ phoneVerification }: Props) {
   const { mutate, data, isPending } = useMutation({
     mutationFn: sendPhoneVerificationAction,
     onSuccess: (response) => {
       toast.success(response.message);
-      resetLoggedInUser();
     },
     onError: (error) => {
       toast.error(error.message);
     },
   });
 
-  if (!user || user.phoneVerification) {
+  if (phoneVerification) {
     return null;
   }
 

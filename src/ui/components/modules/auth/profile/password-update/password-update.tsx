@@ -6,7 +6,7 @@ import { Button } from "@radix-ui/themes";
 import { Label } from "@radix-ui/react-label";
 import { PasswordField } from "@/ui/components/common/form/input-fields";
 import { ErrorField } from "@/ui/components/common/form/error-field";
-import classes from "./profile.module.scss";
+import classes from "../profile.module.scss";
 import { updatePassword } from "@/server/actions/user";
 
 export function PasswordUpdate() {
@@ -29,8 +29,11 @@ export function PasswordUpdate() {
   }
 
   useEffect(() => {
-    if (state.message) {
+    if (state.status === "success") {
+      setIsPasswordFilled(false);
       toast.success(state.message);
+    } else if (state.status === "error") {
+      setIsPasswordFilled(false);
     }
   }, [state]);
 
@@ -44,7 +47,7 @@ export function PasswordUpdate() {
       <Label htmlFor="password">Password</Label>
       <div>
         <PasswordField field="currentPassword" placeHolder="Current password" />
-        <ErrorField error={state.fieldErrors?.password?.[0]} />
+        <ErrorField error={state.fieldErrors?.currentPassword?.[0]} />
       </div>
 
       <div>
@@ -54,7 +57,11 @@ export function PasswordUpdate() {
 
       <div className={classes.submission}>
         <ErrorField error={state.error} />
-        <Button type="submit" loading={pending} disabled={!isPasswordFilled}>
+        <Button
+          type="submit"
+          loading={pending}
+          disabled={!isPasswordFilled || pending}
+        >
           Update Password
         </Button>
       </div>
