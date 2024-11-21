@@ -30,6 +30,7 @@ export function EmailUpdate({ email, emailVerification }: Props) {
       setUserEmail(inputEmail);
       toast.success(state.message);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state]);
 
   return (

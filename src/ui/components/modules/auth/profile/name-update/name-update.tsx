@@ -23,6 +23,7 @@ export function NameUpdate({ name }: Props) {
       setUserName(inputName);
       toast.success(state.message);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state]);
 
   return (

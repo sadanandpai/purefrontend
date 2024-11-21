@@ -1,16 +1,15 @@
 import { useEffect, useState } from "react";
-import { Box, Tabs } from "@radix-ui/themes";
+import { Box, ScrollArea, Tabs } from "@radix-ui/themes";
 import { ChallengeInput } from "@/ui/components/modules/challenge/challenge-elements/challenge-input/challenge-input";
 import { ChallengeConsole } from "@/ui/components/modules/challenge/challenge-elements/challenge-console/challenge-console";
 import { ChallengeOutput } from "@/ui/components/modules/challenge/challenge-elements/challenge-output/challenge-output";
 import { useChallengeStore } from "@/ui/store/challenge.store";
-import classes from "./challenge-controls.module.scss";
 
 interface Props {
   defaultInput: string;
 }
 
-export function ChallengeControls({ defaultInput }: Props) {
+export function ChallengeTerminal({ defaultInput }: Props) {
   const [selectedTab, setSelectedTab] = useState("input");
   const testOutput = useChallengeStore((state) => state.testOutput);
 
@@ -25,7 +24,7 @@ export function ChallengeControls({ defaultInput }: Props) {
       <Tabs.Root
         value={selectedTab}
         onValueChange={setSelectedTab}
-        className={classes.controlsWrapper}
+        className="panel-layout flex flex-col"
       >
         <Tabs.List className="flex-shrink-0">
           <Tabs.Trigger value="input">Input</Tabs.Trigger>
@@ -33,28 +32,30 @@ export function ChallengeControls({ defaultInput }: Props) {
           <Tabs.Trigger value="console">Console</Tabs.Trigger>
         </Tabs.List>
 
-        <Box pt="3" className={classes.controlsBox}>
-          <Tabs.Content
-            value="input"
-            hidden={selectedTab !== "input"}
-            forceMount
-          >
-            <ChallengeInput defaultInput={defaultInput} />
-          </Tabs.Content>
+        <ScrollArea type="auto">
+          <Box p="3">
+            <Tabs.Content
+              value="input"
+              hidden={selectedTab !== "input"}
+              forceMount
+            >
+              <ChallengeInput defaultInput={defaultInput} />
+            </Tabs.Content>
 
-          <Tabs.Content value="output" className="tab-content">
-            <ChallengeOutput testOutput={testOutput} />
-          </Tabs.Content>
+            <Tabs.Content value="output">
+              <ChallengeOutput testOutput={testOutput} />
+            </Tabs.Content>
 
-          <Tabs.Content
-            value="console"
-            className="tab-content"
-            hidden={selectedTab !== "console"}
-            forceMount
-          >
-            <ChallengeConsole />
-          </Tabs.Content>
-        </Box>
+            <Tabs.Content
+              value="console"
+              className="static"
+              hidden={selectedTab !== "console"}
+              forceMount
+            >
+              <ChallengeConsole />
+            </Tabs.Content>
+          </Box>
+        </ScrollArea>
       </Tabs.Root>
     </div>
   );

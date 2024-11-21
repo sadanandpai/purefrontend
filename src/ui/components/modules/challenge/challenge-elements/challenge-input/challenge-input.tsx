@@ -18,13 +18,11 @@ export function ChallengeInput({ defaultInput }: Props) {
   }, [userInput]);
 
   return (
-    <div className={classes.testInputWrapper}>
-      <ContentEditable
-        className={classes.testInput}
-        html={userInput}
-        onChange={(e) => setUserInput(e.target.value)}
-        tagName="div"
-      />
-    </div>
+    <ContentEditable
+      className={classes.testInput}
+      html={userInput}
+      onChange={(e) => setUserInput(e.target.value)}
+      tagName="div"
+    />
   );
 }

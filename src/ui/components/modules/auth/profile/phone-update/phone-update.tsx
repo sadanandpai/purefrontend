@@ -34,6 +34,7 @@ export function PhoneUpdate({ phone, phoneVerification }: Props) {
       setIsVerified(false);
       toast.success(state.message);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state]);
 
   useEffect(() => {

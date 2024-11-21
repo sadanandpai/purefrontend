@@ -26,3 +26,7 @@ p {
 :disabled {
   cursor: var(--cursor-disabled);
 }
+
+.rt-ScrollAreaViewport > * {
+  width: inherit;
+}

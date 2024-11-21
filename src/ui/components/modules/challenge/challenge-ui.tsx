@@ -1,15 +1,14 @@
 "use client";
 
+import { useEffect } from "react";
+import { testCode } from "@/ui/utils/test-code";
+import { ProblemProps } from "@/common/types/problem";
+import { useChallengeStore } from "@/ui/store/challenge.store";
 import { SandpackProvider } from "@codesandbox/sandpack-react/unstyled";
 import { Panel, PanelGroup, PanelResizeHandle } from "react-resizable-panels";
-import { ChallengeDetails } from "@/ui/components/modules/challenge/challenge-sections/challenge-details/challenge-details";
 import { ChallengeEditor } from "./challenge-sections/challenge-editor/challenge-editor";
-import { ChallengeControls } from "./challenge-sections/challenge-controls/challenge-controls";
-import { ProblemProps } from "@/common/types/problem";
-import { testCode } from "@/ui/utils/test-code";
-import classes from "./challenge-ui.module.scss";
-import { useEffect } from "react";
-import { useChallengeStore } from "@/ui/store/challenge.store";
+import { ChallengeTerminal } from "./challenge-sections/challenge-terminal/challenge-terminal";
+import { ChallengeDetails } from "@/ui/components/modules/challenge/challenge-sections/challenge-details/challenge-details";
 
 interface Props {
   problem: ProblemProps;
@@ -38,13 +37,13 @@ export default function ChallengeUI({ problem, views }: Props) {
     <SandpackProvider
       files={files}
       template="test-ts"
-      className={classes.challengeWrapper}
       options={{
         activeFile: "/code.ts",
         visibleFiles: ["/code.ts"],
         initMode: "immediate",
         autorun: true,
       }}
+      className="h-full"
     >
       <PanelGroup direction="horizontal">
         <Panel minSize={25} defaultSize={40} className="panel left">
@@ -58,7 +57,7 @@ export default function ChallengeUI({ problem, views }: Props) {
             </Panel>
             <PanelResizeHandle />
             <Panel defaultSize={25} minSize={25} className="panel right bottom">
-              <ChallengeControls defaultInput={problem.sampleInput} />
+              <ChallengeTerminal defaultInput={problem.sampleInput} />
             </Panel>
           </PanelGroup>
         </Panel>

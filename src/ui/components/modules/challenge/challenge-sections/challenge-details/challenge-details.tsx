@@ -5,8 +5,7 @@ import { ProblemStatement } from "@/ui/components/modules/challenge/challenge-el
 import { ChallengeSubmissions } from "@/ui/components/modules/challenge/challenge-elements/challenge-submissions/challenge-submissions";
 import { useChallengeStore } from "@/ui/store/challenge.store";
 import { ProblemProps } from "@/common/types/problem";
-import { Box, Tabs } from "@radix-ui/themes";
-import classes from "./challenge-details.module.scss";
+import { Box, ScrollArea, Tabs } from "@radix-ui/themes";
 
 interface Props {
   problem: ProblemProps;
@@ -28,7 +27,7 @@ export function ChallengeDetails({ problem, views }: Props) {
     <Tabs.Root
       value={selectedTab}
       onValueChange={setSelectedTab}
-      className={`panel-layout ${classes.controlsWrapper}`}
+      className="panel-layout flex flex-col"
     >
       <Tabs.List className="flex-shrink-0">
         <Tabs.Trigger value="question">Question</Tabs.Trigger>
@@ -39,26 +38,28 @@ export function ChallengeDetails({ problem, views }: Props) {
         <Tabs.Trigger value="submissions">Submissions</Tabs.Trigger>
       </Tabs.List>
 
-      <Box p="3" className={classes.controlsBox}>
-        <Tabs.Content value="question">
-          <ProblemStatement problem={problem} views={views} />
-        </Tabs.Content>
+      <ScrollArea type="auto">
+        <Box p="3">
+          <Tabs.Content value="question">
+            <ProblemStatement problem={problem} views={views} />
+          </Tabs.Content>
 
-        <Tabs.Content value="result">
-          <ChallengeResults
-            setSelectedTab={setSelectedTab}
-            testOutputs={testOutputs}
-          />
-        </Tabs.Content>
+          <Tabs.Content value="result">
+            <ChallengeResults
+              setSelectedTab={setSelectedTab}
+              testOutputs={testOutputs}
+            />
+          </Tabs.Content>
 
-        <Tabs.Content value="solution">
-          <ChallengeSolution code={problem.solution} />
-        </Tabs.Content>
+          <Tabs.Content value="solution">
+            <ChallengeSolution code={problem.solution} />
+          </Tabs.Content>
 
-        <Tabs.Content value="submissions">
-          <ChallengeSubmissions />
-        </Tabs.Content>
-      </Box>
+          <Tabs.Content value="submissions">
+            <ChallengeSubmissions />
+          </Tabs.Content>
+        </Box>
+      </ScrollArea>
     </Tabs.Root>
   );
 }

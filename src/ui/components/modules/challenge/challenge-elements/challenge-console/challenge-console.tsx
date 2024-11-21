@@ -1,6 +1,6 @@
 import { useRef } from "react";
-import { SandpackConsole } from "@codesandbox/sandpack-react/unstyled";
 import { Button } from "@radix-ui/themes";
+import { SandpackConsole } from "@codesandbox/sandpack-react/unstyled";
 
 interface SandpackConsoleRef {
   reset: () => void;
@@ -21,7 +21,9 @@ export function ChallengeConsole() {
         showResetConsoleButton={false}
         resetOnPreviewRestart={true}
       />
-      <Button onClick={onClear}>Clear</Button>
+      <Button onClick={onClear} className="absolute right-4 bottom-4">
+        Clear
+      </Button>
     </>
   );
 }
