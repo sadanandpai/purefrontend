@@ -53,7 +53,7 @@ export default function ChallengeUI({ problem, views }: Props) {
         <Panel minSize={30} defaultSize={60} className="hidden md:block">
           <PanelGroup direction="vertical">
             <Panel defaultSize={75} minSize={50} className="panel right top">
-              <ChallengeEditor />
+              <ChallengeEditor defaultCode={problem.code} />
             </Panel>
             <PanelResizeHandle />
             <Panel defaultSize={25} minSize={25} className="panel right bottom">
