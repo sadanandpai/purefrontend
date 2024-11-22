@@ -1,8 +1,8 @@
+import { notFound } from "next/navigation";
 import { ProblemProps } from "@/common/types/problem";
-import { getIncrementedViews } from "@/server/data-access/views";
+import { getIncrementedViews } from "@/server/data-access/activities";
 import { isValidChallengeId } from "@/server/utils/challenge";
 import ChallengeUI from "@/ui/components/modules/challenge/challenge-ui";
-import { notFound } from "next/navigation";
 
 interface Props {
   params: Promise<{ challengeId: string }>;

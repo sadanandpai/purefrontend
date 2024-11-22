@@ -1,11 +1,12 @@
 "use server";
 
 import {
-  createChallengeInfo,
+  createUserChallengeInfo,
   readUserChallengeInfo,
   updateUserChallengeInfo,
-} from "@/server/data-access/challenge";
+} from "@/server/data-access/user-challenge";
 import { isValidChallengeId } from "@/server/utils/challenge";
+import { modifyLikes } from "@/server/data-access/activities";
 import { getLoggedInUser } from "./auth";
 
 export async function getUserChallengeInfo(challengeId: number) {
@@ -20,19 +21,30 @@ export async function getUserChallengeInfo(challengeId: number) {
   return await readUserChallengeInfo(challengeId);
 }
 
-export async function setUserChallengeInfo(
-  challengeId: number,
-  data: Partial<{ like: boolean; done: boolean }>
-) {
+export async function setUserChallengeLike(challengeId: number, like: boolean) {
   if (!isValidChallengeId(challengeId)) {
     throw new Error("Invalid challenge ID");
   }
 
   const document = await readUserChallengeInfo(challengeId);
+  let updatedDoc = null;
 
-  if (document) {
-    return await updateUserChallengeInfo(document.$id, challengeId, data);
+  if (!document) {
+    updatedDoc = await createUserChallengeInfo(challengeId, {
+      like,
+    });
+    modifyLikes(challengeId, like);
+  } else if (document.like !== like) {
+    updatedDoc = await updateUserChallengeInfo(document.$id, challengeId, {
+      like,
+    });
+    modifyLikes(challengeId, like);
   } else {
-    return await createChallengeInfo(challengeId, data);
+    updatedDoc = document;
   }
+
+  return {
+    $id: updatedDoc.$id,
+    like: updatedDoc.like,
+  };
 }

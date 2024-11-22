@@ -25,14 +25,14 @@ export async function readUserChallengeInfo(challengeId: number) {
     : null;
 }
 
-export async function createChallengeInfo(
+export async function createUserChallengeInfo(
   challengeId: number,
   data: Partial<{ like: boolean; done: boolean }>
 ) {
   const { client } = await createSessionClient();
   const databases = new Databases(client);
 
-  return await databases.createDocument(
+  const doc = await databases.createDocument(
     DB,
     USER_CHALLENGE_INFO_COLLECTION,
     getUniqueID(),
@@ -41,12 +41,18 @@ export async function createChallengeInfo(
       ...data,
     }
   );
+
+  return {
+    $id: doc.$id,
+    like: doc.like,
+    done: doc.done,
+  };
 }
 
 export async function updateUserChallengeInfo(
   documentId: string,
   challengeId: number,
-  data: Partial<{ liked: boolean; done: boolean }>
+  data: Partial<{ like: boolean; done: boolean }>
 ) {
   const { client } = await createSessionClient();
   const databases = new Databases(client);

@@ -7,8 +7,8 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { appContext } from "@/ui/context/app.context";
 import {
   getUserChallengeInfo,
-  setUserChallengeInfo,
-} from "@/server/actions/challenge";
+  setUserChallengeLike,
+} from "@/server/actions/user-challenge";
 import { useTheme } from "next-themes";
 
 export function UserLike() {
@@ -26,10 +26,7 @@ export function UserLike() {
 
   const { mutate, isPending } = useMutation({
     mutationKey: ["userChallengeInfo", challengeId],
-    mutationFn: () =>
-      setUserChallengeInfo(challengeId, {
-        like: !infoData?.like,
-      }),
+    mutationFn: () => setUserChallengeLike(challengeId, !infoData?.like),
     onSuccess: (data) => {
       // update the cache of query (this helps to update the UI without invoking the API again)
       queryClient.setQueryData(
