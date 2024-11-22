@@ -12,7 +12,7 @@ import {
 import { useTheme } from "next-themes";
 
 export function UserLike() {
-  const theme = useTheme();
+  const { resolvedTheme } = useTheme();
   const queryClient = useQueryClient();
   const context = useContext(appContext);
   const challengeId = Number(usePathname().split("/").at(-1));
@@ -67,7 +67,7 @@ export function UserLike() {
   if (!context.user) {
     return (
       <Button size="1" variant="ghost" onClick={handleLike}>
-        <Heart color={theme.theme === "dark" ? "white" : "black"} />
+        <Heart color={resolvedTheme === "dark" ? "white" : "black"} />
       </Button>
     );
   }
@@ -82,7 +82,7 @@ export function UserLike() {
       <Heart
         fill={infoData?.like ? "red" : "none"}
         color={
-          infoData?.like ? "red" : theme.theme === "dark" ? "white" : "black"
+          infoData?.like ? "red" : resolvedTheme === "dark" ? "white" : "black"
         }
       />
     </Button>

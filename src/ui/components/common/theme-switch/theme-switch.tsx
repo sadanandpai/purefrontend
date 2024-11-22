@@ -7,7 +7,7 @@ import { Moon, Sun } from "lucide-react";
 
 export const ThemeSwitch = () => {
   const [mounted, setMounted] = useState(false);
-  const { theme, setTheme } = useTheme();
+  const { resolvedTheme, setTheme } = useTheme();
 
   // useEffect only runs on the client, so now we can safely show the UI
   useEffect(() => {
@@ -21,9 +21,9 @@ export const ThemeSwitch = () => {
   return (
     <Button
       variant="ghost"
-      onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+      onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
     >
-      {theme === "dark" ? <Sun /> : <Moon />}
+      {resolvedTheme === "dark" ? <Sun /> : <Moon />}
     </Button>
   );
 };

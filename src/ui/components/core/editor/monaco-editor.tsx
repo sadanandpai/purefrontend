@@ -16,7 +16,7 @@ function MonacoEditorWithRef(
   { fontSize }: Props,
   ref: React.Ref<{ updateCode: (code: string) => void }>
 ) {
-  const theme = useTheme();
+  const { resolvedTheme } = useTheme();
   const { sandpack } = useSandpack();
   const { code, updateCode } = useActiveCode();
 
@@ -30,7 +30,7 @@ function MonacoEditorWithRef(
       <Editor
         height="calc(100% - 8.5rem)"
         language="javascript"
-        theme={theme.theme === "dark" ? "vs-dark" : "vs-light"}
+        theme={resolvedTheme === "dark" ? "vs-dark" : "vs-light"}
         options={{
           fontSize,
           formatOnType: true,

@@ -8,12 +8,12 @@ interface Props {
 }
 
 export function ChallengeSolution({ code }: Props) {
-  const theme = useTheme();
+  const { resolvedTheme } = useTheme();
 
   return (
     <CodeSnippet
       code={code}
-      theme={theme.theme === "dark" ? themes.vsDark : themes.vsLight}
+      theme={resolvedTheme === "dark" ? themes.vsDark : themes.vsLight}
     />
   );
 }
