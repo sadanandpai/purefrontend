@@ -12,10 +12,15 @@ import {
 } from "@/ui/components/common/form/input-fields";
 import { RadixNextLink } from "@/ui/components/core/radix-next-link/radix-next-link";
 import classes from "./sign-in-up.module.scss";
+import { useSearchParams } from "next/navigation";
 
 export function SignIn() {
   const [email, setEmail] = useState("");
   const [state, formAction, pending] = useActionState(signInWithEmail, {});
+
+  const params = useSearchParams();
+  const redirectURL = params.get("redirect");
+  const redirectQuery = redirectURL ? `?redirect=${redirectURL}` : "";
 
   return (
     <div className={classes.authFormWrapper}>
@@ -40,7 +45,9 @@ export function SignIn() {
         <RadixNextLink href={routes.forgotPassword}>
           Forgot password?
         </RadixNextLink>
-        <RadixNextLink href={routes.signUp}>Sign up</RadixNextLink>
+        <RadixNextLink href={`${routes.signUp}${redirectQuery}`}>
+          Sign up
+        </RadixNextLink>
       </div>
 
       <OAuth />

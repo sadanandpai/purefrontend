@@ -54,7 +54,11 @@ export function ChallengeSubmissions() {
     return (
       <p className={classes.verticalCenter}>
         Please&nbsp;
-        <RadixNextLink href={routes.signIn}>Sign in</RadixNextLink>
+        <RadixNextLink
+          href={`${routes.signIn}?redirect=${routes.challenges}/${challengeId}`}
+        >
+          Sign in
+        </RadixNextLink>
         &nbsp;to view your submissions
       </p>
     );

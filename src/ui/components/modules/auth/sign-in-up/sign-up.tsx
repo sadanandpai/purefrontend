@@ -13,11 +13,16 @@ import {
 } from "@/ui/components/common/form/input-fields";
 import { RadixNextLink } from "@/ui/components/core/radix-next-link/radix-next-link";
 import classes from "./sign-in-up.module.scss";
+import { useSearchParams } from "next/navigation";
 
 export function SignUp() {
+  const params = useSearchParams();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [state, formAction, pending] = useActionState(signUpWithEmail, {});
+
+  const redirectURL = params.get("redirect");
+  const redirectQuery = redirectURL ? `?redirect=${redirectURL}` : "";
 
   return (
     <div className={classes.authFormWrapper}>
@@ -44,7 +49,9 @@ export function SignUp() {
       </form>
 
       <div className={classes.authFormLinks}>
-        <RadixNextLink href={routes.signIn}>Sign in</RadixNextLink>
+        <RadixNextLink href={`${routes.signIn}${redirectQuery}`}>
+          Sign in
+        </RadixNextLink>
       </div>
 
       <OAuth />

@@ -22,5 +22,5 @@ export default async function Challenge({ params }: Props) {
 
   const views = await getIncrementedViews(Number(challengeId));
 
-  return <ChallengeUI problem={problem} views={views} />;
+  return <ChallengeUI problem={problem} views={views ?? -1} />;
 }

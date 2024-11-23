@@ -9,7 +9,7 @@ export default async function ProfilePage() {
   const user = await getLoggedInUser();
 
   if (!user) {
-    redirect(routes.signIn);
+    redirect(`${routes.signIn}?auth=false`);
   }
 
   return <Profile user={user} />;

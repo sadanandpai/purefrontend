@@ -1,19 +1,30 @@
 import Image from "next/image";
 import { signInWithOAuth } from "@/server/actions/auth";
-import { Button } from "@radix-ui/themes";
-import classes from "./oauth.module.scss";
+import { Button, Flex } from "@radix-ui/themes";
 import { useTheme } from "next-themes";
+import { useSearchParams } from "next/navigation";
+import { useEffect } from "react";
+
+const localStorageKey = "redirect";
 
 export function OAuth() {
   const { resolvedTheme } = useTheme();
+  const params = useSearchParams();
+  const redirectURL = params.get("redirect");
+
+  useEffect(() => {
+    if (redirectURL) {
+      localStorage.setItem(localStorageKey, redirectURL);
+    }
+  }, [redirectURL]);
 
   return (
-    <div className={classes.oauthForms}>
+    <div className="mt-8">
       <p>Or access using</p>
-      <div className={classes.oauthFormsIcons}>
+      <Flex justify="center" gap="6" className="mt-8">
         <form action={() => signInWithOAuth("Google")}>
           <Button type="submit" variant="ghost">
-            <Image src="/google.svg" alt="Google" width={40} height={40} />
+            <Image src="/google.svg" alt="Google" width={36} height={36} />
           </Button>
         </form>
 
@@ -24,12 +35,12 @@ export function OAuth() {
                 resolvedTheme === "dark" ? "/github-dark.svg" : "/github.svg"
               }
               alt="Github"
-              width={40}
-              height={40}
+              width={36}
+              height={36}
             />
           </Button>
         </form>
-      </div>
+      </Flex>
     </div>
   );
 }

@@ -43,7 +43,11 @@ export function SaveSubmission({ status, onSubmit, disabled }: Props) {
     return (
       <p>
         Please&nbsp;
-        <RadixNextLink href={routes.signIn}>Sign in</RadixNextLink>
+        <RadixNextLink
+          href={`${routes.signIn}?redirect=${routes.challenges}/${challengeId}`}
+        >
+          Sign in
+        </RadixNextLink>
         &nbsp;to save your submission
       </p>
     );

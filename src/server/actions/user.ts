@@ -19,7 +19,7 @@ import {
   validateResetPassword,
   validatePhone,
   validatePhoneOTP,
-} from "@/server/utils/auth";
+} from "@/server/utils/parser";
 import {
   GlobalResponse,
   respondWithError,
