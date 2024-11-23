@@ -1,9 +1,14 @@
+"use client";
+
+import { usePathname } from "next/navigation";
 import { Button, Flex } from "@radix-ui/themes";
 import { useChallengeStore } from "@/ui/store/challenge.store";
 import { useSandpack } from "@codesandbox/sandpack-react/unstyled";
 import { getTestResult, getTestResults } from "@/ui/utils/test-results";
+import { incrementChallengeAttempts } from "@/server/actions/challenge";
 
 export function Executor() {
+  const challengeId = Number(usePathname().split("/").at(-1));
   const { dispatch, listen } = useSandpack();
   const setOutput = useChallengeStore((state) => state.setOutput);
   const setOutputs = useChallengeStore((state) => state.setOutputs);
@@ -27,6 +32,8 @@ export function Executor() {
       setOutputs({ isLoading: false, ...result, executionId: Date.now() });
       unsubscribe();
     });
+
+    incrementChallengeAttempts(challengeId);
 
     dispatch({
       type: "run-tests",

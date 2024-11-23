@@ -8,7 +8,7 @@ export default function Home() {
     <>
       <NavBar />
       <div className="text-center">
-        <Heading size={"7"} className="my-8 mx-4">
+        <Heading size="7" className="my-8 mx-4">
           Prepare for your next frontend coding interview
         </Heading>
 

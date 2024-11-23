@@ -1,5 +1,5 @@
 import { Redis } from "ioredis";
-import { REDIS_HOST, REDIS_PORT } from "../config/redis.config";
+import { REDIS_HOST, REDIS_PORT } from "@/server/config/redis.config";
 
 export const redis = new Redis({
   host: REDIS_HOST,
@@ -14,8 +14,9 @@ export async function getViews(challengeId: number) {
 }
 
 export async function incrementViews(challengeId: number) {
-  const redisViews = await redis.get(`views:${challengeId}`);
-  const views = Number(redisViews) ?? 0;
-  await redis.set(`views:${challengeId}`, views + 1);
-  REDIS_VIEWS_CACHE.set(challengeId, views + 1);
+  await redis.incr(`views:${challengeId}`);
+  REDIS_VIEWS_CACHE.set(
+    challengeId,
+    Number(await redis.get(`views:${challengeId}`))
+  );
 }

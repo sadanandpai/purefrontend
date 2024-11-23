@@ -19,3 +19,11 @@ export async function modifyLikes(challengeId: number, isIncrement: boolean) {
     await redis.decr(`likes:${challengeId}`);
   }
 }
+
+export async function getAttempts(challengeId: number) {
+  return Number(await redis.get(`attempts:${challengeId}`));
+}
+
+export async function incrementAttempts(challengeId: number) {
+  await redis.incr(`attempts:${challengeId}`);
+}
