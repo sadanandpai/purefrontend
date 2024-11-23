@@ -21,7 +21,7 @@ interface Props {
 }
 
 export function SaveSubmission({ status, onSubmit, disabled }: Props) {
-  const context = useContext(appContext);
+  const { user } = useContext(appContext);
   const { code } = useActiveCode();
   const challengeId = Number(usePathname().split("/").at(-1));
 
@@ -34,12 +34,12 @@ export function SaveSubmission({ status, onSubmit, disabled }: Props) {
   });
 
   async function saveSubmission() {
-    if (status !== undefined) {
+    if (status !== undefined && !isPending) {
       mutate({ challengeId, code, status });
     }
   }
 
-  if (!context.user) {
+  if (!user) {
     return (
       <p>
         Please&nbsp;
@@ -49,9 +49,23 @@ export function SaveSubmission({ status, onSubmit, disabled }: Props) {
     );
   }
 
+  if (!user.emailVerification) {
+    return (
+      <p>
+        Please&nbsp;
+        <RadixNextLink href={routes.profile}>verify your email</RadixNextLink>
+        &nbsp;to save your submission
+      </p>
+    );
+  }
+
   return (
-    <Button onClick={saveSubmission} disabled={disabled || isPending}>
-      {isPending ? "Submitting..." : "Save Submission"}
+    <Button
+      onClick={saveSubmission}
+      disabled={disabled || isPending}
+      loading={isPending}
+    >
+      Save Submission
     </Button>
   );
 }

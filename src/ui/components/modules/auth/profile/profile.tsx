@@ -36,7 +36,10 @@ export function Profile({ user: serverUser }: Props) {
 
       <Flex gap="2">
         <EmailVerification emailVerification={user.emailVerification} />
-        <PhoneVerification phoneVerification={user.phoneVerification} />
+        <PhoneVerification
+          phone={user.phone}
+          phoneVerification={user.phoneVerification}
+        />
 
         <form action={signOut}>
           <Button type="submit" color="tomato">

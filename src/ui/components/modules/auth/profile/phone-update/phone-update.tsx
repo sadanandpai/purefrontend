@@ -64,7 +64,9 @@ export function PhoneUpdate({ phone, phoneVerification }: Props) {
       <div className={classes.submission}>
         <ErrorField error={state.error} />
         <Flex gap="2">
-          {!isVerified && <OTPUpdate />}
+          {!isVerified && userPhone && userPhone === inputPhone && (
+            <OTPUpdate />
+          )}
           <Button
             type="submit"
             loading={pending}

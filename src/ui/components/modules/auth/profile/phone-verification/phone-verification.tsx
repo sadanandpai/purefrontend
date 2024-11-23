@@ -6,10 +6,11 @@ import { useMutation } from "@tanstack/react-query";
 import { sendPhoneVerificationAction } from "@/server/actions/user";
 
 interface Props {
+  phone: string;
   phoneVerification: boolean;
 }
 
-export function PhoneVerification({ phoneVerification }: Props) {
+export function PhoneVerification({ phone, phoneVerification }: Props) {
   const { mutate, data, isPending } = useMutation({
     mutationFn: sendPhoneVerificationAction,
     onSuccess: (response) => {
@@ -20,7 +21,7 @@ export function PhoneVerification({ phoneVerification }: Props) {
     },
   });
 
-  if (phoneVerification) {
+  if (!phone || phoneVerification) {
     return null;
   }
 

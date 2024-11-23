@@ -2,8 +2,11 @@ import Image from "next/image";
 import { signInWithOAuth } from "@/server/actions/auth";
 import { Button } from "@radix-ui/themes";
 import classes from "./oauth.module.scss";
+import { useTheme } from "next-themes";
 
 export function OAuth() {
+  const { resolvedTheme } = useTheme();
+
   return (
     <div className={classes.oauthForms}>
       <p>Or access using</p>
@@ -16,7 +19,14 @@ export function OAuth() {
 
         <form action={() => signInWithOAuth("Github")}>
           <Button type="submit" variant="ghost">
-            <Image src="/github.svg" alt="Github" width={40} height={40} />
+            <Image
+              src={
+                resolvedTheme === "dark" ? "/github-dark.svg" : "/github.svg"
+              }
+              alt="Github"
+              width={40}
+              height={40}
+            />
           </Button>
         </form>
       </div>

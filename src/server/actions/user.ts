@@ -55,7 +55,7 @@ export async function updatePhone(_prev: GlobalResponse, formData: FormData) {
     const { phone, password } = validatePhone(formData);
     await updatePhoneNumber(phone, password);
     await sendPhoneVerification();
-    return respondWithSuccess("Phone updated successfully");
+    return respondWithSuccess("Phone updated & verification code sent");
   } catch (error) {
     return respondWithError(error);
   }
@@ -72,7 +72,7 @@ export async function updateEmail(_prev: GlobalResponse, formData: FormData) {
     const { email, password } = validateEmailPassword(formData);
     await updateUserEmail(email, password);
     await sendVerificationEmail();
-    return respondWithSuccess("Email updated successfully");
+    return respondWithSuccess("Email updated & verification email sent");
   } catch (error) {
     return respondWithError(error);
   }
@@ -110,13 +110,13 @@ export async function resetForgotPassword(
 }
 
 export async function sendVerificationEmailAction() {
-  const session = await getLoggedInUser();
+  const user = await getLoggedInUser();
 
-  if (!session) {
+  if (!user) {
     throw "User not logged in";
   }
 
-  if (session.emailVerification) {
+  if (user.emailVerification) {
     throw "Email already verified. Please refresh the page";
   }
 
