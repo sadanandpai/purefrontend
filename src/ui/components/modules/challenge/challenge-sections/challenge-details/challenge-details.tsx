@@ -9,10 +9,9 @@ import { Box, ScrollArea, Tabs } from "@radix-ui/themes";
 
 interface Props {
   problem: ProblemProps;
-  views: number;
 }
 
-export function ChallengeDetails({ problem, views }: Props) {
+export function ChallengeDetails({ problem }: Props) {
   const [selectedTab, setSelectedTab] = useState("question");
   const testOutputs = useChallengeStore((state) => state.testOutputs);
 
@@ -41,7 +40,7 @@ export function ChallengeDetails({ problem, views }: Props) {
       <ScrollArea type="auto">
         <Box p="3">
           <Tabs.Content value="question">
-            <ProblemStatement problem={problem} views={views} />
+            <ProblemStatement problem={problem} />
           </Tabs.Content>
 
           <Tabs.Content value="result">

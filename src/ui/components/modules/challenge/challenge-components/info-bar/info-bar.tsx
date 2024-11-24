@@ -4,9 +4,10 @@ import { UserLike } from "../user-like/user-like";
 
 interface Props {
   difficulty: string;
+  totalLikes?: number;
 }
 
-export function InfoBar({ difficulty }: Props) {
+export function InfoBar({ difficulty, totalLikes }: Props) {
   const difficultyColor =
     difficulty === "easy"
       ? "green"
@@ -29,7 +30,7 @@ export function InfoBar({ difficulty }: Props) {
       </Flex>
 
       <Flex gap="4" align="center" mr={"2"}>
-        <UserLike />
+        <UserLike totalLikes={totalLikes} />
       </Flex>
     </Flex>
   );

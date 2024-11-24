@@ -12,10 +12,9 @@ import { ChallengeDetails } from "@/ui/components/modules/challenge/challenge-se
 
 interface Props {
   problem: ProblemProps;
-  views: number;
 }
 
-export default function ChallengeUI({ problem, views }: Props) {
+export default function ChallengeUI({ problem }: Props) {
   const files = {
     "/code.ts": problem.code,
     "/add.test.ts": testCode(problem.sampleInput),
@@ -47,7 +46,7 @@ export default function ChallengeUI({ problem, views }: Props) {
     >
       <PanelGroup direction="horizontal">
         <Panel minSize={25} defaultSize={40} className="panel left">
-          <ChallengeDetails problem={problem} views={views} />
+          <ChallengeDetails problem={problem} />
         </Panel>
         <PanelResizeHandle />
         <Panel minSize={30} defaultSize={60} className="hidden md:block">

@@ -6,7 +6,7 @@ import {
   updateUserChallengeInfo,
 } from "@/server/data-access/user-challenge";
 import { isValidChallengeId } from "@/server/utils/challenge";
-import { modifyLikes } from "@/server/data-access/activities";
+import { updateLikes } from "@/server/data-access/activities";
 import { getLoggedInUser } from "./auth";
 
 export async function getUserChallengeInfo(challengeId: number) {
@@ -33,12 +33,12 @@ export async function setUserChallengeLike(challengeId: number, like: boolean) {
     updatedDoc = await createUserChallengeInfo(challengeId, {
       like,
     });
-    modifyLikes(challengeId, like);
+    updateLikes(challengeId, like);
   } else if (document.like !== like) {
     updatedDoc = await updateUserChallengeInfo(document.$id, challengeId, {
       like,
     });
-    modifyLikes(challengeId, like);
+    updateLikes(challengeId, like);
   } else {
     updatedDoc = document;
   }
