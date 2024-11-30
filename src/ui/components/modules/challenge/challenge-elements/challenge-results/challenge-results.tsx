@@ -8,11 +8,16 @@ import { usePathname } from "next/navigation";
 interface Props {
   testOutputs: OutputsStateProps | null;
   setSelectedTab: (tabName: string) => void;
+  submittedCode: string;
 }
 
 let submittedExecutionId: number | undefined;
 
-export function ChallengeResults({ setSelectedTab, testOutputs }: Props) {
+export function ChallengeResults({
+  setSelectedTab,
+  testOutputs,
+  submittedCode,
+}: Props) {
   const queryClient = useQueryClient();
   const challengeId = Number(usePathname().split("/").at(-1));
 
@@ -49,6 +54,7 @@ export function ChallengeResults({ setSelectedTab, testOutputs }: Props) {
       <SaveSubmission
         onSubmit={onSubmit}
         status={testOutputs.status}
+        submittedCode={submittedCode}
         disabled={submittedExecutionId === testOutputs.executionId}
       />
     </div>
