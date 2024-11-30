@@ -6,23 +6,46 @@ import {
   useActiveCode,
   // FileTabs,
 } from "@codesandbox/sandpack-react/unstyled";
+import {
+  getFromLocalStorage,
+  saveToLocalStorage,
+} from "@/ui/utils/code-editor";
 // import classes from "./editor.module.scss";
 
 interface Props {
   fontSize: number;
+  userId?: string;
+  challengeId: number;
 }
 
 function MonacoEditorWithRef(
-  { fontSize }: Props,
+  { fontSize, challengeId, userId }: Props,
   ref: React.Ref<{ updateCode: (code: string) => void }>
 ) {
   const { resolvedTheme } = useTheme();
   const { sandpack } = useSandpack();
   const { code, updateCode } = useActiveCode();
 
-  useImperativeHandle(ref, () => ({
-    updateCode,
-  }));
+  function onCodeChange(value?: string) {
+    const code = value || "";
+    updateCode(code);
+    saveToLocalStorage(challengeId, code, userId);
+  }
+
+  function onMount() {
+    const localCode = getFromLocalStorage(challengeId, userId);
+    if (localCode) {
+      updateCode(localCode);
+    }
+  }
+
+  useImperativeHandle(
+    ref,
+    () => ({
+      updateCode,
+    }),
+    []
+  );
 
   return (
     <>
@@ -43,7 +66,8 @@ function MonacoEditorWithRef(
         }}
         key={sandpack.activeFile}
         value={code}
-        onChange={(value) => updateCode(value || "")}
+        onChange={onCodeChange}
+        onMount={onMount}
       />
     </>
   );
