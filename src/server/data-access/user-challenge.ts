@@ -20,14 +20,14 @@ export async function readUserChallengeInfo(challengeId: number) {
     ? {
         $id: document.$id,
         like: document.like,
-        done: document.done,
+        solve: document.solve,
       }
     : null;
 }
 
 export async function createUserChallengeInfo(
   challengeId: number,
-  data: Partial<{ like: boolean; done: boolean }>
+  data: Partial<{ like: boolean; solve: boolean }>
 ) {
   const { client } = await createSessionClient();
   const databases = new Databases(client);
@@ -45,14 +45,14 @@ export async function createUserChallengeInfo(
   return {
     $id: doc.$id,
     like: doc.like,
-    done: doc.done,
+    solve: doc.solve,
   };
 }
 
 export async function updateUserChallengeInfo(
   documentId: string,
   challengeId: number,
-  data: Partial<{ like: boolean; done: boolean }>
+  data: Partial<{ like: boolean; solve: boolean }>
 ) {
   const { client } = await createSessionClient();
   const databases = new Databases(client);
@@ -70,6 +70,6 @@ export async function updateUserChallengeInfo(
   return {
     $id: doc.$id,
     like: doc.like,
-    done: doc.done,
+    solve: doc.solve,
   };
 }

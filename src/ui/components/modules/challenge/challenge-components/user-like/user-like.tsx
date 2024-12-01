@@ -30,7 +30,7 @@ export function UserLike({ totalLikes }: Props) {
   });
 
   const { mutate, isPending } = useMutation({
-    mutationKey: ["userChallengeInfo", challengeId],
+    mutationKey: ["userChallengeInfo", "like", challengeId],
     mutationFn: () => setUserChallengeLike(challengeId, !infoData?.like),
     onSuccess: (data) => {
       // update the cache of query (this helps to update the UI without invoking the API again)

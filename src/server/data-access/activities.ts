@@ -14,12 +14,20 @@ export async function getAttempts(challengeId: number) {
   return Number(await redis.get(`attempts:${challengeId}`));
 }
 
+export async function getSolves(challengeId: number) {
+  return Number(await redis.get(`solves:${challengeId}`));
+}
+
 export async function incrementViews(challengeId: number) {
   await redis.incr(`views:${challengeId}`);
 }
 
 export async function incrementAttempts(challengeId: number) {
   await redis.incr(`attempts:${challengeId}`);
+}
+
+export async function incrementSolves(challengeId: number) {
+  await redis.incr(`solves:${challengeId}`);
 }
 
 export async function updateLikes(challengeId: number, isIncrement: boolean) {

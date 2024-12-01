@@ -1,18 +1,10 @@
-import dynamic from "next/dynamic";
 import { TestRunner } from "@/ui/components/core/test-runner/test-runner";
 import { Executor } from "../../challenge-components/executor/executor";
 import { useContext, useRef, useState } from "react";
 import { EditorControls } from "../../challenge-components/editor-controls/editor-controls";
 import { appContext } from "@/ui/context/app.context";
 import { usePathname } from "next/navigation";
-
-const MonacoEditor = dynamic(
-  () =>
-    import("@/ui/components/core/editor/monaco-editor").then(
-      (module) => module.MonacoEditor
-    ),
-  { ssr: false }
-);
+import { MonacoEditor } from "@/ui/components/core/editor/monaco-editor";
 
 interface Props {
   defaultCode: string;

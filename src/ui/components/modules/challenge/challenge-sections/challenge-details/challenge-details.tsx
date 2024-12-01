@@ -19,9 +19,12 @@ export function ChallengeDetails({ problem }: Props) {
   const submittedCode = useRef<string>("");
 
   useEffect(() => {
+    if (testOutputs?.isLoading) {
+      setSelectedTab("result");
+    }
+
     if (testOutputs?.outputs?.length) {
       submittedCode.current = code;
-      setSelectedTab("result");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [testOutputs, setSelectedTab]);

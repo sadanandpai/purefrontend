@@ -1,15 +1,17 @@
-import { forwardRef, useImperativeHandle } from "react";
+import { forwardRef, useEffect, useImperativeHandle } from "react";
 import Editor from "@monaco-editor/react";
 import { useTheme } from "next-themes";
 import {
   useSandpack,
   useActiveCode,
+  useLoadingOverlayState,
   // FileTabs,
 } from "@codesandbox/sandpack-react/unstyled";
 import {
   getFromLocalStorage,
   saveToLocalStorage,
 } from "@/ui/utils/code-editor";
+import { Spinner } from "@radix-ui/themes";
 // import classes from "./editor.module.scss";
 
 interface Props {
@@ -25,6 +27,7 @@ function MonacoEditorWithRef(
   const { resolvedTheme } = useTheme();
   const { sandpack } = useSandpack();
   const { code, updateCode } = useActiveCode();
+  const overlayState = useLoadingOverlayState();
 
   function onCodeChange(value?: string) {
     const code = value || "";
@@ -32,18 +35,26 @@ function MonacoEditorWithRef(
     saveToLocalStorage(challengeId, code, userId);
   }
 
-  function onMount() {
+  function setLocalCode() {
     const localCode = getFromLocalStorage(challengeId, userId);
     if (localCode) {
       updateCode(localCode);
     }
   }
 
+  useEffect(() => {
+    if (overlayState === "HIDDEN" || userId) {
+      setLocalCode();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [overlayState, userId]);
+
   useImperativeHandle(
     ref,
     () => ({
       updateCode,
     }),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     []
   );
 
@@ -67,7 +78,7 @@ function MonacoEditorWithRef(
         key={sandpack.activeFile}
         value={code}
         onChange={onCodeChange}
-        onMount={onMount}
+        loading={<Spinner />}
       />
     </>
   );

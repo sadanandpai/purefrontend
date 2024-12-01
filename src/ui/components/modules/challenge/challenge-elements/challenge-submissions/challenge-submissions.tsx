@@ -11,6 +11,7 @@ import {
 } from "@/server/actions/submissions";
 import { RadixNextLink } from "@/ui/components/core/radix-next-link/radix-next-link";
 import classes from "./challenge-submissions.module.scss";
+import { Spinner } from "@radix-ui/themes";
 
 interface SubmissionMutationProp {
   submissionId: string;
@@ -73,7 +74,11 @@ export function ChallengeSubmissions() {
   }
 
   if (isRecordsLoading) {
-    return <div className={classes.verticalCenter}>Loading...</div>;
+    return (
+      <div className={classes.verticalCenter}>
+        <Spinner />
+      </div>
+    );
   }
 
   if (!submissionsData?.documents?.length) {
