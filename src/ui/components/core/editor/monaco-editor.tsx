@@ -8,20 +8,19 @@ import {
   // FileTabs,
 } from "@codesandbox/sandpack-react/unstyled";
 import {
-  getFromLocalStorage,
-  saveToLocalStorage,
+  getCodeFromLocalStorage,
+  saveCodeToLocalStorage,
 } from "@/ui/utils/code-editor";
 import { Spinner } from "@radix-ui/themes";
 // import classes from "./editor.module.scss";
 
 interface Props {
   fontSize: number;
-  userId?: string;
   challengeId: number;
 }
 
 function MonacoEditorWithRef(
-  { fontSize, challengeId, userId }: Props,
+  { fontSize, challengeId }: Props,
   ref: React.Ref<{ updateCode: (code: string) => void }>
 ) {
   const { resolvedTheme } = useTheme();
@@ -32,22 +31,22 @@ function MonacoEditorWithRef(
   function onCodeChange(value?: string) {
     const code = value || "";
     updateCode(code);
-    saveToLocalStorage(challengeId, code, userId);
+    saveCodeToLocalStorage(challengeId, code);
   }
 
   function setLocalCode() {
-    const localCode = getFromLocalStorage(challengeId, userId);
+    const localCode = getCodeFromLocalStorage(challengeId);
     if (localCode) {
       updateCode(localCode);
     }
   }
 
   useEffect(() => {
-    if (overlayState === "HIDDEN" || userId) {
+    if (overlayState === "HIDDEN") {
       setLocalCode();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [overlayState, userId]);
+  }, [overlayState]);
 
   useImperativeHandle(
     ref,

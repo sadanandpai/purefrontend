@@ -9,19 +9,33 @@ import {
 } from "@codesandbox/sandpack-react/unstyled";
 import { getTestResult, getTestResults } from "@/ui/utils/test-results";
 import { incrementChallengeAttempts } from "@/server/actions/challenge";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { setUserChallengeSolve } from "@/server/actions/user-challenge";
+import { useContext } from "react";
+import { appContext } from "@/ui/context/app.context";
 
 export function Executor() {
+  const { user } = useContext(appContext);
   const challengeId = Number(usePathname().split("/").at(-1));
   const { dispatch, listen } = useSandpack();
   const setOutput = useChallengeStore((state) => state.setOutput);
   const setOutputs = useChallengeStore((state) => state.setOutputs);
   const overlayState = useLoadingOverlayState();
+  const queryClient = useQueryClient();
 
-  const { mutate: markSolve, isPending } = useMutation({
+  const { mutate: markChallengeComplete, isPending } = useMutation({
     mutationKey: ["userChallengeInfo", "solve", challengeId],
     mutationFn: () => setUserChallengeSolve(challengeId),
+    onSuccess: (data) => {
+      // update the cache of query (this helps to update the UI without invoking the API again)
+      queryClient.setQueryData(
+        ["userChallengeInfo", challengeId],
+        (oldData: { $id: string; like: boolean; solve: boolean }) => ({
+          ...oldData,
+          solve: data.solve,
+        })
+      );
+    },
   });
 
   function runUserTest() {
@@ -40,8 +54,8 @@ export function Executor() {
   async function runAllTests() {
     setOutputs({ isLoading: true });
     const unsubscribe = getTestResults(listen, (result) => {
-      if (result.status && !isPending) {
-        markSolve();
+      if (user && result.status && !isPending) {
+        markChallengeComplete();
       }
 
       incrementChallengeAttempts(challengeId);

@@ -1,8 +1,8 @@
-import { Badge, Flex, Heading, Text } from "@radix-ui/themes";
-import { ProblemProps } from "@/common/types/problem";
-import { InfoBar } from "@/ui/components/modules/challenge/challenge-components/info-bar/info-bar";
-import { useQuery } from "@tanstack/react-query";
 import { usePathname } from "next/navigation";
+import { useQuery } from "@tanstack/react-query";
+import { ProblemProps } from "@/common/types/problem";
+import { Badge, Flex, Heading, Text } from "@radix-ui/themes";
+import { InfoBar } from "@/ui/components/modules/challenge/challenge-components/info-bar/info-bar";
 import { getChallengeActivity } from "@/server/actions/challenge";
 
 interface Props {
@@ -32,6 +32,12 @@ export function ProblemStatement({ problem }: Props) {
         {activityData?.attempts ? (
           <Badge color="gray" variant="solid" size="1" radius="full">
             {activityData.attempts} attempts
+          </Badge>
+        ) : null}
+
+        {activityData?.solves ? (
+          <Badge color="gray" variant="solid" size="1" radius="full">
+            {activityData.solves} completions
           </Badge>
         ) : null}
       </Flex>

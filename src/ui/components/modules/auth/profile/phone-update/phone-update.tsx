@@ -8,12 +8,12 @@ import {
   PasswordField,
   PhoneField,
 } from "@/ui/components/common/form/input-fields";
-import { ErrorField } from "@/ui/components/common/form/error-field";
-import classes from "../profile.module.scss";
-import { OTPUpdate } from "../otp-update/otp-update";
 import { updatePhone } from "@/server/actions/user";
-import { VerificationBadge } from "@/ui/components/core/verification-badge/verification-badge";
 import { appContext } from "@/ui/context/app.context";
+import { ErrorField } from "@/ui/components/common/form/error-field";
+import { OTPUpdate } from "@/ui/components/modules/auth/profile/otp-update/otp-update";
+import { VerificationBadge } from "@/ui/components/core/verification-badge/verification-badge";
+import classes from "../profile.module.scss";
 
 interface Props {
   phone: string;

@@ -26,6 +26,6 @@ export async function getChallengeActivity(challengeId: number) {
     views: await getViews(challengeId),
     likes: await getLikes(challengeId),
     attempts: await getAttempts(challengeId),
-    completions: await getSolves(challengeId),
+    solves: await getSolves(challengeId),
   };
 }

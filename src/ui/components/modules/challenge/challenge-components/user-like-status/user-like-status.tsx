@@ -15,7 +15,7 @@ interface Props {
   totalLikes?: number;
 }
 
-export function UserLike({ totalLikes }: Props) {
+export function UserLikeStatus({ totalLikes }: Props) {
   const { resolvedTheme } = useTheme();
   const { user, isLoginChecked } = useContext(appContext);
   const queryClient = useQueryClient();
@@ -23,7 +23,7 @@ export function UserLike({ totalLikes }: Props) {
   const challengeId = Number(usePathname().split("/").at(-1));
 
   const { data: infoData, isLoading } = useQuery({
-    queryKey: ["isLiked", challengeId],
+    queryKey: ["userChallengeInfo", challengeId],
     queryFn: () => getUserChallengeInfo(challengeId),
     enabled: !!user,
     staleTime: Infinity,
@@ -35,7 +35,7 @@ export function UserLike({ totalLikes }: Props) {
     onSuccess: (data) => {
       // update the cache of query (this helps to update the UI without invoking the API again)
       queryClient.setQueryData(
-        ["isLiked", challengeId],
+        ["userChallengeInfo", challengeId],
         (oldData: typeof infoData) => ({
           ...oldData,
           like: data.like,

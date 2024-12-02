@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { Badge, Flex } from "@radix-ui/themes";
-import { UserLike } from "../user-like/user-like";
+import { UserLikeStatus } from "@/ui/components/modules/challenge/challenge-components/user-like-status/user-like-status";
+import { UserSolutionStatus } from "@/ui/components/modules/challenge/challenge-components/user-solution-status/user-solution-status";
 
 interface Props {
   difficulty: string;
@@ -30,7 +31,8 @@ export function InfoBar({ difficulty, totalLikes }: Props) {
       </Flex>
 
       <Flex gap="4" align="center" mr={"2"}>
-        <UserLike totalLikes={totalLikes} />
+        <UserSolutionStatus />
+        <UserLikeStatus totalLikes={totalLikes} />
       </Flex>
     </Flex>
   );
