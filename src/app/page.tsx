@@ -1,12 +1,12 @@
 import { routes } from "@/common/routes";
-import { NavBar } from "@/ui/components/common/nav-bar/nav-bar";
+import { HomeNavBar } from "@/ui/components/common/home-nav-bar/home-nav-bar";
 import { RadixNextLink } from "@/ui/components/core/radix-next-link/radix-next-link";
 import { Heading } from "@radix-ui/themes";
 
 export default function Home() {
   return (
     <>
-      <NavBar />
+      <HomeNavBar />
       <div className="text-center">
         <Heading size="7" className="my-8 mx-4">
           Prepare for your next frontend coding interview

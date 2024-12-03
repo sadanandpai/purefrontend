@@ -1,14 +1,12 @@
-import Image from "next/image";
-import { signInWithOAuth } from "@/server/actions/auth";
-import { Button, Flex } from "@radix-ui/themes";
-import { useTheme } from "next-themes";
-import { useSearchParams } from "next/navigation";
 import { useEffect } from "react";
+import Image from "next/image";
+import { Button, Flex } from "@radix-ui/themes";
+import { useSearchParams } from "next/navigation";
+import { signInWithOAuth } from "@/server/actions/auth";
 
 const localStorageKey = "redirect";
 
 export function OAuth() {
-  const { resolvedTheme } = useTheme();
   const params = useSearchParams();
   const redirectURL = params.get("redirect");
 
@@ -30,14 +28,7 @@ export function OAuth() {
 
         <form action={() => signInWithOAuth("Github")}>
           <Button type="submit" variant="ghost">
-            <Image
-              src={
-                resolvedTheme === "dark" ? "/github-dark.svg" : "/github.svg"
-              }
-              alt="Github"
-              width={36}
-              height={36}
-            />
+            <Image src="/github.svg" alt="Github" width={36} height={36} />
           </Button>
         </form>
       </Flex>
