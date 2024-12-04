@@ -1,94 +1,142 @@
 import "server-only";
 
-import { Client, Account, ID, OAuthProvider } from "node-appwrite";
+import {
+  Client,
+  Account,
+  ID,
+  OAuthProvider,
+  Databases,
+  Query,
+} from "node-appwrite";
 import { COOKIE_NAME } from "@/server/config/server.config";
 import { getCookie } from "@/server/utils/cookies";
+import { RequestCookie } from "next/dist/compiled/@edge-runtime/cookies";
 
-const oAuthProviders = {
+export const OAuthProviders = {
   Google: OAuthProvider.Google,
   Github: OAuthProvider.Github,
 };
 
-export type oAuthProvidersType = keyof typeof oAuthProviders;
+export type oAuthProvidersType = keyof typeof OAuthProviders;
+
+export const getOAuthProvider = (provider: oAuthProvidersType) => {
+  return OAuthProviders[provider];
+};
 
 export function getUniqueID() {
   return ID.unique();
 }
 
-export function getOAuthProvider(provider: keyof typeof oAuthProviders) {
-  return oAuthProviders[provider];
+export class BaseClientAppWrite {
+  endpoint: string = "";
+  project: string = "";
+  protected static instance: BaseClientAppWrite | null = null;
+
+  constructor() {
+    this.endpoint = process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT ?? "";
+    this.project = process.env.NEXT_APPWRITE_PROJECT ?? "";
+
+    if (!this.endpoint || !this.project) {
+      throw new Error("Appwrite endpoint, project not provided");
+    }
+  }
+
+  get client() {
+    return new Client().setEndpoint(this.endpoint).setProject(this.project);
+  }
+
+  get account() {
+    return new Account(this.client);
+  }
+
+  static async getInstance() {
+    if (!BaseClientAppWrite.instance) {
+      BaseClientAppWrite.instance = new BaseClientAppWrite();
+    }
+    return BaseClientAppWrite.instance;
+  }
 }
 
-export function createClient() {
-  if (
-    !process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT ||
-    !process.env.NEXT_APPWRITE_PROJECT
-  ) {
-    throw new Error("Appwrite endpoint or project not provided");
+export class SessionClientAppwrite extends BaseClientAppWrite {
+  protected static instance: SessionClientAppwrite | null = null;
+  session;
+
+  constructor(session: RequestCookie | undefined) {
+    super();
+    if (!session?.value) {
+      throw new Error("No session");
+    }
+    this.session = session;
   }
 
-  const client = new Client()
-    .setEndpoint(process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT)
-    .setProject(process.env.NEXT_APPWRITE_PROJECT);
+  get client() {
+    return super.client.setSession(this.session.value);
+  }
 
-  return {
-    get account() {
-      return new Account(client);
-    },
-    get client() {
-      return client;
-    },
-  };
+  get account() {
+    return new Account(this.client);
+  }
+
+  public static async getInstance() {
+    if (!SessionClientAppwrite.instance) {
+      let sessionCookie: RequestCookie | undefined = await getCookie(COOKIE_NAME)
+     
+      SessionClientAppwrite.instance = new SessionClientAppwrite(
+        sessionCookie
+      );
+    }
+    return SessionClientAppwrite.instance;
+  }
 }
 
-export async function createSessionClient() {
-  if (
-    !process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT ||
-    !process.env.NEXT_APPWRITE_PROJECT
-  ) {
-    throw new Error("Appwrite endpoint or project not provided");
+export class DatabaseClientAppwrite extends SessionClientAppwrite {
+  protected static instance: DatabaseClientAppwrite | null = null;
+
+
+  public static async getInstance() {
+    if (!DatabaseClientAppwrite.instance) {
+      const sessionInstance = await SessionClientAppwrite.getInstance();
+      DatabaseClientAppwrite.instance = new DatabaseClientAppwrite(
+        sessionInstance.session
+      );
+    }
+    return DatabaseClientAppwrite.instance;
   }
 
-  const sessionCookie = await getCookie(COOKIE_NAME);
-  if (!sessionCookie || !sessionCookie.value) {
-    throw new Error("No session");
+  get databases() {
+    return new Databases(super.client);
   }
 
-  const client = new Client()
-    .setEndpoint(process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT)
-    .setProject(process.env.NEXT_APPWRITE_PROJECT)
-    .setSession(sessionCookie.value);
-
-  return {
-    get account() {
-      return new Account(client);
-    },
-    get client() {
-      return client;
-    },
-  };
+  get Query() {
+    return Query
+  }
 }
 
-export async function createAdminClient() {
-  if (
-    !process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT ||
-    !process.env.NEXT_APPWRITE_PROJECT ||
-    !process.env.NEXT_APPWRITE_KEY
-  ) {
-    throw new Error("Appwrite endpoint or project or key not provided");
+export class AdminClientAppwrite extends BaseClientAppWrite {
+  apiKey: string = "";
+  protected static instance: AdminClientAppwrite | null = null;
+
+  constructor() {
+    super();
+    this.apiKey = process.env.NEXT_APPWRITE_KEY ?? "";
+    if (!this.apiKey) {
+      throw new Error("Appwrite key not provided");
+    }
   }
 
-  const client = new Client()
-    .setEndpoint(process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT)
-    .setProject(process.env.NEXT_APPWRITE_PROJECT)
-    .setKey(process.env.NEXT_APPWRITE_KEY);
+   public static async getInstance() {
+    if (!AdminClientAppwrite.instance) {
+      AdminClientAppwrite.instance = new AdminClientAppwrite();
+    }
+    return AdminClientAppwrite.instance;
+  }
 
-  return {
-    get account() {
-      return new Account(client);
-    },
-    get client() {
-      return client;
-    },
-  };
+  get client() {
+    return super.client.setKey(this.apiKey);
+  }
+
+  get account() {
+    return new Account(this.client);
+  }
+  
 }

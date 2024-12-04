@@ -1,13 +1,12 @@
-import { Databases, Query } from "node-appwrite";
 import {
   DB,
   USER_CHALLENGE_INFO_COLLECTION,
 } from "@/server/config/appwrite.config";
-import { createSessionClient, getUniqueID } from "@/server/services/appwrite";
+import {  getUniqueID } from "@/server/services/appwrite";
+import { serviceClient } from "../services/service_client";
 
 export async function readUserChallengeInfo(challengeId: number) {
-  const { client } = await createSessionClient();
-  const databases = new Databases(client);
+  const { databases, Query } = await serviceClient.database();
 
   const result = await databases.listDocuments(
     DB,
@@ -29,8 +28,7 @@ export async function createUserChallengeInfo(
   challengeId: number,
   data: Partial<{ like: boolean; solve: boolean }>
 ) {
-  const { client } = await createSessionClient();
-  const databases = new Databases(client);
+  const { databases } = await serviceClient.database();
 
   const doc = await databases.createDocument(
     DB,
@@ -54,8 +52,7 @@ export async function updateUserChallengeInfo(
   challengeId: number,
   data: Partial<{ like: boolean; solve: boolean }>
 ) {
-  const { client } = await createSessionClient();
-  const databases = new Databases(client);
+  const { databases } = await serviceClient.database();
 
   const doc = await databases.updateDocument(
     DB,
