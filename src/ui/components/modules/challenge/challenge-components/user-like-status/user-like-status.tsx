@@ -1,7 +1,7 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { toast } from "sonner";
 import { Heart } from "lucide-react";
-import { Button } from "@radix-ui/themes";
+import { Button, Text } from "@radix-ui/themes";
 import { usePathname } from "next/navigation";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { appContext } from "@/ui/context/app.context";
@@ -11,26 +11,31 @@ import {
 } from "@/server/actions/user-challenge";
 import { useTheme } from "next-themes";
 
-export function UserLike() {
+interface Props {
+  totalLikes?: number;
+}
+
+export function UserLikeStatus({ totalLikes }: Props) {
   const { resolvedTheme } = useTheme();
+  const { user, isLoginChecked } = useContext(appContext);
   const queryClient = useQueryClient();
-  const context = useContext(appContext);
+  const [challengeLikes, setChallengeLikes] = useState<number | undefined>();
   const challengeId = Number(usePathname().split("/").at(-1));
 
   const { data: infoData, isLoading } = useQuery({
-    queryKey: ["isLiked", challengeId],
+    queryKey: ["userChallengeInfo", challengeId],
     queryFn: () => getUserChallengeInfo(challengeId),
-    enabled: !!context.user,
+    enabled: !!user,
     staleTime: Infinity,
   });
 
   const { mutate, isPending } = useMutation({
-    mutationKey: ["userChallengeInfo", challengeId],
+    mutationKey: ["userChallengeInfo", "like", challengeId],
     mutationFn: () => setUserChallengeLike(challengeId, !infoData?.like),
     onSuccess: (data) => {
       // update the cache of query (this helps to update the UI without invoking the API again)
       queryClient.setQueryData(
-        ["isLiked", challengeId],
+        ["userChallengeInfo", challengeId],
         (oldData: typeof infoData) => ({
           ...oldData,
           like: data.like,
@@ -42,6 +47,10 @@ export function UserLike() {
       } else {
         toast("Challenge is un-liked");
       }
+
+      if (challengeLikes !== undefined) {
+        setChallengeLikes(data.like ? challengeLikes + 1 : challengeLikes - 1);
+      }
     },
     onError: () => {
       toast.error("Failed to like challenge");
@@ -49,7 +58,7 @@ export function UserLike() {
   });
 
   function handleLike() {
-    if (!context.user) {
+    if (!user) {
       toast("Please sign in to like the challenge");
       return;
     }
@@ -61,9 +70,20 @@ export function UserLike() {
     mutate();
   }
 
-  if (!context.user) {
+  useEffect(() => {
+    if (totalLikes !== undefined) {
+      setChallengeLikes(totalLikes);
+    }
+  }, [totalLikes]);
+
+  if (!user) {
     return (
-      <Button size="1" variant="ghost" onClick={handleLike}>
+      <Button
+        size="1"
+        variant="ghost"
+        onClick={handleLike}
+        loading={!isLoginChecked}
+      >
         <Heart color={resolvedTheme === "dark" ? "white" : "black"} />
       </Button>
     );
@@ -78,10 +98,12 @@ export function UserLike() {
     >
       <Heart
         fill={infoData?.like ? "red" : "none"}
+        size={24}
         color={
           infoData?.like ? "red" : resolvedTheme === "dark" ? "white" : "black"
         }
       />
+      <Text size="2">{challengeLikes}</Text>
     </Button>
   );
 }

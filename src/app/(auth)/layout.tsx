@@ -1,6 +1,7 @@
+import Image from "next/image";
+import { Flex } from "@radix-ui/themes";
 import { NavBar } from "@/ui/components/common/nav-bar/nav-bar";
 import classes from "./auth.module.scss";
-import { Text } from "@radix-ui/themes";
 
 export default function Layout({
   children,
@@ -11,9 +12,9 @@ export default function Layout({
     <div className="body-wrapper">
       <NavBar />
       <section className={classes.authSection}>
-        <Text size={"8"} mb={"6"} as="p">
-          ClearFrontend
-        </Text>
+        <Flex justify="center" className="mb-16">
+          <Image src="/cfe-logo.svg" alt="Brand logo" width={60} height={60} />
+        </Flex>
         {children}
       </section>
     </div>

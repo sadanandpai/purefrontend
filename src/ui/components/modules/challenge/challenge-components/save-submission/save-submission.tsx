@@ -1,5 +1,4 @@
 import { useContext } from "react";
-import { useActiveCode } from "@codesandbox/sandpack-react/unstyled";
 import { submitUserSubmission } from "@/server/actions/submissions";
 import { useMutation } from "@tanstack/react-query";
 import { appContext } from "@/ui/context/app.context";
@@ -18,11 +17,16 @@ interface Props {
   status?: boolean;
   disabled?: boolean;
   onSubmit?: () => void;
+  submittedCode: string;
 }
 
-export function SaveSubmission({ status, onSubmit, disabled }: Props) {
+export function SaveSubmission({
+  status,
+  onSubmit,
+  disabled,
+  submittedCode,
+}: Props) {
   const { user } = useContext(appContext);
-  const { code } = useActiveCode();
   const challengeId = Number(usePathname().split("/").at(-1));
 
   const { mutate, isPending } = useMutation({
@@ -35,7 +39,7 @@ export function SaveSubmission({ status, onSubmit, disabled }: Props) {
 
   async function saveSubmission() {
     if (status !== undefined && !isPending) {
-      mutate({ challengeId, code, status });
+      mutate({ challengeId, code: submittedCode, status });
     }
   }
 

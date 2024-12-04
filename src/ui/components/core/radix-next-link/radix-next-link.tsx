@@ -5,13 +5,20 @@ interface Props {
   href?: string;
   size?: LinkProps["size"];
   weight?: LinkProps["weight"];
+  target?: LinkProps["target"];
   children: React.ReactNode;
 }
 
-export function RadixNextLink({ href = "#", size, weight, children }: Props) {
+export function RadixNextLink({
+  href = "#",
+  size,
+  weight,
+  target,
+  children,
+}: Props) {
   return (
     <Link href={href} passHref legacyBehavior>
-      <Anchor size={size} weight={weight}>
+      <Anchor size={size} weight={weight} target={target}>
         {children}
       </Anchor>
     </Link>

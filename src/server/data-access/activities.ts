@@ -1,29 +1,38 @@
 import "server-only";
+import { serviceClient } from "../services/service_client";
 
-import { redis, incrementViews, getViews } from "@/server/services/redis";
-
-export async function getIncrementedViews(challengeId: number) {
-  try {
-    incrementViews(challengeId);
-    return getViews(challengeId) ?? -1;
-  } catch {
-    // if cache server is down, return -1
-    return -1;
-  }
+export async function getViews(challengeId: number) {
+  return Number(await serviceClient.cache().get(`views:${challengeId}`));
 }
 
-export async function modifyLikes(challengeId: number, isIncrement: boolean) {
-  if (isIncrement) {
-    await redis.incr(`likes:${challengeId}`);
-  } else {
-    await redis.decr(`likes:${challengeId}`);
-  }
+export async function getLikes(challengeId: number) {
+  return Number(await serviceClient.cache().get(`likes:${challengeId}`));
 }
 
 export async function getAttempts(challengeId: number) {
-  return Number(await redis.get(`attempts:${challengeId}`));
+  return Number(await serviceClient.cache().get(`attempts:${challengeId}`));
+}
+
+export async function getSolves(challengeId: number) {
+  return Number(await serviceClient.cache().get(`solves:${challengeId}`));
+}
+
+export async function incrementViews(challengeId: number) {
+  await serviceClient.cache().incr(`views:${challengeId}`);
 }
 
 export async function incrementAttempts(challengeId: number) {
-  await redis.incr(`attempts:${challengeId}`);
+  await serviceClient.cache().incr(`attempts:${challengeId}`);
+}
+
+export async function incrementSolves(challengeId: number) {
+  await serviceClient.cache().incr(`solves:${challengeId}`);
+}
+
+export async function updateLikes(challengeId: number, isIncrement: boolean) {
+  if (isIncrement) {
+    await serviceClient.cache().incr(`likes:${challengeId}`);
+  } else {
+    await serviceClient.cache().decr(`likes:${challengeId}`);
+  }
 }

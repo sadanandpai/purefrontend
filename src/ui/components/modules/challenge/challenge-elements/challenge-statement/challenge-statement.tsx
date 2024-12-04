@@ -1,25 +1,51 @@
-import { Badge, Flex, Heading, Text } from "@radix-ui/themes";
+import { usePathname } from "next/navigation";
+import { useQuery } from "@tanstack/react-query";
 import { ProblemProps } from "@/common/types/problem";
+import { Badge, Flex, Heading, Text } from "@radix-ui/themes";
 import { InfoBar } from "@/ui/components/modules/challenge/challenge-components/info-bar/info-bar";
+import { getChallengeActivity } from "@/server/actions/challenge";
 
 interface Props {
   problem: ProblemProps;
-  views: number;
 }
 
-export function ProblemStatement({ problem, views }: Props) {
+export function ProblemStatement({ problem }: Props) {
+  const challengeId = Number(usePathname().split("/").at(-1));
+
+  const { data: activityData } = useQuery({
+    queryKey: ["activity", challengeId],
+    queryFn: () => getChallengeActivity(challengeId),
+    staleTime: Infinity,
+  });
+
   return (
     <div>
       <Flex gap="2" align="center">
         <Heading size="5">{problem.name}</Heading>
-        {views !== -1 && (
+
+        {activityData?.views && (
           <Badge color="gray" variant="solid" size="1" radius="full">
-            {views} views
+            {activityData.views} views
           </Badge>
         )}
+
+        {activityData?.attempts ? (
+          <Badge color="gray" variant="solid" size="1" radius="full">
+            {activityData.attempts} attempts
+          </Badge>
+        ) : null}
+
+        {activityData?.solves ? (
+          <Badge color="gray" variant="solid" size="1" radius="full">
+            {activityData.solves} completions
+          </Badge>
+        ) : null}
       </Flex>
 
-      <InfoBar difficulty={problem.difficulty} />
+      <InfoBar
+        difficulty={problem.difficulty}
+        totalLikes={activityData?.likes}
+      />
 
       <Text dangerouslySetInnerHTML={{ __html: problem.statement }}></Text>
       <Text dangerouslySetInnerHTML={{ __html: problem.description }}></Text>

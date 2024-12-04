@@ -1,28 +1,61 @@
-import { forwardRef, useImperativeHandle } from "react";
+import { forwardRef, useEffect, useImperativeHandle } from "react";
 import Editor from "@monaco-editor/react";
 import { useTheme } from "next-themes";
 import {
   useSandpack,
   useActiveCode,
+  useLoadingOverlayState,
   // FileTabs,
 } from "@codesandbox/sandpack-react/unstyled";
+import {
+  getCodeFromLocalStorage,
+  saveCodeToLocalStorage,
+} from "@/ui/utils/code-editor";
+import { Spinner } from "@radix-ui/themes";
 // import classes from "./editor.module.scss";
 
 interface Props {
   fontSize: number;
+  challengeId: number;
 }
 
 function MonacoEditorWithRef(
-  { fontSize }: Props,
+  { fontSize, challengeId }: Props,
   ref: React.Ref<{ updateCode: (code: string) => void }>
 ) {
   const { resolvedTheme } = useTheme();
   const { sandpack } = useSandpack();
   const { code, updateCode } = useActiveCode();
+  const overlayState = useLoadingOverlayState();
 
-  useImperativeHandle(ref, () => ({
-    updateCode,
-  }));
+  function onCodeChange(value?: string) {
+    const code = value || "";
+    updateCode(code);
+    saveCodeToLocalStorage(challengeId, code);
+  }
+
+  function setLocalCode() {
+    const localCode = getCodeFromLocalStorage(challengeId);
+    if (localCode) {
+      updateCode(localCode);
+    }
+  }
+
+  useEffect(() => {
+    if (overlayState === "HIDDEN") {
+      setLocalCode();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [overlayState]);
+
+  useImperativeHandle(
+    ref,
+    () => ({
+      updateCode,
+    }),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    []
+  );
 
   return (
     <>
@@ -43,7 +76,8 @@ function MonacoEditorWithRef(
         }}
         key={sandpack.activeFile}
         value={code}
-        onChange={(value) => updateCode(value || "")}
+        onChange={onCodeChange}
+        loading={<Spinner />}
       />
     </>
   );

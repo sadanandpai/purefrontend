@@ -12,6 +12,7 @@ export function AppProvider({ children }: Props) {
   const [user, setUser] = useState<null | Models.User<Models.Preferences>>(
     null
   );
+  const [isLoginChecked, setIsLoginChecked] = useState(false);
   const [userDataLoading, setUserDataLoading] = useState(false);
 
   const searchParams = useSearchParams();
@@ -30,6 +31,7 @@ export function AppProvider({ children }: Props) {
       })
       .finally(() => {
         setUserDataLoading(false);
+        setIsLoginChecked(true);
       });
   }
 
@@ -47,7 +49,9 @@ export function AppProvider({ children }: Props) {
   }, [authParam]);
 
   return (
-    <appContext.Provider value={{ user, userDataLoading, resetLoggedInUser }}>
+    <appContext.Provider
+      value={{ user, userDataLoading, isLoginChecked, resetLoggedInUser }}
+    >
       {children}
     </appContext.Provider>
   );
