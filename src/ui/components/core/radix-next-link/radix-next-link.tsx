@@ -18,7 +18,7 @@ export function RadixNextLink({
 }: Props) {
   return (
     <Link href={href} passHref legacyBehavior>
-      <Anchor size={size} weight={weight} target={target}>
+      <Anchor size={size} weight={weight} target={target} color="grass">
         {children}
       </Anchor>
     </Link>

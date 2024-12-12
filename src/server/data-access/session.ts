@@ -2,7 +2,11 @@ import "server-only";
 
 import { routes } from "@/common/routes";
 import { HOST_URL } from "@/server/config/server.config";
-import { getOAuthProvider, getUniqueID, oAuthProvidersType } from "@/server/services/appwrite";
+import {
+  getOAuthProvider,
+  getUniqueID,
+  oAuthProvidersType,
+} from "@/server/services/appwrite";
 import { serviceClient } from "../services/service_client";
 
 export async function getSession() {
@@ -11,14 +15,14 @@ export async function getSession() {
 }
 
 export async function createSessionWithEmail(email: string, password: string) {
-  const { account } = await serviceClient.user.admin()
-  let session = await account.createEmailPasswordSession(email, password);
+  const { account } = await serviceClient.user.admin();
+  const session = await account.createEmailPasswordSession(email, password);
   return session.secret;
 }
 
 export async function createSessionWithSecret(userId: string, secret: string) {
-  const { account } = await serviceClient.user.admin()
-  let session = await account.createSession(userId, secret);
+  const { account } = await serviceClient.user.admin();
+  const session = await account.createSession(userId, secret);
   return session.secret;
 }
 
@@ -26,8 +30,12 @@ export async function redirectToOAuth(
   origin: string | null,
   provider: oAuthProvidersType
 ) {
-  const { account } = await serviceClient.user.admin()
-  return await account.createOAuth2Token(getOAuthProvider(provider), `${origin}/oauth`, `${origin}/signin`);
+  const { account } = await serviceClient.user.admin();
+  return await account.createOAuth2Token(
+    getOAuthProvider(provider),
+    `${origin}/oauth`,
+    `${origin}/signin`
+  );
 }
 
 export async function initiateSessionWithEmail(
@@ -35,11 +43,9 @@ export async function initiateSessionWithEmail(
   email: string,
   password: string
 ) {
-  const { account } = await serviceClient.user.admin()
-  await account
-    .create(getUniqueID(), email, password, name);
-  const session = await account
-    .createEmailPasswordSession(email, password);
+  const { account } = await serviceClient.user.admin();
+  await account.create(getUniqueID(), email, password, name);
+  const session = await account.createEmailPasswordSession(email, password);
   return session.secret;
 }
 
@@ -58,10 +64,7 @@ export async function updateSessionPassword(
   oldPassword: string
 ) {
   const { account } = await serviceClient.user.authenticated();
-  await account.updatePassword(
-    password.toString(),
-    oldPassword.toString()
-  );
+  await account.updatePassword(password.toString(), oldPassword.toString());
 }
 
 export async function updateFullName(name: string) {
@@ -76,10 +79,7 @@ export async function updateUserEmail(email: string, password: string) {
 
 export async function sendPasswordRecoveryEmail(email: string) {
   const { account } = await serviceClient.user.authenticated();
-  await account.createRecovery(
-    email,
-    `${HOST_URL}${routes.resetPassword}`
-  );
+  await account.createRecovery(email, `${HOST_URL}${routes.resetPassword}`);
 }
 
 export async function resetPassword(

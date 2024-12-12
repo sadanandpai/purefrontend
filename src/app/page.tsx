@@ -1,19 +1,32 @@
 import { routes } from "@/common/routes";
 import { HomeNavBar } from "@/ui/components/common/home-nav-bar/home-nav-bar";
-import { RadixNextLink } from "@/ui/components/core/radix-next-link/radix-next-link";
-import { Heading } from "@radix-ui/themes";
+import Link from "next/link";
 
 export default function Home() {
   return (
-    <>
-      <HomeNavBar />
-      <div className="text-center">
-        <Heading size="7" className="my-8 mx-4">
-          Prepare for your next frontend coding interview
-        </Heading>
+    <div className="home-bg">
+      <div className="container">
+        <HomeNavBar />
+        <h1 className="home-heading mt-24">
+          <span className="text-brand-1">Learn.</span>
+          <br />
+          <span className="text-brand-3">Succeed.</span>
+          <br />
+          <span className="text-bg-2">Contribute.</span>
+        </h1>
 
-        <RadixNextLink href={routes.challenges}>Get started</RadixNextLink>
+        <h2 className="home-heading-2">
+          Master your frontend skills with{" "}
+          <span className="text-brand-1 font-bold">Clear Frontend</span>
+        </h2>
+
+        <Link
+          href={routes.challenges}
+          className="primary-link large inline-block"
+        >
+          CHALLENGES &gt;
+        </Link>
       </div>
-    </>
+    </div>
   );
 }

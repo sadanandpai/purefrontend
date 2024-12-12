@@ -4,6 +4,13 @@
 
 :root {
   font-size: 62.5%;
+  --brand-main-1: #03ae66;
+  --brand-main-2: #ff584c;
+  --brand-main-3: #f6db3f;
+  --brand-main-4: #0075bf;
+  --brand-bg-1: #00110a;
+  --brand-bg-2: #f2fbf7;
+  --brand-bg-3: #c0d1ca;
 }
 
 body {
@@ -21,4 +28,32 @@ body {
 
 .rt-ScrollAreaViewport > * {
   width: inherit;
+}
+
+.text-brand-1 {
+  color: var(--brand-main-1);
+}
+
+.text-brand-2 {
+  color: var(--brand-main-2);
+}
+
+.text-brand-3 {
+  color: var(--brand-main-3);
+}
+
+.text-brand-4 {
+  color: var(--brand-main-4);
+}
+
+.text-bg-1 {
+  color: var(--brand-bg-1);
+}
+
+.text-bg-2 {
+  color: var(--brand-bg-2);
+}
+
+.text-bg-3 {
+  color: var(--brand-bg-3);
 }

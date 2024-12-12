@@ -79,11 +79,11 @@ export class SessionClientAppwrite extends BaseClientAppWrite {
 
   public static async getInstance() {
     if (!SessionClientAppwrite.instance) {
-      let sessionCookie: RequestCookie | undefined = await getCookie(COOKIE_NAME)
-     
-      SessionClientAppwrite.instance = new SessionClientAppwrite(
-        sessionCookie
+      const sessionCookie: RequestCookie | undefined = await getCookie(
+        COOKIE_NAME
       );
+
+      SessionClientAppwrite.instance = new SessionClientAppwrite(sessionCookie);
     }
     return SessionClientAppwrite.instance;
   }
@@ -91,7 +91,6 @@ export class SessionClientAppwrite extends BaseClientAppWrite {
 
 export class DatabaseClientAppwrite extends SessionClientAppwrite {
   protected static instance: DatabaseClientAppwrite | null = null;
-
 
   public static async getInstance() {
     if (!DatabaseClientAppwrite.instance) {
@@ -108,7 +107,7 @@ export class DatabaseClientAppwrite extends SessionClientAppwrite {
   }
 
   get Query() {
-    return Query
+    return Query;
   }
 }
 
@@ -124,7 +123,7 @@ export class AdminClientAppwrite extends BaseClientAppWrite {
     }
   }
 
-   public static async getInstance() {
+  public static async getInstance() {
     if (!AdminClientAppwrite.instance) {
       AdminClientAppwrite.instance = new AdminClientAppwrite();
     }
@@ -138,5 +137,4 @@ export class AdminClientAppwrite extends BaseClientAppWrite {
   get account() {
     return new Account(this.client);
   }
-  
 }
