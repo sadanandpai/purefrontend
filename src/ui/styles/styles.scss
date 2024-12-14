@@ -8,6 +8,7 @@
   max-width: 1028px;
   width: 100%;
   margin: 0 auto;
+  position: relative;
 }
 
 .primary-link {
@@ -35,19 +36,6 @@
   font-weight: bold;
   font-size: 16px;
   line-height: 20px;
-}
-
-.home-heading {
-  font-size: 72px;
-  line-height: 86px;
-}
-
-.home-heading-2 {
-  font-size: 36px;
-  line-height: 48px;
-  font-weight: 200;
-  margin: 44px 0 64px;
-  color: var(--brand-bg-2);
 }
 
 .panel {

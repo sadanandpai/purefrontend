@@ -1,31 +1,24 @@
-import { routes } from "@/common/routes";
 import { HomeNavBar } from "@/ui/components/common/home-nav-bar/home-nav-bar";
-import Link from "next/link";
+import { Circles } from "@/ui/components/core/circles/circles";
+import { Features } from "@/ui/components/modules/home/features";
+import { GetStarted } from "@/ui/components/modules/home/get-started";
+import { Hero } from "@/ui/components/modules/home/hero";
+import { Practice } from "@/ui/components/modules/home/practice";
+import { Flex } from "@radix-ui/themes";
 
 export default function Home() {
   return (
     <div className="home-bg">
       <div className="container">
+        <Circles />
         <HomeNavBar />
-        <h1 className="home-heading mt-24">
-          <span className="text-brand-1">Learn.</span>
-          <br />
-          <span className="text-brand-3">Succeed.</span>
-          <br />
-          <span className="text-bg-2">Contribute.</span>
-        </h1>
 
-        <h2 className="home-heading-2">
-          Master your frontend skills with{" "}
-          <span className="text-brand-1 font-bold">Clear Frontend</span>
-        </h2>
-
-        <Link
-          href={routes.challenges}
-          className="primary-link large inline-block"
-        >
-          CHALLENGES &gt;
-        </Link>
+        <Flex direction="column" gap="260px" className="mt-[84px] relative">
+          <Hero />
+          <Practice />
+          <Features />
+          <GetStarted />
+        </Flex>
       </div>
     </div>
   );

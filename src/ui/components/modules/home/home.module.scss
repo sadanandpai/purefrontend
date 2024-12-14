@@ -1,0 +1,26 @@
+.title {
+  font-size: 72px;
+  line-height: 86px;
+  font-family: var(--font-bGr);
+}
+
+.subTitle {
+  font-size: 36px;
+  line-height: 48px;
+  font-weight: 200;
+  color: var(--brand-bg-2);
+}
+
+.sectionTitle {
+  font-size: 64px;
+  line-height: 78px;
+  font-family: var(--font-bGr);
+  color: var(--brand-main-1);
+}
+
+.background {
+  height: 412px;
+  padding: 80px;
+  background: url("/vibrant.png") no-repeat;
+  background-size: 100% 100%;
+}

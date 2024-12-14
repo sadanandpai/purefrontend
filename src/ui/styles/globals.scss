@@ -11,6 +11,8 @@
   --brand-bg-1: #00110a;
   --brand-bg-2: #f2fbf7;
   --brand-bg-3: #c0d1ca;
+  --font-dm-sans: "DM Sans";
+  --font-bGr: "Bricolage Grotesque";
 }
 
 body {
@@ -20,6 +22,11 @@ body {
 .radix-themes {
   --cursor-button: pointer;
   --default-font-family: var(--font-dm-sans);
+}
+
+.bGr-font {
+  font-family: "Bricolage Grotesque";
+  font-optical-sizing: auto;
 }
 
 :disabled {
