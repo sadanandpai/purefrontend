@@ -1,26 +1,103 @@
 .title {
-  font-size: 72px;
-  line-height: 86px;
+  font-size: 60px;
+  line-height: 72px;
   font-family: var(--font-bGr);
 }
 
 .subTitle {
-  font-size: 36px;
-  line-height: 48px;
+  font-size: 30px;
+  line-height: 42px;
   font-weight: 200;
   color: var(--brand-bg-2);
 }
 
 .sectionTitle {
-  font-size: 64px;
-  line-height: 78px;
+  font-size: 52px;
+  line-height: 66px;
   font-family: var(--font-bGr);
   color: var(--brand-main-1);
 }
 
 .background {
-  height: 412px;
-  padding: 80px;
+  padding: 64px 32px;
   background: url("/vibrant.png") no-repeat;
   background-size: 100% 100%;
+  margin-left: -32px;
+  width: 100vw;
+}
+
+.practiceContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+
+  .infoCards {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    justify-content: center;
+  }
+
+  .infoCard:first-child {
+    transform: rotate(-5deg);
+  }
+
+  .infoCard:last-child {
+    transform: rotate(5deg);
+  }
+}
+
+.links {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  margin-top: 32px;
+}
+
+@media (width >= 768px) {
+  .title {
+    font-size: 72px;
+    line-height: 86px;
+  }
+
+  .subTitle {
+    font-size: 36px;
+    line-height: 48px;
+  }
+
+  .sectionTitle {
+    font-size: 64px;
+    line-height: 78px;
+  }
+
+  .links {
+    flex-direction: row;
+  }
+
+  .background {
+    padding: 80px;
+  }
+}
+
+@media (width >= 992px) {
+  .practiceContainer {
+    flex-direction: row;
+
+    .infoCards {
+      flex-direction: row;
+      gap: 0;
+    }
+
+    .infoCard:last-child {
+      transform: translate(-20%, 38%) rotate(5deg);
+    }
+  }
+}
+
+@media (width >= 1200px) {
+  .background {
+    margin-left: calc((1200px - 100vw) / 2);
+  }
 }

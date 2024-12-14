@@ -2,10 +2,11 @@
   background-color: var(--brand-bg-1);
   min-height: 100vh;
   padding: 32px;
+  overflow-x: hidden;
 }
 
 .container {
-  max-width: 1028px;
+  max-width: 1200px;
   width: 100%;
   margin: 0 auto;
   position: relative;
