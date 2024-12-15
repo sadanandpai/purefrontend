@@ -3,6 +3,7 @@ import Image from "next/image";
 import { Flex } from "@radix-ui/themes";
 import { routes } from "@/common/routes";
 import classes from "./home-nav-bar.module.scss";
+import { MenuDropdown } from "./menu-dropdown";
 
 export function HomeNavBar() {
   return (
@@ -10,20 +11,23 @@ export function HomeNavBar() {
       <Flex align="center" gap="5">
         <Image src="/cfe-logo.svg" alt="Github" width={36} height={36} />
 
-        <Link href={routes.challenges} className="text-brand-1  font-bold">
+        <Link
+          href={routes.challenges}
+          className="text-brand-1 font-bold hidden md:flex"
+        >
           Challenges
         </Link>
 
         <Link
           href="https://github.com/sadanandpai/clearfrontend"
           target="blank"
-          className="text-brand-1 font-bold"
+          className="text-brand-1 font-bold hidden md:flex"
         >
           Contribute
         </Link>
       </Flex>
 
-      <Flex align="center" gap="5">
+      <Flex align="center" gap="5" className="hidden lg:flex">
         <Link href={routes.signIn} className="secondary-link">
           LOGIN
         </Link>
@@ -39,6 +43,8 @@ export function HomeNavBar() {
           <Image src="/github.svg" alt="Github" width={32} height={32} />
         </Link>
       </Flex>
+
+      <MenuDropdown />
     </nav>
   );
 }

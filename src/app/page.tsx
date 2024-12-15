@@ -13,7 +13,10 @@ export default function Home() {
         <Circles />
         <HomeNavBar />
 
-        <Flex direction="column" gap="260px" className="mt-[84px] relative">
+        <Flex
+          direction="column"
+          className="mt-[84px] relative gap-[130px] lg:gap-[260px]"
+        >
           <Hero />
           <Practice />
           <Features />
