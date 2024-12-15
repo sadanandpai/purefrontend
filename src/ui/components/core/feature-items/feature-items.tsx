@@ -1,6 +1,6 @@
 "use client";
 
-import { Fragment, useState } from "react";
+import { Fragment } from "react";
 import { Flex } from "@radix-ui/themes";
 import classes from "./feature-items.module.scss";
 
