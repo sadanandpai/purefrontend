@@ -6,11 +6,15 @@ import classes from "./feature-items.module.scss";
 
 interface Props {
   listItems: string[];
+  activeIndex: number | null;
+  setActiveIndex: (index: number) => void;
 }
 
-export const FeatureItems = ({ listItems }: Props) => {
-  const [activeIndex, setActiveIndex] = useState<number | null>(0);
-
+export const FeatureItems = ({
+  listItems,
+  activeIndex,
+  setActiveIndex,
+}: Props) => {
   return (
     <Flex direction="column" gap="5">
       {listItems.map((item, index) => (

@@ -1,22 +1,4 @@
-.title {
-  font-size: 60px;
-  line-height: 72px;
-  font-family: var(--font-bGr);
-}
-
-.subTitle {
-  font-size: 30px;
-  line-height: 42px;
-  font-weight: 200;
-  color: var(--brand-bg-2);
-}
-
-.sectionTitle {
-  font-size: 52px;
-  line-height: 66px;
-  font-family: var(--font-bGr);
-  color: var(--brand-main-1);
-}
+@use "src/ui/styles/home";
 
 .background {
   padding: 64px 32px;
@@ -35,8 +17,9 @@
   .infoCards {
     display: flex;
     flex-direction: column;
-    gap: 40px;
+    gap: 6rem;
     justify-content: center;
+    margin: 4rem auto;
   }
 
   .infoCard:first-child {
@@ -57,21 +40,6 @@
 }
 
 @media (width >= 768px) {
-  .title {
-    font-size: 72px;
-    line-height: 86px;
-  }
-
-  .subTitle {
-    font-size: 36px;
-    line-height: 48px;
-  }
-
-  .sectionTitle {
-    font-size: 64px;
-    line-height: 78px;
-  }
-
   .links {
     flex-direction: row;
   }
@@ -88,6 +56,7 @@
     .infoCards {
       flex-direction: row;
       gap: 0;
+      margin: 0;
     }
 
     .infoCard:last-child {

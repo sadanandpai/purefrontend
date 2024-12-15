@@ -1,0 +1,30 @@
+.embla {
+  overflow: hidden;
+}
+
+.emblaContainer {
+  display: flex;
+}
+
+.emblaSlide {
+  flex: 0 0 100%;
+  min-width: 0;
+}
+
+.emblaDots {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  margin-top: 16px;
+}
+
+.emblaDot {
+  height: 12px;
+  width: 12px;
+  border-radius: 50%;
+  border: 1px solid var(--brand-bg-2);
+
+  &.isSelected {
+    background-color: var(--brand-bg-2);
+  }
+}
